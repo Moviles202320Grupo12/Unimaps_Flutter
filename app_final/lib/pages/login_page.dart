@@ -121,7 +121,7 @@ class LoginPage extends StatelessWidget {
                   SizedBox(width: 25),
 
                   // outlook button
-                  SquareTile(imagePath: 'lib/imgs/outlook_logo.png')
+                  SquareTile(imagePath: 'lib/imgs/outlook_logo.webp')
                 ],
               ),
 
