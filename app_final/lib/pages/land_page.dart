@@ -1,10 +1,11 @@
+import 'package:app_final/components/register_button.dart';
 import 'package:flutter/material.dart';
 import 'package:app_final/components/my_button.dart';
 import 'package:app_final/components/my_textfield.dart';
 import 'package:app_final/components/square_tile.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LandPage extends StatelessWidget {
+  LandPage({super.key});
 
   // text editing controllers
   final usernameController = TextEditingController();
@@ -32,7 +33,7 @@ class LoginPage extends StatelessWidget {
 
               // welcome back, you've been missed!
               Text(
-                'Welcome back you\'ve been missed!',
+                'Bienvenido',
                 style: TextStyle(
                   color: Colors.deepOrange,
                   fontSize: 16,
@@ -41,43 +42,26 @@ class LoginPage extends StatelessWidget {
 
               const SizedBox(height: 25),
 
-              // username textfield
-              MyTextField(
-                controller: usernameController,
-                hintText: 'Username',
-                obscureText: false,
-              ),
 
               const SizedBox(height: 10),
 
-              // password textfield
-              MyTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: true,
-              ),
 
               const SizedBox(height: 10),
-
-              // forgot password?
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
+              RegisterButton(
+                onTap: () {
+                  Navigator.pop(context,
+                      '/pages/login_page.dart'); // Regresar a la ventana anterior
+                },
               ),
 
               const SizedBox(height: 25),
 
               // sign in button
               MyButton(
-                onTap: signUserIn,
+                  onTap: () {
+                    Navigator.pop(context,
+                        '/pages/registro.dart'); // Regresar a la ventana anterior
+                  },
               ),
 
               const SizedBox(height: 50),
@@ -111,45 +95,6 @@ class LoginPage extends StatelessWidget {
               ),
 
               const SizedBox(height: 50),
-
-              // google + apple sign in buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  // google button
-                  SquareTile(imagePath: 'lib/imgs/google.png'),
-
-                  SizedBox(width: 20),
-
-                  // outlook button
-                  SquareTile(imagePath: 'lib/imgs/outlook_logo.webp'),
-                  SizedBox(width: 20),
-
-                  // outlook button
-                  SquareTile(imagePath: 'lib/imgs/huella.png')
-                ],
-              ),
-
-              const SizedBox(height: 50),
-
-              // not a member? register now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Not a member?',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text(
-                    'Register now',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ),
