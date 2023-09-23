@@ -33,7 +33,7 @@ class LostPropertyHome extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: TextField(
@@ -46,11 +46,22 @@ class LostPropertyHome extends StatelessWidget {
                   labelText: '',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0)),
+                      borderRadius: BorderRadius.circular(25.0)),
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Text("Categorias",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: 'Urbanist',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
+            )
           ],
         ));
   }
