@@ -1,15 +1,10 @@
 import 'package:app_final/pages/lost_property.dart';
+import 'package:app_final/pages/create_lost_property.dart';
 import 'package:app_final/pages/find_lost_property.dart';
 import 'package:flutter/material.dart';
 import 'pages/login_page.dart';
 
-void main() => runApp(MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LostProperty(),
-        '/pages/lost_property': (context) => FindLostProperty(),
-      },
-    ));
+void main() => runApp(CreateLostProperty());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
