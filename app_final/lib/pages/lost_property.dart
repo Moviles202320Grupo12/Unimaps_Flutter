@@ -120,9 +120,95 @@ class LostPropertyHome extends StatelessWidget {
                 )
               ],
             ),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Dos elementos por fila
+                ),
+                itemCount: 4, // Cuatro elementos en total
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.network('URL_de_la_imagen'),
+                        const Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Iphone 13",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18)),
+                                    Text(
+                                        "Encontrado:", // Nuevo texto debajo de "Iphone 13"
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xBBBB87400))),
+                                    Text(
+                                        "Martes", // Nuevo texto debajo de "Iphone 13"
+                                        style: TextStyle(
+                                          color: Color(0xFFF6A700),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                    Text(
+                                        " ", // Nuevo texto debajo de "Iphone 13"
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(Icons.location_on_outlined,
+                                        color: Color(
+                                            0xBBBB87400)), // Ícono al lado del texto
+                                    SizedBox(
+                                        width:
+                                            2), // Espacio entre el ícono y el texto adicional
+                                    Text("RGD",
+                                        style: TextStyle(
+                                            color: Color(0xBBBB87400),
+                                            fontSize:
+                                                18)), // Texto adicional al lado del ícono
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ));
   }
 
   void setState(Null Function() param0) {}
 }
+/*
+child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Iphone 13",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18)),
+                                Text(
+                                  "Encontrado:",
+                                  style: TextStyle(fontSize: 12),
+                                ), // Nuevo texto debajo de "Iphone 13"
+                              ],
+                            ),
+*/
