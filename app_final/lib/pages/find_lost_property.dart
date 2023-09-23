@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app_final/pages/find_lost_property.dart';
 
 class FindLostProperty extends StatelessWidget {
   @override
@@ -14,6 +15,16 @@ class FindLostPropertyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context,
+                '/pages/lost_property.dart'); // Navegar a una ventana específica
+          },
+        ),
         centerTitle: true,
         title: const Text(
           'Objetos Perdidos',
@@ -53,16 +64,16 @@ class FindLostPropertyHome extends StatelessWidget {
               ),
             ),
           ),
-          Align(
+          const Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: EdgeInsets.all(20.0),
                 child: Text(
                   "Iphone 13",
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
               )),
-          Align(
+          const Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
               padding: const EdgeInsets.all(5.0),
@@ -75,7 +86,7 @@ class FindLostPropertyHome extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
+          const Padding(
             padding: const EdgeInsets.all(15.0),
             child: Text(
               "Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.",

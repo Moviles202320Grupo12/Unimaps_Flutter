@@ -3,7 +3,13 @@ import 'package:app_final/pages/find_lost_property.dart';
 import 'package:flutter/material.dart';
 import 'pages/login_page.dart';
 
-void main() => runApp(FindLostProperty());
+void main() => runApp(MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LostProperty(),
+        '/pages/lost_property': (context) => FindLostProperty(),
+      },
+    ));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,6 +17,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/': (context) => LostProperty(), // Pantalla de inicio
+        '/lost_property.dart': (context) =>
+            FindLostProperty(), // Tu pantalla LostProperty
+      },
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
       theme: ThemeData(

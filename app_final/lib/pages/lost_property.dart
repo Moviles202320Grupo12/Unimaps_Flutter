@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app_final/pages/find_lost_property.dart';
 
 class LostProperty extends StatelessWidget {
   @override
@@ -16,6 +17,16 @@ class LostPropertyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context,
+                '/lost_property.dart'); // Regresar a la ventana anterior
+          },
+        ),
         centerTitle: true,
         title: const Text(
           'Objetos Perdidos',
@@ -152,58 +163,69 @@ class LostPropertyHome extends StatelessWidget {
 
   Widget buildGridView(String category) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
       itemCount: 4,
       itemBuilder: (BuildContext context, int index) {
-        return Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset('lib/imgs/el_logo.png'),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Iphone 13",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
-                          ),
-                          Text(
-                            "Encontrado:",
-                            style: TextStyle(
-                                fontSize: 15, color: Color(0xBBBB87400)),
-                          ),
-                          // ... (other texts)
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            color: Color(0xBBBB87400),
-                          ),
-                          SizedBox(width: 2),
-                          Text(
-                            "RGD",
-                            style: TextStyle(
-                                color: Color(0xBBBB87400), fontSize: 18),
-                          ),
-                        ],
-                      ),
-                    ],
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    FindLostProperty(), // Navegar a la ventana
+              ),
+            );
+          },
+          child: Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset('lib/imgs/el_logo.png'),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Iphone 13",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            Text(
+                              "Encontrado:",
+                              style: TextStyle(
+                                  fontSize: 15, color: Color(0xBBBB87400)),
+                            ),
+                            // ... (otros textos)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Color(0xBBBB87400),
+                            ),
+                            SizedBox(width: 2),
+                            Text(
+                              "RGD",
+                              style: TextStyle(
+                                  color: Color(0xBBBB87400), fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
