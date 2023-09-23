@@ -1,4 +1,4 @@
-[Screencast from 23-09-2023 00:16:31.webm](https://github.com/Moviles202320Grupo12/Unimaps_Flutter/assets/72769799/56d5dfb4-3acc-4860-bd04-ae002f90119d)# StuZone
+# StuZone
 
 -----
 
@@ -7,7 +7,10 @@ Sprint 2
 ## Home View for Lost Objects
 
 The Home View serves as the central hub for viewing all lost objects. It displays a grid of items that have been reported as lost. Each item is represented by a card that includes essential details like the object's name and location. The grid is scrollable, allowing users to browse through an extensive list of lost items.
-[Screencast from 23-09-2023 00:14:47.webm](https://github.com/Moviles202320Grupo12/Unimaps_Flutter/assets/72769799/f1ed98de-a4d0-4f49-8a3e-6210d0d4ebeb)
+
+
+[Screencast from 23-09-2023 00:14:47.webm](https://github.com/Moviles202320Grupo12/Unimaps_Flutter/assets/72769799/a0442745-d2e9-4c20-9a99-7c2bb4f8e90c)
+
 
 ## Specific Lost Object View
 
