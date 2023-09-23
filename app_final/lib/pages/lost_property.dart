@@ -19,10 +19,41 @@ class LostPropertyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-      centerTitle: true,
-      title: (const Text('Objetos Perdidos',
-          style: TextStyle(color: Colors.black, fontFamily: 'Urbanist'))),
-      backgroundColor: Colors.white,
-    ));
+          centerTitle: true,
+          title: (const Text('Objetos Perdidos',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Urbanist',
+                  fontWeight: FontWeight.bold))),
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+        ),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    var searchString = value.toLowerCase();
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: '',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+          ],
+        ));
   }
+
+  void setState(Null Function() param0) {}
 }
