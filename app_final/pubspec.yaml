@@ -63,6 +63,10 @@ flutter:
      - lib/imgs/el_logo.png
      - lib/imgs/outlook_logo.webp
      - lib/imgs/google.png
+     - lib/imgs/tutors.png
+     - lib/imgs/tutor2.png
+     - lib/imgs/tutor3.png
+     - lib/imgs/tutor4.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
