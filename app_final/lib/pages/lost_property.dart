@@ -22,7 +22,8 @@ class LostPropertyHome extends StatelessWidget {
           style: TextStyle(
               color: Colors.black,
               fontFamily: 'Urbanist',
-              fontWeight: FontWeight.bold),
+              fontWeight: FontWeight.bold,
+              fontSize: 25),
         ),
         backgroundColor: Colors.white,
         elevation: 0.0,
