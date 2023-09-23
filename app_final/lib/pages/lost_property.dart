@@ -61,7 +61,65 @@ class LostPropertyHome extends StatelessWidget {
                       fontFamily: 'Urbanist',
                       fontWeight: FontWeight.bold,
                       fontSize: 20)),
-            )
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Acción del botón 1
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black, minimumSize: Size(40, 40)),
+                  child: const Text("Celulares",
+                      style: TextStyle(
+                          color: Color(0xFFF6A700),
+                          fontFamily: 'Urbanist',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Acción del botón 2
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black, minimumSize: Size(40, 40)),
+                  child: const Text("Libros",
+                      style: TextStyle(
+                          color: Color(0xFFF6A700),
+                          fontFamily: 'Urbanist',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Acción del botón 3
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black, minimumSize: Size(40, 40)),
+                  child: const Text("PCs",
+                      style: TextStyle(
+                          color: Color(0xFFF6A700),
+                          fontFamily: 'Urbanist',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Acción del botón 3
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black, minimumSize: Size(40, 40)),
+                  child: const Text("Otros",
+                      style: TextStyle(
+                          color: Color(0xFFF6A700),
+                          fontFamily: 'Urbanist',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)),
+                )
+              ],
+            ),
           ],
         ));
   }
