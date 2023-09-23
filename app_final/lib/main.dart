@@ -13,9 +13,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
-      theme: ThemeData.light().copyWith(
-          textTheme:
-              GoogleFonts.urbanistTextTheme(Theme.of(context).textTheme)),
+      theme: ThemeData(
+          textTheme: const TextTheme(
+              bodyText1: TextStyle(
+                fontFamily: 'Urbanist',
+              ),
+              bodyText2: TextStyle(
+                fontFamily: 'Urbanist',
+              ))),
     );
   }
 }
