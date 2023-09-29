@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:app_final/pages/find_lost_property.dart';
 
 class FindLostProperty extends StatelessWidget {
   @override
