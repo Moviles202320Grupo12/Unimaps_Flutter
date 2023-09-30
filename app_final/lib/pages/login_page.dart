@@ -91,7 +91,7 @@ class LoginPage extends StatelessWidget {
           horizontal: 20,
           vertical: 15, // Margen simétrico para centrar el botón
         ),
-        height: 60.0, // Altura del botón
+        height: 50.0, // Altura del botón
         width: 400.0, // Ancho del botón
 
         child: ElevatedButton(
@@ -110,44 +110,42 @@ class LoginPage extends StatelessWidget {
           ),
         ));
 
-    final otro_ingreso = Stack(
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width - 40,
-          margin: const EdgeInsets.only(left: 20, right: 20),
-          decoration: const ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-                strokeAlign: BorderSide.strokeAlignCenter,
-                color: Color(0xFFE8ECF4),
+    final otro_ingreso = Container(
+        margin: EdgeInsets.only(top: 10),
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width - 40,
+              margin: const EdgeInsets.only(left: 20, right: 20),
+              child: Divider(
+                color: Colors.black12,
+                thickness: 2,
+                height: 36,
               ),
             ),
-          ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          child: Container(
-            alignment: Alignment.center,
-            child: Container(
-              padding: const EdgeInsets.all(2.0), // Padding around the text
-              color:
-                  Colors.white, // Background color matching the main container
-              child: const Text(
-                "Ingresar con",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: Container(
+                alignment: Alignment.center,
+                child: Container(
+                  padding: const EdgeInsets.all(2.0), // Padding around the text
+                  color: Colors
+                      .white, // Background color matching the main container
+                  child: const Text(
+                    "  Ingresar con  ",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-      ],
-    );
+          ],
+        ));
 
     return Scaffold(
         backgroundColor: Colors.white,
