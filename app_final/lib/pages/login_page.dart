@@ -6,7 +6,9 @@ class LoginPage extends StatelessWidget {
 
   // ignore: non_constant_identifier_names
   String path_image = "lib/imgs/el_logo.png";
-
+  String path_google = "lib/imgs/google.png";
+  String path_outlook = "lib/imgs/google.png";
+  String path_huella = "lib/imgs/huella.png";
   // text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -106,11 +108,11 @@ class LoginPage extends StatelessWidget {
           onPressed: () {},
           child: const Text(
             'Ingresar',
-            style: TextStyle(color: Color(0xbbbbf6a700), fontSize: 17),
+            style: TextStyle(color: Colors.amber, fontSize: 17),
           ),
         ));
 
-    final otro_ingreso = Container(
+    final otroIngreso = Container(
         margin: EdgeInsets.only(top: 10),
         child: Stack(
           children: [
@@ -147,6 +149,108 @@ class LoginPage extends StatelessWidget {
           ],
         ));
 
+    final googleButton = InkWell(
+      onTap: () {
+        // Acción al tocar el texto
+      },
+      child: Container(
+        height: 30,
+        width: 30,
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path_google)),
+          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
+          shape: BoxShape.rectangle,
+        ),
+      ),
+    );
+
+    final outlookButton = InkWell(
+      onTap: () {
+        // Acción al tocar el texto
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 30,
+        width: 30,
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path_outlook)),
+          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
+          shape: BoxShape.rectangle,
+        ),
+      ),
+    );
+
+    final huella = InkWell(
+      onTap: () {
+        // Acción al tocar el texto
+      },
+      child: Container(
+        height: 30,
+        width: 30,
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path_huella)),
+          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
+          shape: BoxShape.rectangle,
+        ),
+      ),
+    );
+
+    final metodosIngreso = Container(
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.width * 0.05,
+        horizontal: MediaQuery.of(context).size.width *
+            0.1, // Dynamic margin based on screen width
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment:
+            MainAxisAlignment.center, // Center the children horizontally
+        children: [googleButton, outlookButton, huella],
+      ),
+    );
+
+    final crear_cuenta = Container(
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.width * 0.1,
+        horizontal: MediaQuery.of(context).size.width *
+            0.1, // Dynamic margin based on screen width
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment:
+            MainAxisAlignment.center, // Center the children horizontally
+        crossAxisAlignment:
+            CrossAxisAlignment.center, // Center the children vertically
+        children: [
+          const Text(
+            'No tienes una cuenta?  ',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+          Container(
+            margin: const EdgeInsets.only(right: 25),
+            child: InkWell(
+              onTap: () {
+                // Acción al tocar el texto
+              },
+              child: const Text(
+                'Crear cuenta',
+                style: TextStyle(
+                  color: Colors.amber, // Color del texto
+                  decoration: TextDecoration.underline,
+                  fontSize: 15,
+                  // Subrayado
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
@@ -155,7 +259,9 @@ class LoginPage extends StatelessWidget {
           ingresarContrasena,
           olvideContrasena,
           ingresar,
-          otro_ingreso
+          otroIngreso,
+          metodosIngreso,
+          crear_cuenta
         ]));
 
     /*
