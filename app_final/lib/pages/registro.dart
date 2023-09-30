@@ -1,17 +1,23 @@
+import 'package:app_final/pages/land_page.dart';
 import 'package:flutter/material.dart';
 import 'package:app_final/components/my_button.dart';
 import 'package:app_final/components/my_textfield.dart';
 import 'package:app_final/components/square_tile.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  RegisterPage({super.key});
 
   // text editing controllers
   final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final passwordconfirmerController = TextEditingController();
 
   // sign user in method
-  void signUserIn() {}
+  void register(BuildContext context) {
+    Navigator.pushNamed(context,
+        '/pages/lost_property.dart');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +38,12 @@ class LoginPage extends StatelessWidget {
 
               // welcome back, you've been missed!
               Text(
-                'Welcome back you\'ve been missed!',
+                'Hola!, registrese para comenzar',
                 style: TextStyle(
-                  color: Colors.deepOrange,
-                  fontSize: 16,
+                    color: Colors.black,
+                    fontFamily: 'Urbanist',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25
                 ),
               ),
 
@@ -48,6 +56,14 @@ class LoginPage extends StatelessWidget {
                 obscureText: false,
               ),
 
+              const SizedBox(height: 25),
+
+              // email textfield
+              MyTextField(
+                controller: emailController,
+                hintText: 'Email',
+                obscureText: false,
+              ),
               const SizedBox(height: 10),
 
               // password textfield
@@ -56,28 +72,32 @@ class LoginPage extends StatelessWidget {
                 hintText: 'Password',
                 obscureText: true,
               ),
+              const SizedBox(height: 25),
 
+              // confirmer textfield
+              MyTextField(
+                controller: passwordconfirmerController,
+                hintText: 'Confirm Password',
+                obscureText: false,
+              ),
               const SizedBox(height: 10),
 
-              // forgot password?
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
-              ),
+
 
               const SizedBox(height: 25),
 
               // sign in button
               MyButton(
-                onTap: signUserIn,
+                onTap:  () {
+                  // Navegar a la página de detalles al presionar el botón
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LandPage(), // Página de detalles
+                      ),
+                      );
+                  },
+
+
               ),
 
               const SizedBox(height: 50),
@@ -123,10 +143,11 @@ class LoginPage extends StatelessWidget {
 
                   // outlook button
                   SquareTile(imagePath: 'lib/imgs/outlook_logo.webp'),
+
                   SizedBox(width: 20),
 
                   // outlook button
-                  SquareTile(imagePath: 'lib/imgs/huella.png')
+                  SquareTile(imagePath: 'lib/imgs/outlook_logo.webp')
                 ],
               ),
 
