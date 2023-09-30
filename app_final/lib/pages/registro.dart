@@ -1,4 +1,4 @@
-import 'package:app_final/pages/land_page.dart';
+import 'package:app_final/pages/inicio_crear_sesion.dart';
 import 'package:flutter/material.dart';
 import 'package:app_final/components/my_button.dart';
 import 'package:app_final/components/my_textfield.dart';
@@ -15,15 +15,13 @@ class RegisterPage extends StatelessWidget {
 
   // sign user in method
   void register(BuildContext context) {
-    Navigator.pushNamed(context,
-        '/pages/lost_property.dart');
+    Navigator.pushNamed(context, '/pages/lost_property.dart');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-
       body: SafeArea(
         child: Center(
           child: Column(
@@ -43,8 +41,7 @@ class RegisterPage extends StatelessWidget {
                     color: Colors.black,
                     fontFamily: 'Urbanist',
                     fontWeight: FontWeight.bold,
-                    fontSize: 25
-                ),
+                    fontSize: 25),
               ),
 
               const SizedBox(height: 25),
@@ -82,22 +79,19 @@ class RegisterPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
 
-
-
               const SizedBox(height: 25),
 
               // sign in button
               MyButton(
-                onTap:  () {
+                onTap: () {
                   // Navegar a la página de detalles al presionar el botón
                   Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => LandPage(), // Página de detalles
-                      ),
-                      );
-                  },
-
-
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          InicioCrearSesion(), // Página de detalles
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(height: 50),

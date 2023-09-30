@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
 class InicioCrearSesion extends StatelessWidget {
-  // ignore: non_constant_identifier_names
+  // Variables
+
   String path_image = "lib/imgs/el_logo.png";
+
   @override
   Widget build(BuildContext context) {
     final ingresar = Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 100,
-          vertical: 20, // Margen simétrico para centrar el botón
+          vertical: 15, // Margen simétrico para centrar el botón
         ),
-        height: 35.0, // Altura del botón
+        height: 45.0, // Altura del botón
         width: 200.0, // Ancho del botón
+
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            // ignore: use_full_hex_values_for_flutter_colors
             backgroundColor: const Color(0xbbbbbb87400), // Fondo de color café
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -39,9 +41,9 @@ class InicioCrearSesion extends StatelessWidget {
     final crear_cuenta = Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 100,
-          vertical: 20, // Margen simétrico para centrar el botón
+          vertical: 10, // Margen simétrico para centrar el botón
         ),
-        height: 35.0, // Altura del botón
+        height: 45.0, // Altura del botón
         width: 200.0, // Ancho del botón
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
