@@ -1,3 +1,4 @@
+import 'package:app_final/pages/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:app_final/pages/login_page.dart';
 
@@ -61,7 +62,12 @@ class InicioCrearSesion extends StatelessWidget {
             ),
             // Altura y ancho del botón
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => RegisterPage()),
+            );
+          },
           child: const Text('Crear cuenta'),
         ));
 
