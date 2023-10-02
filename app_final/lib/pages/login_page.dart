@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app_final/pages/olvidoContrasena.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
@@ -21,7 +22,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final texto = Container(
-        height: 125,
+        height: 130,
         alignment: Alignment.topLeft,
         margin: const EdgeInsets.only(
           top: 80,
@@ -73,7 +74,10 @@ class LoginPage extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10, right: 25, bottom: 25),
         child: InkWell(
           onTap: () {
-            // Acción al tocar el texto
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => OlvidoContrasena()),
+            );
           },
           child: const Text(
             'Olvide mi contraseña',
@@ -263,133 +267,5 @@ class LoginPage extends StatelessWidget {
           metodosIngreso,
           crear_cuenta
         ]));
-
-    /*
-          SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // welcome back, you've been missed!
-              Text(,
-              ),
-
-              const SizedBox(height: 25),
-
-              // username textfield
-              MyTextField(
-                controller: usernameController,
-                hintText: 'Username',
-                obscureText: false,
-              ),
-
-              const SizedBox(height: 10),
-
-              // password textfield
-              MyTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              // forgot password?
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              // sign in button
-              MyButton(
-                onTap: signUserIn,
-              ),
-
-              const SizedBox(height: 50),
-
-              // or continue with
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'Or continue with',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 50),
-
-              // google + apple sign in buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  // google button
-                  SquareTile(imagePath: 'lib/imgs/google.png'),
-
-                  SizedBox(width: 20),
-
-                  // outlook button
-                  SquareTile(imagePath: 'lib/imgs/outlook_logo.webp'),
-                  SizedBox(width: 20),
-
-                  // outlook button
-                  SquareTile(imagePath: 'lib/imgs/huella.png')
-                ],
-              ),
-
-              const SizedBox(height: 50),
-
-              // not a member? register now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Not a member?',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text(
-                    'Register now',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-    */
   }
 }

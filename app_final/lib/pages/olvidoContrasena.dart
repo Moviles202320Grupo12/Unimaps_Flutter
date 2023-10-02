@@ -1,5 +1,6 @@
+import 'package:app_final/pages/verificacion_correo.dart';
 import 'package:flutter/material.dart';
-import 'package:stuzone/login_page.dart';
+import 'package:app_final/pages/login_page.dart';
 
 class OlvidoContrasena extends StatelessWidget {
   @override
@@ -11,8 +12,8 @@ class OlvidoContrasena extends StatelessWidget {
           left: 20,
           right: 20,
         ),
-        child: Column(children: [
-          const Text(
+        child: const Column(children: [
+          Text(
             'Olvidaste la contraseña?',
             style: TextStyle(
                 color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
@@ -21,7 +22,7 @@ class OlvidoContrasena extends StatelessWidget {
           Padding(
               padding:
                   EdgeInsets.only(top: 20), //apply padding to all four sides
-              child: const Text(
+              child: Text(
                 'No te preocupes. Por favor ingresa tu correo electronico para recuperar tu cuenta',
                 style: TextStyle(
                     color: Color(0xbbbbbbF6A700),
@@ -63,7 +64,7 @@ class OlvidoContrasena extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
+              MaterialPageRoute(builder: (context) => VerificacionCorreo()),
             );
           },
           child: const Text('Ingresar'),
@@ -90,7 +91,10 @@ class OlvidoContrasena extends StatelessWidget {
             margin: const EdgeInsets.only(right: 25),
             child: InkWell(
               onTap: () {
-                // Acción al tocar el texto
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VerificacionCorreo()),
+                );
               },
               child: const Text(
                 'Ingresar ',

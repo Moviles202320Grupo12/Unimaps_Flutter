@@ -72,7 +72,7 @@ class InicioCrearSesion extends StatelessWidget {
         ));
 
     final invitado = Container(
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
             horizontal: 110, // Margen horizontal
             vertical: 50),
         height: 100.0, // Altura del texto interactivo

@@ -1,13 +1,9 @@
+import 'package:app_final/pages/crear_contrasena.dart';
 import 'package:app_final/pages/inicio_crear_sesion.dart';
-//import 'package:app_final/pages/land_page.dart';
-//import 'package:app_final/pages/lost_property.dart';
-//import 'package:app_final/pages/create_lost_property.dart';
-import 'package:app_final/pages/find_lost_property.dart';
 import 'package:app_final/pages/registro.dart';
-import 'package:app_final/pages/login_page.dart';
+import 'package:app_final/pages/verificacion_correo.dart';
+import 'package:app_final/pages/contrasena_creada.dart';
 import 'package:flutter/material.dart';
-//import 'pages/login_page.dart';
-//import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() => runApp(const MyApp());
 
@@ -28,7 +24,7 @@ class MyApp extends StatelessWidget {
                 ))),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          body: InicioCrearSesion(),
+          body: ContasenaCreada(),
         ));
   }
 }

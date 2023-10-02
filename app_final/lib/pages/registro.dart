@@ -5,14 +5,13 @@ class RegisterPage extends StatelessWidget {
   String path_google = "lib/imgs/google.png";
   String path_outlook = "lib/imgs/google.png";
   String path_huella = "lib/imgs/google.png";
-  
+
   @override
   Widget build(BuildContext context) {
     final texto = Container(
-        height: 80,
         alignment: Alignment.topLeft,
         margin: const EdgeInsets.only(
-          top: 30,
+          top: 80,
           left: 20,
           right: 20,
         ),
@@ -88,7 +87,7 @@ class RegisterPage extends StatelessWidget {
     final ingresar = Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 15, // Margen simétrico para centrar el botón
+          vertical: 40, // Margen simétrico para centrar el botón
         ),
         height: 50.0, // Altura del botón
         width: 400.0, // Ancho del botón
@@ -110,7 +109,7 @@ class RegisterPage extends StatelessWidget {
         ));
 
     final otroIngreso = Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: EdgeInsets.only(top: 5),
         child: Stack(
           children: [
             Container(

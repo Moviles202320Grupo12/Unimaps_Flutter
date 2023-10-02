@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stuzone/registro.dart';
-import 'package:stuzone/login_page.dart';
+import 'package:app_final/pages/registro.dart';
+import 'package:app_final/pages/login_page.dart';
 
 class TouchID extends StatelessWidget {
   @override
