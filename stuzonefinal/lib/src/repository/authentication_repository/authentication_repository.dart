@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:stuzonefinal/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:stuzonefinal/src/features/lostproperty/screens/find_lost_property.dart';
+import 'package:stuzonefinal/src/features/feed/screens/feedscreen.dart';
+
 
 import 'exceptions/t_exceptions.dart';
 
@@ -41,7 +44,7 @@ class AuthenticationRepository extends GetxController {
     user == null
         ? Get.offAll(() => const WelcomeScreen())
         // : await UserRepository.instance.recordExist(user.email ?? "")
-        : Get.offAll(() => const Dashboard());
+        : Get.offAll(() => const FeedScreen());
     // : Get.offAll(() => const WelcomeScreen());
   }
 

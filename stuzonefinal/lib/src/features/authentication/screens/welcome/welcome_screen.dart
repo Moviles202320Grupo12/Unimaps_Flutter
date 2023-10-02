@@ -50,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
                     Hero(
                         tag: 'welcome-image-tag',
                         child: Image(
-                            image: const AssetImage(tWelcomeScreenImage), width: width * 0.7, height: height * 0.6)),
+                            image: const AssetImage(tWelcomeScreenImage), width: width * 0.5, height: height * 0.4)),
                     Column(
                       children: [
                         Text(tWelcomeTitle, style: Theme.of(context).textTheme.displayMedium),

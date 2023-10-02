@@ -34,8 +34,8 @@ const String tOnBoardingCounter3 = "3/3";
 
 
 // -- Welcome Screen Text
-const String tWelcomeTitle = "Build Awesome Apps";
-const String tWelcomeSubTitle = "Let's put your creativity on the development highway.";
+const String tWelcomeTitle = "Travel Accross The campus";
+const String tWelcomeSubTitle = "Fast Solutions to your university life";
 
 
 // -- Login Screen Text
@@ -100,3 +100,9 @@ const String tMenu3 = "User Management";
 const String tDelete = "Delete";
 const String tJoined = "Joined";
 const String tJoinedAt = " 31 October 2022";
+
+// --feed strings
+const String fLostButton = "Lost Property";
+const String fWalkingButton = "Walking Points";
+const String fEventsButton = "Events";
+const String fTutorsButton = "Tutors";
