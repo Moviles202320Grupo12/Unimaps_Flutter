@@ -35,7 +35,7 @@ class _Map extends State<Map> {
     );
 
     final caja_menu = Container(
-      margin: EdgeInsets.only(top: height - 150),
+      margin: EdgeInsets.only(top: height - 120),
       decoration: const ShapeDecoration(
         color: Colors.white70,
         shape: RoundedRectangleBorder(
@@ -56,27 +56,119 @@ class _Map extends State<Map> {
     );
 
     final busqueda = Positioned(
-      top: height - 150, // Device height minus 200
+      top: height - 120, // Device height minus 200
       left: 1,
       right: 1,
-      child: const Opacity(
-        opacity: 1, // Adjust the opacity as needed
-        child: Opacity(
-            opacity: 0.99,
-            child: TextField(
-              obscureText: false,
-              decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  filled: true,
-                  fillColor: Color(0xbbbbbf7f8f9),
-                  border: OutlineInputBorder(),
-                  labelText: 'Edificio ML',
-                  labelStyle: TextStyle(color: Colors.black45),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1.5, color: Colors.black))),
-            )),
+      child: Opacity(
+        opacity: 0.8, // Adjust the opacity as needed
+        child: Container(
+          height: 80.0, // Set the height
+          child: const TextField(
+            obscureText: false,
+            decoration: InputDecoration(
+              prefixIcon: Icon(
+                Icons.search,
+                color: Colors.orange,
+              ), // Existing search icon
+              filled: true,
+              fillColor: Color(0xbbbbbf7f8f9),
+              border: OutlineInputBorder(),
+              labelText: 'Edificio ML',
+              labelStyle: TextStyle(color: Colors.orange),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1.5, color: Colors.black)),
+            ),
+          ),
+        ),
       ),
     );
+    final pasos = Positioned(
+      top: height - 55,
+      //bottom: ,
+      child: Container(
+        height: 55, // Set the height
+        width: MediaQuery.of(context).size.width / 4, // Set the width
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(1),
+            ),
+          ),
+          onPressed: () {},
+          child: Icon(
+            Icons.directions_walk,
+            color: Colors.amber,
+          ),
+        ),
+      ),
+    );
+    final configuracion = Positioned(
+      top: height - 55,
+      left: (MediaQuery.of(context).size.width / 4),
+      child: Container(
+        height: 55, // Set the height
+        width: (MediaQuery.of(context).size.width / 4), // Set the width
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(1),
+            ),
+          ),
+          onPressed: () {},
+          child: Icon(
+            Icons.settings,
+            color: Colors.amber,
+          ),
+        ),
+      ),
+    );
+
+    final eventos = Positioned(
+      top: height - 55,
+      left: (MediaQuery.of(context).size.width / 4) * 2,
+      child: Container(
+        height: 55, // Set the height
+        width: (MediaQuery.of(context).size.width / 4), // Set the width
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(1),
+            ),
+          ),
+          onPressed: () {},
+          child: Icon(
+            Icons.event,
+            color: Colors.amber,
+          ),
+        ),
+      ),
+    );
+
+    final lost_property = Positioned(
+      top: height - 55,
+      left: (MediaQuery.of(context).size.width / 4) * 3,
+      child: Container(
+        height: 55, // Set the height
+        width: (MediaQuery.of(context).size.width / 4), // Set the width
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(1),
+            ),
+          ),
+          onPressed: () {},
+          child: Icon(
+            Icons.backpack,
+            color: Colors.amber,
+          ), // Icon for lost items
+        ),
+      ),
+    );
+
     return MaterialApp(
       theme: ThemeData(
         useMaterial3: true,
@@ -87,7 +179,15 @@ class _Map extends State<Map> {
         width: width,
         height: height,
         child: Stack(
-          children: [mapa_google, caja_menu, busqueda],
+          children: [
+            mapa_google,
+            caja_menu,
+            busqueda,
+            configuracion,
+            pasos,
+            eventos,
+            lost_property
+          ],
         ),
       )),
     );

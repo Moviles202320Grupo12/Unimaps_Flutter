@@ -1,6 +1,7 @@
 import 'package:app_final/pages/registro.dart';
 import 'package:flutter/material.dart';
 import 'package:app_final/pages/login_page.dart';
+import 'package:app_final/pages/map.dart';
 
 class InicioCrearSesion extends StatelessWidget {
   // Variables
@@ -75,11 +76,14 @@ class InicioCrearSesion extends StatelessWidget {
         margin: const EdgeInsets.symmetric(
             horizontal: 110, // Margen horizontal
             vertical: 50),
-        height: 100.0, // Altura del texto interactivo
+        height: 20.0, // Altura del texto interactivo
         width: 400.0, // Ancho del texto interactivo
         child: InkWell(
           onTap: () {
-            // Acción al tocar el texto
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Map()),
+            );
           },
           child: const Text(
             'Continuar como Invitado',
