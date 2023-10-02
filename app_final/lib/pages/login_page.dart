@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app_final/pages/olvidoContrasena.dart';
+import 'package:app_final/pages/registro.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
@@ -6,7 +8,9 @@ class LoginPage extends StatelessWidget {
 
   // ignore: non_constant_identifier_names
   String path_image = "lib/imgs/el_logo.png";
-
+  String path_google = "lib/imgs/google.png";
+  String path_outlook = "lib/imgs/google.png";
+  String path_huella = "lib/imgs/huella.png";
   // text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -19,7 +23,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final texto = Container(
-        height: 125,
+        height: 130,
         alignment: Alignment.topLeft,
         margin: const EdgeInsets.only(
           top: 80,
@@ -71,7 +75,10 @@ class LoginPage extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10, right: 25, bottom: 25),
         child: InkWell(
           onTap: () {
-            // Acción al tocar el texto
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => OlvidoContrasena()),
+            );
           },
           child: const Text(
             'Olvide mi contraseña',
@@ -106,11 +113,11 @@ class LoginPage extends StatelessWidget {
           onPressed: () {},
           child: const Text(
             'Ingresar',
-            style: TextStyle(color: Color(0xbbbbf6a700), fontSize: 17),
+            style: TextStyle(color: Colors.amber, fontSize: 17),
           ),
         ));
 
-    final otro_ingreso = Container(
+    final otroIngreso = Container(
         margin: EdgeInsets.only(top: 10),
         child: Stack(
           children: [
@@ -147,6 +154,111 @@ class LoginPage extends StatelessWidget {
           ],
         ));
 
+    final googleButton = InkWell(
+      onTap: () {
+        // Acción al tocar el texto
+      },
+      child: Container(
+        height: 30,
+        width: 30,
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path_google)),
+          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
+          shape: BoxShape.rectangle,
+        ),
+      ),
+    );
+
+    final outlookButton = InkWell(
+      onTap: () {
+        // Acción al tocar el texto
+      },
+      child: Container(
+        alignment: Alignment.center,
+        height: 30,
+        width: 30,
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path_outlook)),
+          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
+          shape: BoxShape.rectangle,
+        ),
+      ),
+    );
+
+    final huella = InkWell(
+      onTap: () {
+        // Acción al tocar el texto
+      },
+      child: Container(
+        height: 30,
+        width: 30,
+        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path_huella)),
+          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
+          shape: BoxShape.rectangle,
+        ),
+      ),
+    );
+
+    final metodosIngreso = Container(
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.width * 0.05,
+        horizontal: MediaQuery.of(context).size.width *
+            0.1, // Dynamic margin based on screen width
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment:
+            MainAxisAlignment.center, // Center the children horizontally
+        children: [googleButton, outlookButton, huella],
+      ),
+    );
+
+    final crear_cuenta = Container(
+      margin: EdgeInsets.symmetric(
+        vertical: MediaQuery.of(context).size.width * 0.1,
+        horizontal: MediaQuery.of(context).size.width *
+            0.1, // Dynamic margin based on screen width
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment:
+            MainAxisAlignment.center, // Center the children horizontally
+        crossAxisAlignment:
+            CrossAxisAlignment.center, // Center the children vertically
+        children: [
+          const Text(
+            'No tienes una cuenta?  ',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          ),
+          Container(
+            margin: const EdgeInsets.only(right: 25),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: const Text(
+                'Crear cuenta',
+                style: TextStyle(
+                  color: Colors.amber, // Color del texto
+                  decoration: TextDecoration.underline,
+                  fontSize: 15,
+                  // Subrayado
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
@@ -155,135 +267,9 @@ class LoginPage extends StatelessWidget {
           ingresarContrasena,
           olvideContrasena,
           ingresar,
-          otro_ingreso
+          otroIngreso,
+          metodosIngreso,
+          crear_cuenta
         ]));
-
-    /*
-          SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // welcome back, you've been missed!
-              Text(,
-              ),
-
-              const SizedBox(height: 25),
-
-              // username textfield
-              MyTextField(
-                controller: usernameController,
-                hintText: 'Username',
-                obscureText: false,
-              ),
-
-              const SizedBox(height: 10),
-
-              // password textfield
-              MyTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: true,
-              ),
-
-              const SizedBox(height: 10),
-
-              // forgot password?
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.grey[600]),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              // sign in button
-              MyButton(
-                onTap: signUserIn,
-              ),
-
-              const SizedBox(height: 50),
-
-              // or continue with
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'Or continue with',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 50),
-
-              // google + apple sign in buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  // google button
-                  SquareTile(imagePath: 'lib/imgs/google.png'),
-
-                  SizedBox(width: 20),
-
-                  // outlook button
-                  SquareTile(imagePath: 'lib/imgs/outlook_logo.webp'),
-                  SizedBox(width: 20),
-
-                  // outlook button
-                  SquareTile(imagePath: 'lib/imgs/huella.png')
-                ],
-              ),
-
-              const SizedBox(height: 50),
-
-              // not a member? register now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Not a member?',
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
-                  const SizedBox(width: 4),
-                  const Text(
-                    'Register now',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-    */
   }
 }

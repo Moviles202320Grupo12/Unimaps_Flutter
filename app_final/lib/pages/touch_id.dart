@@ -1,49 +1,24 @@
-import 'package:app_final/pages/registro.dart';
 import 'package:flutter/material.dart';
+import 'package:app_final/pages/registro.dart';
 import 'package:app_final/pages/login_page.dart';
 
-class InicioCrearSesion extends StatelessWidget {
-  // Variables
-
-  String path_image = "lib/imgs/el_logo.png";
-
+class TouchID extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ingresar = Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 100,
-          vertical: 15, // Margen simétrico para centrar el botón
+    final texto = Container(
+        height: 80,
+        alignment: Alignment.topLeft,
+        margin: const EdgeInsets.only(
+          top: 30,
+          left: 20,
+          right: 20,
         ),
-        height: 45.0, // Altura del botón
-        width: 200.0, // Ancho del botón
-
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xbbbbbb87400), // Fondo de color café
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              // Bordes redondeados
-            ),
-            // Altura y ancho del botón
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-            );
-          },
-          child: const Text('Ingresar'),
+        child: const Text(
+          'Ingresar con touch ID',
+          style: TextStyle(
+              color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.left,
         ));
-
-    final photoImage = Container(
-      width: 340,
-      height: 340,
-      margin: const EdgeInsets.only(top: 80, bottom: 10, left: 20),
-      decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(path_image)),
-        borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
-      ),
-    );
 
     final crear_cuenta = Container(
         margin: const EdgeInsets.symmetric(
@@ -72,7 +47,7 @@ class InicioCrearSesion extends StatelessWidget {
         ));
 
     final invitado = Container(
-        margin: const EdgeInsets.symmetric(
+        margin: EdgeInsets.symmetric(
             horizontal: 110, // Margen horizontal
             vertical: 50),
         height: 100.0, // Altura del texto interactivo
@@ -92,8 +67,34 @@ class InicioCrearSesion extends StatelessWidget {
           ),
         ));
 
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [photoImage, ingresar, crear_cuenta, invitado]);
+    final ingresar = Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: 100,
+          vertical: 15, // Margen simétrico para centrar el botón
+        ),
+        height: 45.0, // Altura del botón
+        width: 200.0, // Ancho del botón
+
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xbbbbbb87400), // Fondo de color café
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+              // Bordes redondeados
+            ),
+            // Altura y ancho del botón
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginPage()),
+            );
+          },
+          child: const Text('Ingresar'),
+        ));
+    return MaterialApp(
+        color: Colors.white,
+        home: Scaffold(
+            body: Column(children: [texto, ingresar, crear_cuenta, invitado])));
   }
 }
