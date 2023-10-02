@@ -1,3 +1,4 @@
+import 'package:app_final/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -221,17 +222,20 @@ class RegisterPage extends StatelessWidget {
             CrossAxisAlignment.center, // Center the children vertically
         children: [
           const Text(
-            'No tienes una cuenta?  ',
+            'Tienes una cuenta?  ',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           Container(
             margin: const EdgeInsets.only(right: 25),
             child: InkWell(
               onTap: () {
-                // Acción al tocar el texto
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
               },
               child: const Text(
-                'Crear cuenta',
+                'Ingresar',
                 style: TextStyle(
                   color: Colors.amber, // Color del texto
                   decoration: TextDecoration.underline,

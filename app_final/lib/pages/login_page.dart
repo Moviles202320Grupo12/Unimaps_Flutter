@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_final/pages/olvidoContrasena.dart';
+import 'package:app_final/pages/registro.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
@@ -237,7 +238,10 @@ class LoginPage extends StatelessWidget {
             margin: const EdgeInsets.only(right: 25),
             child: InkWell(
               onTap: () {
-                // Acción al tocar el texto
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
               },
               child: const Text(
                 'Crear cuenta',

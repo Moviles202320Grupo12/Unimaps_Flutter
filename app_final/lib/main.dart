@@ -1,8 +1,4 @@
-import 'package:app_final/pages/crear_contrasena.dart';
 import 'package:app_final/pages/inicio_crear_sesion.dart';
-import 'package:app_final/pages/registro.dart';
-import 'package:app_final/pages/verificacion_correo.dart';
-import 'package:app_final/pages/contrasena_creada.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const MyApp());
@@ -24,7 +20,7 @@ class MyApp extends StatelessWidget {
                 ))),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          body: ContasenaCreada(),
+          body: InicioCrearSesion(),
         ));
   }
 }

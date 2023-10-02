@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:app_final/pages/contrasena_creada.dart';
 
 class VerificacionCorreo extends StatelessWidget {
   @override
@@ -67,7 +68,12 @@ class VerificacionCorreo extends StatelessWidget {
             ),
             // Altura y ancho del botón
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ContrasenaCreada()),
+            );
+          },
           child: const Text(
             'Verificar',
             style: TextStyle(color: Colors.amber, fontSize: 17),

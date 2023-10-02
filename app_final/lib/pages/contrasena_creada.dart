@@ -1,6 +1,7 @@
+import 'package:app_final/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-class ContasenaCreada extends StatelessWidget {
+class ContrasenaCreada extends StatelessWidget {
   String path_success = "lib/imgs/Successmark.png";
 
   @override
@@ -72,7 +73,12 @@ class ContasenaCreada extends StatelessWidget {
                 ),
                 // Altura y ancho del botón
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
               child: const Text(
                 'Ingresar',
                 style: TextStyle(color: Colors.amber, fontSize: 17),
