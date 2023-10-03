@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:app_final/pages/find_lost_property.dart';
+import 'package:app_final/pages/specific_event.dart';
 
-class LostProperty extends StatelessWidget {
+class Events extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: LostPropertyHome());
+    return MaterialApp(home: EventsHome());
   }
 }
 
 
-class LostPropertyHome extends StatelessWidget {
+class EventsHome extends StatelessWidget {
   static const black_titles = Color(0x00090909);
 
-  const LostPropertyHome({super.key});
+  const EventsHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +25,12 @@ class LostPropertyHome extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.pop(context,
-                '/lost_property.dart'); // Regresar a la ventana anterior
+                '/events.dart'); // Regresar a la ventana anterior
           },
         ),
         centerTitle: true,
         title: const Text(
-          'Objetos Perdidos',
+          'Eventos',
           style: TextStyle(
               color: Colors.black,
               fontFamily: 'Urbanist',
@@ -67,7 +67,7 @@ class LostPropertyHome extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Text(
-              "Categorias",
+              "Tipos de evento",
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Urbanist',
@@ -83,7 +83,7 @@ class LostPropertyHome extends StatelessWidget {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("Celulares",
+                child: const Text("Académicos",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -96,7 +96,7 @@ class LostPropertyHome extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("Libros",
+                child: const Text("Gastronómicos",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -109,7 +109,7 @@ class LostPropertyHome extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("PCs",
+                child: const Text("Culturales",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -122,7 +122,7 @@ class LostPropertyHome extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("Otros",
+                child: const Text("Musicales",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -138,7 +138,6 @@ class LostPropertyHome extends StatelessWidget {
                 buildGridView('Category 2'),
                 buildGridView('Category 3'),
                 buildGridView('Category 4'),
-                // Add more categories as needed
               ],
             ),
           ),
@@ -148,7 +147,7 @@ class LostPropertyHome extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   primary: Colors.black, minimumSize: Size(40, 40)),
               child: const Text(
-                "Reportar Objeto perdido",
+                "Crear evento",
                 style: TextStyle(
                     color: Color(0xFFF6A700),
                     fontFamily: 'Urbanist',
@@ -175,7 +174,7 @@ class LostPropertyHome extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    FindLostProperty(), // Navegar a la ventana
+                    SpecificEvent(),
               ),
             );
           },
@@ -183,7 +182,7 @@ class LostPropertyHome extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('lib/imgs/el_logo.png'),
+                Image.asset('lib/imgs/Fopre.png'),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -195,27 +194,22 @@ class LostPropertyHome extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Iphone 13",
+                              "Fopre",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             Text(
-                              "Encontrado:",
+                              "Septiembre 5-9:",
                               style: TextStyle(
                                   fontSize: 15, color: Color(0xBBBB87400)),
                             ),
-                            // ... (otros textos)
                           ],
                         ),
                         Row(
                           children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Color(0xBBBB87400),
-                            ),
                             SizedBox(width: 2),
                             Text(
-                              "RGD",
+                              "Activo",
                               style: TextStyle(
                                   color: Color(0xBBBB87400), fontSize: 18),
                             ),
