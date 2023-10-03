@@ -1,29 +1,15 @@
+import 'package:app_final/pages/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:app_final/pages/olvidoContrasena.dart';
-import 'package:app_final/pages/registro.dart';
 
-// ignore: must_be_immutable
-class LoginPage extends StatelessWidget {
-  // Variables
-
-  // ignore: non_constant_identifier_names
-  String path_image = "lib/imgs/el_logo.png";
+class RegisterPage extends StatelessWidget {
+  String path_image = "lib/imgs/google.png";
   String path_google = "lib/imgs/google.png";
   String path_outlook = "lib/imgs/google.png";
-  String path_huella = "lib/imgs/huella.png";
-  // text editing controllers
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
-
-  LoginPage({super.key});
-
-  // sign user in method
-  void signUserIn() {}
+  String path_huella = "lib/imgs/google.png";
 
   @override
   Widget build(BuildContext context) {
     final texto = Container(
-        height: 130,
         alignment: Alignment.topLeft,
         margin: const EdgeInsets.only(
           top: 80,
@@ -31,29 +17,13 @@ class LoginPage extends StatelessWidget {
           right: 20,
         ),
         child: const Text(
-          'Que bueno verte de nuevo !',
+          '¡Hola! Regístrese para comenzar',
           style: TextStyle(
               color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
           textAlign: TextAlign.left,
         ));
 
-    final ingresarCorreo = Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(left: 20, right: 20),
-      child: const TextField(
-        obscureText: false,
-        decoration: InputDecoration(
-            filled: true,
-            fillColor: Color(0xbbbbbf7f8f9),
-            border: OutlineInputBorder(),
-            labelText: 'Ingresa tu correo uniandes',
-            labelStyle: TextStyle(color: Colors.black45),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 1.5, color: Colors.black))),
-      ),
-    );
-
-    final ingresarContrasena = Container(
+    final ingresarUsername = Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
       child: const TextField(
@@ -62,41 +32,63 @@ class LoginPage extends StatelessWidget {
             filled: true,
             fillColor: Color(0xbbbbbf7f8f9),
             border: OutlineInputBorder(),
-            labelText: 'Ingresa tu contraseña',
+            labelText: 'Nombre de usuario',
             labelStyle: TextStyle(color: Colors.black45),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 1.5, color: Colors.black))),
       ),
     );
 
-    final olvideContrasena = Align(
-      alignment: Alignment.centerRight,
-      child: Container(
-        margin: const EdgeInsets.only(top: 10, right: 25, bottom: 25),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => OlvidoContrasena()),
-            );
-          },
-          child: const Text(
-            'Olvide mi contraseña',
-            style: TextStyle(
-              color: Colors.black, // Color del texto
-              decoration: TextDecoration.underline,
-              // Subrayado
-            ),
-            textAlign: TextAlign.right,
-          ),
-        ),
+    final ingresarCorreo = Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+      child: const TextField(
+        obscureText: false,
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: Color(0xbbbbbf7f8f9),
+            border: OutlineInputBorder(),
+            labelText: 'Correo uniandes',
+            labelStyle: TextStyle(color: Colors.black45),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1.5, color: Colors.black))),
       ),
     );
 
+    final ingresarContrasena = Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+      child: const TextField(
+        obscureText: false,
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: Color(0xbbbbbf7f8f9),
+            border: OutlineInputBorder(),
+            labelText: 'Contraseña',
+            labelStyle: TextStyle(color: Colors.black45),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1.5, color: Colors.black))),
+      ),
+    );
+    final confirmarContrasena = Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+      child: const TextField(
+        obscureText: false,
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: Color(0xbbbbbf7f8f9),
+            border: OutlineInputBorder(),
+            labelText: 'Confirma ontraseña',
+            labelStyle: TextStyle(color: Colors.black45),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1.5, color: Colors.black))),
+      ),
+    );
     final ingresar = Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 20,
-          vertical: 15, // Margen simétrico para centrar el botón
+          vertical: 40, // Margen simétrico para centrar el botón
         ),
         height: 50.0, // Altura del botón
         width: 400.0, // Ancho del botón
@@ -113,12 +105,12 @@ class LoginPage extends StatelessWidget {
           onPressed: () {},
           child: const Text(
             'Ingresar',
-            style: TextStyle(color: Colors.amber, fontSize: 17),
+            style: TextStyle(color: Color(0xbbbbf6a700), fontSize: 17),
           ),
         ));
 
     final otroIngreso = Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: EdgeInsets.only(top: 5),
         child: Stack(
           children: [
             Container(
@@ -153,7 +145,6 @@ class LoginPage extends StatelessWidget {
             ),
           ],
         ));
-
     final googleButton = InkWell(
       onTap: () {
         // Acción al tocar el texto
@@ -205,7 +196,7 @@ class LoginPage extends StatelessWidget {
 
     final metodosIngreso = Container(
       margin: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.width * 0.05,
+        vertical: MediaQuery.of(context).size.width * 0.005,
         horizontal: MediaQuery.of(context).size.width *
             0.1, // Dynamic margin based on screen width
       ),
@@ -217,9 +208,9 @@ class LoginPage extends StatelessWidget {
       ),
     );
 
-    final crear_cuenta = Container(
+    final crearCuenta = Container(
       margin: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.width * 0.1,
+        vertical: MediaQuery.of(context).size.width * 0.05,
         horizontal: MediaQuery.of(context).size.width *
             0.1, // Dynamic margin based on screen width
       ),
@@ -231,7 +222,7 @@ class LoginPage extends StatelessWidget {
             CrossAxisAlignment.center, // Center the children vertically
         children: [
           const Text(
-            'No tienes una cuenta?  ',
+            'Tienes una cuenta?  ',
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
           Container(
@@ -240,11 +231,11 @@ class LoginPage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                  MaterialPageRoute(builder: (context) => LoginPage()),
                 );
               },
               child: const Text(
-                'Crear cuenta',
+                'Ingresar',
                 style: TextStyle(
                   color: Colors.amber, // Color del texto
                   decoration: TextDecoration.underline,
@@ -263,13 +254,14 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Colors.white,
         body: Column(children: [
           texto,
+          ingresarUsername,
           ingresarCorreo,
           ingresarContrasena,
-          olvideContrasena,
+          confirmarContrasena,
           ingresar,
           otroIngreso,
           metodosIngreso,
-          crear_cuenta
+          crearCuenta
         ]));
   }
 }

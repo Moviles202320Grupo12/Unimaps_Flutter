@@ -1,11 +1,7 @@
+import 'package:app_final/pages/inicio_crear_sesion.dart';
 import 'package:flutter/material.dart';
-import 'pages/tutor_profile.dart';
-import 'pages/select_tutor.dart';
 
-
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,9 +9,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      //home: SelectTutorPage(),
-      home: ProfileScreen(),
-    );
+        title: 'MealGoal',
+        theme: ThemeData(
+            textTheme: const TextTheme(
+                bodyLarge: TextStyle(
+                  fontFamily: 'Urbanist',
+                ),
+                bodyMedium: TextStyle(
+                  fontFamily: 'Urbanist',
+                ))),
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: InicioCrearSesion(),
+        ));
   }
 }
