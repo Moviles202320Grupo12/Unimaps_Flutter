@@ -21,7 +21,7 @@ class SpecificEventHome extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.pushNamed(context,
-                '/pages/events.dart'); // Navegar a una ventana específica
+                '/pages/events.dart');
           },
         ),
         centerTitle: true,
@@ -44,7 +44,7 @@ class SpecificEventHome extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 children: [
                   Container(
-                      width: 360, // Ancho de la imagen
+                      width: 380, // Ancho de la imagen
                       height: 200, // Altura de la imagen
                       child: Image.asset(
                         'lib/imgs/fopre.png',
@@ -54,7 +54,6 @@ class SpecificEventHome extends StatelessWidget {
                     padding: const EdgeInsets.all(2.0),
                     child: FloatingActionButton(
                       onPressed: () {
-                        // Add your share logic here
                       },
                       child: Icon(Icons.share),
                     ),
@@ -77,7 +76,8 @@ class SpecificEventHome extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Text(
-                "Fopre 2023, prepárate, Del 5 al 9 de septiembre en el campus de Uniandes.",
+                "FOPRE CAFÉ 2023
+                 Comida - Juegos - Música y mucha diversión",
                 style: TextStyle(
                     fontSize: 18,
                     color: Color(0xBBBB87400),
@@ -85,8 +85,14 @@ class SpecificEventHome extends StatelessWidget {
               ),
             ),
           ),
+          const Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(
+              "Del 4 al 8 de septiembre de 2023 compra tu comida en el Fopre Café, participa en juegos, conciertos y eventos para que más estudiantes puedan recibir el apoyo FOPRE. No te lo pierdas, tendremos muchas sorpresas.
+
+               En esta edición, participarán más de 20 restaurantes, en las Plazoletas Lleras, Pizano y Banderas de la Universidad de los Andes, con una amplia y variada oferta gastronómica.",
+              style: TextStyle(fontSize: 16),
             ),
-          ),
           ),
         ],
       ),
