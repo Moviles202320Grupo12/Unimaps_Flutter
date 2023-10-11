@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'find_lost_property.dart';
+import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_back.dart';
+import 'package:get/get.dart';
 
 class LostProperty extends StatelessWidget {
   @override
@@ -143,7 +145,9 @@ class LostPropertyHome extends StatelessWidget {
           ),
           Center(
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => AddItem());
+              },
               style: ElevatedButton.styleFrom(
                   primary: Colors.black, minimumSize: Size(40, 40)),
               child: const Text(
