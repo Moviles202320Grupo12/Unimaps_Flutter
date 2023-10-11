@@ -133,12 +133,14 @@ class _AddItemState extends State<AddItem> {
 
                     if (key.currentState!.validate()) {
                       String itemName = _controllerName.text;
-                      String itemQuantity = _controllerLocation.text;
+                      String itemLocation = _controllerLocation.text;
+                      String itemDescription = _controllerDescription.text;
 
                       //Create a Map of data
                       Map<String, String> dataToSend = {
                         'name': itemName,
-                        'quantity': itemQuantity,
+                        'description': itemDescription,
+                        'location': itemLocation,
                         'image': imageUrl,
                       };
 
