@@ -20,9 +20,6 @@ class ProfileScreen extends StatelessWidget {
 
   final controller = Get.put(ProfileController());
 
-
-
-
   @override
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
@@ -30,12 +27,18 @@ class ProfileScreen extends StatelessWidget {
     //String email = instanciaDeMiClase.getUserEmail;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
-        title: Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
-        actions: [IconButton(onPressed: () {}, icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))],
+        leading: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(LineAwesomeIcons.angle_left)),
+        title:
+            Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
+        ],
       ),
       body: SingleChildScrollView(
-
         child: Container(
           padding: const EdgeInsets.all(tDefaultSize),
           child: Column(
@@ -49,8 +52,10 @@ class ProfileScreen extends StatelessWidget {
 
                       //Controllers
                       final email = TextEditingController(text: user.email);
-                      final password = TextEditingController(text: user.password);
-                      final fullName = TextEditingController(text: user.fullName);
+                      final password =
+                          TextEditingController(text: user.password);
+                      final fullName =
+                          TextEditingController(text: user.fullName);
                       final phoneNo = TextEditingController(text: user.phoneNo);
 
                       return Column(
@@ -58,9 +63,11 @@ class ProfileScreen extends StatelessWidget {
                           /// -- IMAGE with ICON
                           const ImageWithIcon(),
                           const SizedBox(height: 50),
-                          Text(user.email, style: Theme.of(context).textTheme.headlineMedium),
-                          Text(user.fullName, style: Theme.of(context).textTheme.bodyMedium)
-
+                          Text(user.email,
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
+                          Text(user.fullName,
+                              style: Theme.of(context).textTheme.bodyMedium)
                         ],
                       );
                     } else if (snapshot.hasError) {
@@ -74,15 +81,17 @@ class ProfileScreen extends StatelessWidget {
                 },
               ),
 
-
               /// -- BUTTON
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
                   onPressed: () => Get.to(() => UpdateProfileScreen()),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: tPrimaryColor, side: BorderSide.none, shape: const StadiumBorder()),
-                  child: const Text(tEditProfile, style: TextStyle(color: tDarkColor)),
+                      backgroundColor: tPrimaryColor,
+                      side: BorderSide.none,
+                      shape: const StadiumBorder()),
+                  child: const Text(tEditProfile,
+                      style: TextStyle(color: tDarkColor)),
                 ),
               ),
               const SizedBox(height: 30),
@@ -90,12 +99,24 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: 10),
 
               /// -- MENU
-              ProfileMenuWidget(title: "Settings", icon: LineAwesomeIcons.cog, onPress: () {}),
-              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () {}),
-              ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () => Get.to(AllUsers())),
+              ProfileMenuWidget(
+                  title: "Settings",
+                  icon: LineAwesomeIcons.cog,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Billing Details",
+                  icon: LineAwesomeIcons.wallet,
+                  onPress: () {}),
+              ProfileMenuWidget(
+                  title: "User Management",
+                  icon: LineAwesomeIcons.user_check,
+                  onPress: () => Get.to(AllUsers())),
               const Divider(),
               const SizedBox(height: 10),
-              ProfileMenuWidget(title: "Information", icon: LineAwesomeIcons.info, onPress: () {}),
+              ProfileMenuWidget(
+                  title: "Information",
+                  icon: LineAwesomeIcons.info,
+                  onPress: () {}),
               ProfileMenuWidget(
                   title: "Logout",
                   icon: LineAwesomeIcons.alternate_sign_out,
@@ -111,13 +132,18 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       confirm: Expanded(
                         child: ElevatedButton(
-                          onPressed: ()  {AuthenticationRepository.instance.logout();
-                            Get.to(() => const WelcomeScreen());},
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, side: BorderSide.none),
+                          onPressed: () {
+                            AuthenticationRepository.instance.logout();
+                            Get.to(() => const WelcomeScreen());
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent,
+                              side: BorderSide.none),
                           child: const Text("Yes"),
                         ),
                       ),
-                      cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No")),
+                      cancel: OutlinedButton(
+                          onPressed: () => Get.back(), child: const Text("No")),
                     );
                   }),
             ],

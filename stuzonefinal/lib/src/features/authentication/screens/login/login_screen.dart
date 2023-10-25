@@ -17,8 +17,8 @@ class LoginScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(tDefaultSize),
-            child: Column(
-              children: const [
+            child: const Column(
+              children: [
                 FormHeaderWidget(
                   image: tWelcomeScreenImage,
                   title: tLoginTitle,
