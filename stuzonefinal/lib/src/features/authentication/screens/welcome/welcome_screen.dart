@@ -35,7 +35,8 @@ class WelcomeScreen extends StatelessWidget {
 
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xbbbbbb87400), // Fondo de color café
+            backgroundColor:
+                Color.fromARGB(186, 29, 160, 79), // Fondo de color café
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               // Bordes redondeados
@@ -43,12 +44,13 @@ class WelcomeScreen extends StatelessWidget {
             // Altura y ancho del botón
           ),
           onPressed: () {
+            /*
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => WelcomeScreen()),
-            );
+            );*/
           },
-          child: const Text('Ingresar'),
+          child: Text('Ingresar', style: TextStyle(color: Colors.white)),
         ));
 
     final photoImage = Container(
@@ -79,12 +81,18 @@ class WelcomeScreen extends StatelessWidget {
             // Altura y ancho del botón
           ),
           onPressed: () {
+            /*
+            
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => WelcomeScreen()),
             );
+            */
           },
-          child: const Text('Crear cuenta'),
+          child: const Text(
+            'Crear cuenta',
+            style: TextStyle(color: Colors.white),
+          ),
         ));
 
     final invitado = Container(
