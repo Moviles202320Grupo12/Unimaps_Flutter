@@ -1,11 +1,6 @@
-import 'package:flutter/material.dart';
-
+// model.dart
 class ButtonModel {
-  final String text;
-  final Function onPressed;
+  final String name;
 
-  ButtonModel({
-    required this.text,
-    required this.onPressed,
-  });
+  ButtonModel(this.name);
 }

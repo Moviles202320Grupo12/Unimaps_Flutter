@@ -1,76 +1,46 @@
+// screen.dart
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:stuzonefinal/src/constants/sizes.dart';
-import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
-import 'package:stuzonefinal/src/constants/colors.dart';
-import 'package:stuzonefinal/src/constants/image_strings.dart';
-import 'package:stuzonefinal/src/constants/text_strings.dart';
-import 'package:stuzonefinal/src/utils/animations/fade_in_animation/animation_design.dart';
-import 'package:stuzonefinal/src/utils/animations/fade_in_animation/fade_in_animation_controller.dart';
-import 'package:stuzonefinal/src/utils/animations/fade_in_animation/fade_in_animation_model.dart';
-import 'package:stuzonefinal/src/features/authentication/screens/login/login_screen.dart';
+import 'package:stuzonefinal/src/features/feed/controllers/feedcontroller.dart';
 
 class FeedScreen extends StatelessWidget {
-  const FeedScreen({Key? key}) : super(key: key);
+
+  final FeedController controller;
+
+  FeedScreen({required this.controller});
 
   @override
   Widget build(BuildContext context) {
-
-
-    var mediaQuery = MediaQuery.of(context);
-    var width = mediaQuery.size.width;
-    var height = mediaQuery.size.height;
-    var brightness = mediaQuery.platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
-
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: isDarkMode ? tSecondaryColor : tPrimaryColor,
-        body:  SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.all(tDefaultSize),
-                child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      children: [
-
-                        const SizedBox(width: 20.0),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => Get.to(() => const SignUpScreen()),
-                            child: Text(fLostButton),
-                          ),
-                        ),
-                        const SizedBox(width: 20.0),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => Get.to(() => const SignUpScreen()),
-                            child: Text(fWalkingButton),
-                          ),
-                        ),
-                        const SizedBox(width: 20.0),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => Get.to(() => const SignUpScreen()),
-                            child: Text(fEventsButton),
-                          ),
-                        ),
-                        const SizedBox(width: 20.0),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => Get.to(() => const SignUpScreen()),
-                            child: Text(fTutorsButton),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ejemplo de botones'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () => controller.buttonPressed(0),
+              child: Text(controller.buttons[0].name),
             ),
+            ElevatedButton(
+              onPressed: () => controller.buttonPressed(1),
+              child: Text(controller.buttons[1].name),
+            ),
+            ElevatedButton(
+              onPressed: () => controller.buttonPressed(2),
+              child: Text(controller.buttons[2].name),
+            ),
+            ElevatedButton(
+              onPressed: () => controller.buttonPressed(3),
+              child: Text(controller.buttons[3].name),
+            ),
+            ElevatedButton(
+              onPressed: () => controller.buttonPressed(4),
+              child: Text(controller.buttons[4].name),
+            ),
+          ],
         ),
-
+      ),
     );
   }
 }

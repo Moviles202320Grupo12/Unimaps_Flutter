@@ -7,6 +7,9 @@ import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome
 import 'package:stuzonefinal/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:stuzonefinal/src/features/lostproperty/screens/find_lost_property.dart';
 import 'package:stuzonefinal/src/features/feed/screens/feedscreen.dart';
+import 'package:stuzonefinal/src/features/core/screens/map.dart';
+
+import 'package:stuzonefinal/src/features/feed/controllers/feedcontroller.dart';
 
 
 import 'exceptions/t_exceptions.dart';
@@ -19,6 +22,8 @@ class AuthenticationRepository extends GetxController {
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> _firebaseUser;
   var verificationId = ''.obs;
+  final FeedController feedController = FeedController();
+
 
   /// QUICK links to get frequently used values in other classes.
   User? get firebaseUser => _firebaseUser.value;
@@ -42,9 +47,9 @@ class AuthenticationRepository extends GetxController {
   /// Setting initial screen onLOAD (optional)
   _setInitialScreen(User? user) async {
     user == null
-        ? Get.offAll(() => const WelcomeScreen())
-        // : await UserRepository.instance.recordExist(user.email ?? "")
-        : Get.offAll(() => const FeedScreen());
+        ? Get.offAll(() => Map())
+    // : await UserRepository.instance.recordExist(user.email ?? "")
+        : Get.offAll(() => FeedScreen(controller: feedController));
     // : Get.offAll(() => const WelcomeScreen());
   }
 

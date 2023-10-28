@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'find_lost_property.dart';
-import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_back.dart';
-import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
-import 'package:stuzonefinal/src/features/lostproperty/controllers/lost_controller.dart';
-import 'package:get/get.dart';
+import 'package:stuzonefinal/src/features/events/screens/specific_event.dart';
 
-class LostProperty extends StatelessWidget {
+class Events extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: LostPropertyHome());
+    return MaterialApp(home: EventsHome());
   }
 }
 
-class LostPropertyHome extends StatelessWidget {
+
+class EventsHome extends StatelessWidget {
   static const black_titles = Color(0x00090909);
 
-  final controller = Get.put(LostController());
-
-  LostPropertyHome({super.key});
+  const EventsHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +25,12 @@ class LostPropertyHome extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.pop(context,
-                '/lost_property.dart'); // Regresar a la ventana anterior
+                '/events.dart'); // Regresar a la ventana anterior
           },
         ),
         centerTitle: true,
         title: const Text(
-          'Objetos Perdidos',
+          'Eventos',
           style: TextStyle(
               color: Colors.black,
               fontFamily: 'Urbanist',
@@ -64,7 +59,7 @@ class LostPropertyHome extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
+                EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
               ),
             ),
           ),
@@ -72,7 +67,7 @@ class LostPropertyHome extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: Text(
-              "Categorias",
+              "Tipos de evento",
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Urbanist',
@@ -88,7 +83,7 @@ class LostPropertyHome extends StatelessWidget {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("Celulares",
+                child: const Text("Académicos",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -101,7 +96,7 @@ class LostPropertyHome extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("Libros",
+                child: const Text("Gastronómicos",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -114,7 +109,7 @@ class LostPropertyHome extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("PCs",
+                child: const Text("Culturales",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -127,7 +122,7 @@ class LostPropertyHome extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
-                child: const Text("Otros",
+                child: const Text("Musicales",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -143,19 +138,16 @@ class LostPropertyHome extends StatelessWidget {
                 buildGridView('Category 2'),
                 buildGridView('Category 3'),
                 buildGridView('Category 4'),
-                // Add more categories as needed
               ],
             ),
           ),
           Center(
             child: ElevatedButton(
-              onPressed: () {
-                Get.to(() => AddItem());
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
                   primary: Colors.black, minimumSize: Size(40, 40)),
               child: const Text(
-                "Reportar Objeto perdido",
+                "Crear evento",
                 style: TextStyle(
                     color: Color(0xFFF6A700),
                     fontFamily: 'Urbanist',
@@ -163,65 +155,6 @@ class LostPropertyHome extends StatelessWidget {
                     fontSize: 20),
               ),
             ),
-          ),
-          FutureBuilder<List<LostModel>>(
-            future: controller.getAllLosts(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (c, index) {
-                        return Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                  color: Color(0xBBBB87400),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
-                              ),
-
-                            ),
-                            Text(snapshot.data![index].name,
-                                style: TextStyle(
-                                    color: Color(0xFFF6A700),
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20)),
-                            Text(snapshot.data![index].description,
-                                style: TextStyle(
-                                    color: Color(0xFFF6A700),
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10)),
-                            Text(snapshot.data![index].location,
-                                style: TextStyle(
-                                    color: Color(0xFFF6A700),
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15)),
-                            Image.network(snapshot.data![index].image,
-                                width: 100, height: 100),
-
-                            const SizedBox(
-                              height: 10,
-                            )
-                          ],
-                        );
-                      });
-                } else if (snapshot.hasError) {
-                  return Center(child: Text(snapshot.error.toString()));
-                } else {
-                  return const Center(child: Text('Something went wrong'));
-                }
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
           ),
         ],
       ),
@@ -241,7 +174,7 @@ class LostPropertyHome extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    FindLostProperty(), // Navegar a la ventana
+                    SpecificEvent(),
               ),
             );
           },
@@ -249,7 +182,7 @@ class LostPropertyHome extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset('lib/imgs/el_logo.png'),
+                Image.asset('lib/imgs/Fopre.png'),
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -261,27 +194,22 @@ class LostPropertyHome extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Iphone 13",
+                              "Fopre",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             Text(
-                              "Encontrado:",
+                              "Septiembre 5-9:",
                               style: TextStyle(
                                   fontSize: 15, color: Color(0xBBBB87400)),
                             ),
-                            // ... (otros textos)
                           ],
                         ),
                         Row(
                           children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Color(0xBBBB87400),
-                            ),
                             SizedBox(width: 2),
                             Text(
-                              "RGD",
+                              "Activo",
                               style: TextStyle(
                                   color: Color(0xBBBB87400), fontSize: 18),
                             ),

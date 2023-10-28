@@ -1,21 +1,10 @@
 import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
-
-<<<<<<< Updated upstream
-class ButtonController {
-  List<ButtonModel> buttons = [
-    ButtonModel(text: 'Botón 1', onPressed: () {}),
-    ButtonModel(text: 'Botón 2', onPressed: () {}),
-    ButtonModel(text: 'Botón 3', onPressed: () {}),
-    ButtonModel(text: 'Botón 4', onPressed: () {}),
-    ButtonModel(text: 'Botón 5', onPressed: () {}),
-    ButtonModel(text: 'Botón 6', onPressed: () {}),
-  ];
-=======
+import 'package:get/get.dart';
+import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
 import 'package:stuzonefinal/src/features/tutors/screens/todos_los_tutores.dart';
 import 'package:stuzonefinal/src/features/walkingpoints/screens/screenwalk.dart';
 import 'package:stuzonefinal/src/features/core/screens/map.dart';
-import 'package:stuzonefinal/src/features/tutors/screens/select_tutor.dart';
 import 'package:stuzonefinal/src/features/events/screens/events.dart';
 
 import 'package:stuzonefinal/src/features/lostproperty/screens/lost_property.dart';
@@ -51,5 +40,4 @@ class FeedController {
       print('D');
     }
   }
->>>>>>> Stashed changes
 }
