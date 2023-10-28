@@ -4,6 +4,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/firebase_options.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:stuzonefinal/src/repository/lost_repository/lost_repository.dart';
+import 'package:stuzonefinal/src/repository/tutor_repository/tutor_repository.dart';
 import 'package:stuzonefinal/src/utils/app_bindings.dart';
 import 'package:stuzonefinal/src/utils/theme/theme.dart';
 
@@ -16,7 +18,13 @@ void main() {
   /// Before running App - Initialize Firebase and after initialization, Call
   /// Authentication Repository so that It can check which screen to show.
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then((value) => Get.put(AuthenticationRepository()));
+      .then((value) {
+    Get.put(AuthenticationRepository());
+    Get.put(LostRepository());
+    Get.put(TutorRepository());
+
+  });
+
 
   runApp(const App());
 }

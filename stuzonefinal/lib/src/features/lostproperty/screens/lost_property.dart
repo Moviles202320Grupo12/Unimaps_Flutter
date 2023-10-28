@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'find_lost_property.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_back.dart';
+import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
+import 'package:stuzonefinal/src/features/lostproperty/controllers/lost_controller.dart';
+import 'package:get/get.dart';
+>>>>>>> Stashed changes
 
 class LostProperty extends StatelessWidget {
   @override
@@ -11,7 +18,9 @@ class LostProperty extends StatelessWidget {
 class LostPropertyHome extends StatelessWidget {
   static const black_titles = Color(0x00090909);
 
-  const LostPropertyHome({super.key});
+  final controller = Get.put(LostController());
+
+  LostPropertyHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +164,65 @@ class LostPropertyHome extends StatelessWidget {
                     fontSize: 20),
               ),
             ),
+          ),
+          FutureBuilder<List<LostModel>>(
+            future: controller.getAllLosts(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (c, index) {
+                        return Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              decoration: BoxDecoration(
+                                  color: Color(0xBBBB87400),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
+                              ),
+
+                            ),
+                            Text(snapshot.data![index].name,
+                                style: TextStyle(
+                                    color: Color(0xFFF6A700),
+                                    fontFamily: 'Urbanist',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20)),
+                            Text(snapshot.data![index].description,
+                                style: TextStyle(
+                                    color: Color(0xFFF6A700),
+                                    fontFamily: 'Urbanist',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 10)),
+                            Text(snapshot.data![index].location,
+                                style: TextStyle(
+                                    color: Color(0xFFF6A700),
+                                    fontFamily: 'Urbanist',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15)),
+                            Image.network(snapshot.data![index].image,
+                                width: 100, height: 100),
+
+                            const SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        );
+                      });
+                } else if (snapshot.hasError) {
+                  return Center(child: Text(snapshot.error.toString()));
+                } else {
+                  return const Center(child: Text('Something went wrong'));
+                }
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
           ),
         ],
       ),
