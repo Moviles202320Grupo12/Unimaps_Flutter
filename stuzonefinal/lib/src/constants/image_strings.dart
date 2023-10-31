@@ -1,6 +1,8 @@
 
 /* -- App Image Strings -- */
 
+//PA LA ESTRATEGIA DE CACHE DE LOSTPROPERTY
+const String defaultLostProperty = "assets/images/lostProperty/lostItemDefault.jpg";
 
 // -- Splash Screen Images
 const String tSplashTopIcon = "assets/images/splash_images/splash-top-icon.png";

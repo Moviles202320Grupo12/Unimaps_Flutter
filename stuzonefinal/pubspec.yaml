@@ -15,6 +15,7 @@ dependencies:
   ## -- STATE MANAGEMENT
   get: ^4.6.5
   url_launcher: ^6.2.1
+  cached_network_image: ^3.3.0
 
   ## -- OnBoarding PACKAGES
   liquid_swipe: ^3.0.0
@@ -80,6 +81,7 @@ flutter:
     - assets/logo/
     - assets/icon/
     - assets/images/
+    - assets/images/lostProperty/
     - assets/images/profile/
     - assets/images/dashboard/
     - assets/images/splash_images/

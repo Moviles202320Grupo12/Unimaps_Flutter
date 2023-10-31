@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'find_lost_property.dart';
 import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_back.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
 import 'package:stuzonefinal/src/features/lostproperty/controllers/lost_controller.dart';
+import 'package:stuzonefinal/src/constants/image_strings.dart';
 import 'package:get/get.dart';
 
 class LostProperty extends StatelessWidget {
@@ -189,8 +191,17 @@ class LostPropertyHome extends StatelessWidget {
                                       fontFamily: 'Urbanist',
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15)),
-                              Image.network(snapshot.data![index].image,
-                                  width: 100, height: 100),
+                              CachedNetworkImage(
+                                        imageUrl: snapshot.data![index].image,
+                                        placeholder: (context, url) {
+                                          // Si no hay conexión o la imagen no se puede cargar, muestra la imagen predeterminada desde el almacenamiento local
+                                          return Image.asset(defaultLostProperty);
+                                        },
+                                        errorWidget: (context, url, error) {
+                                          // Si ocurre un error al cargar la imagen, muestra la imagen predeterminada desde el almacenamiento local
+                                          return Image.asset(defaultLostProperty);
+                                        },
+                                      ),
 
                               const SizedBox(
                                 height: 10,
