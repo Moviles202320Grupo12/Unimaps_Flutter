@@ -6,6 +6,7 @@ import 'package:stuzonefinal/firebase_options.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/lost_repository.dart';
 import 'package:stuzonefinal/src/repository/tutor_repository/tutor_repository.dart';
+import 'package:stuzonefinal/src/repository/event_repository/event_repository.dart';
 import 'package:stuzonefinal/src/utils/app_bindings.dart';
 import 'package:stuzonefinal/src/utils/theme/theme.dart';
 
@@ -22,6 +23,7 @@ void main() {
     Get.put(AuthenticationRepository());
     Get.put(LostRepository());
     Get.put(TutorRepository());
+    Get.put(EventRepository());
 
   });
 

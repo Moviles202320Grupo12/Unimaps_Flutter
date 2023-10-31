@@ -1,3 +1,4 @@
+import 'package:stuzonefinal/src/features/events/screens/todos_los_eventos.dart';
 import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
@@ -32,7 +33,7 @@ class FeedController {
       Get.to(() => ScreenWalk());
     } else if (index == 3) {
       print('C');
-      Get.to(() => Events());
+      Get.to(() => AllEvents());
     } else if (index == 4) {
       print('C');
       Get.to(() => AllTutors());
