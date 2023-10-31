@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:provider/provider.dart';
+
+import '../../../utils/relojParaBq/reloj.dart';
 
 class AddItem extends StatefulWidget {
   const AddItem({Key? key}) : super(key: key);
@@ -23,6 +27,25 @@ class _AddItemState extends State<AddItem> {
   FirebaseFirestore.instance.collection('lostproperty');
 
   String imageUrl = '';
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final timerModel = Provider.of<TimerModel>(context);
+
+    if (timerModel.isRunning) {
+      // El cronómetro está en funcionamiento, inicia la cuenta atrás.
+      Timer.periodic(Duration(seconds: 1), (timer) {
+        setState(() {
+          timerModel.seconds++;
+        });
+      });
+    } else {
+      // El cronómetro se detuvo, cancela la cuenta atrás.
+      timerModel.stopTimer();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
