@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:stuzonefinal/firebase_options.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/lost_repository.dart';
+import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 import 'package:stuzonefinal/src/repository/tutor_repository/tutor_repository.dart';
 import 'package:stuzonefinal/src/repository/event_repository/event_repository.dart';
 import 'package:stuzonefinal/src/utils/app_bindings.dart';
@@ -24,6 +25,7 @@ void main() {
     Get.put(LostRepository());
     Get.put(TutorRepository());
     Get.put(EventRepository());
+    Get.put(LostTimerRepository());
 
   });
 

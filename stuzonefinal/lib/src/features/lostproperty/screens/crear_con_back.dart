@@ -1,13 +1,12 @@
-import 'dart:async';
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:provider/provider.dart';
-
-import '../../../utils/relojParaBq/reloj.dart';
+import 'package:stuzonefinal/src/features/lostproperty/models/time_register_model.dart';
+import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 
 class AddItem extends StatefulWidget {
   const AddItem({Key? key}) : super(key: key);
@@ -27,25 +26,10 @@ class _AddItemState extends State<AddItem> {
   FirebaseFirestore.instance.collection('lostproperty');
 
   String imageUrl = '';
+  final now = DateTime.now();
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
 
-    final timerModel = Provider.of<TimerModel>(context);
 
-    if (timerModel.isRunning) {
-      // El cronómetro está en funcionamiento, inicia la cuenta atrás.
-      Timer.periodic(Duration(seconds: 1), (timer) {
-        setState(() {
-          timerModel.seconds++;
-        });
-      });
-    } else {
-      // El cronómetro se detuvo, cancela la cuenta atrás.
-      timerModel.stopTimer();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +43,9 @@ class _AddItemState extends State<AddItem> {
           key: key,
           child: Column(
             children: [
+            Text(
+            'Fecha y Hora Actual: $now',
+            style: TextStyle(fontSize: 24),),
               TextFormField(
                 controller: _controllerName,
                 decoration:
@@ -166,9 +153,15 @@ class _AddItemState extends State<AddItem> {
                         'location': itemLocation,
                         'image': imageUrl,
                       };
+                      int timeSpent = DateTime.now().microsecondsSinceEpoch - now.microsecondsSinceEpoch;
 
                       //Add a new item
                       _reference.add(dataToSend);
+
+                      final timerr = LostTimerModel(tiempo: timeSpent);
+
+                      //Add a new item
+                      LostTimerRepository.instance.createLostTimer(timerr);
                     }
                   },
                   child: Text('Submit'))
