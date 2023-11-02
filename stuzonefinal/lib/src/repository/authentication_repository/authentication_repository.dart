@@ -49,7 +49,7 @@ class AuthenticationRepository extends GetxController {
     user == null
         ? Get.offAll(() => Map())
     // : await UserRepository.instance.recordExist(user.email ?? "")
-        : Get.offAll(() => FeedScreen(controller: feedController));
+        : Get.offAll(() => Dashboard());
     // : Get.offAll(() => const WelcomeScreen());
   }
 
