@@ -179,20 +179,20 @@ class _Map extends State<Map> {
       ),
       home: Scaffold(
           body: SizedBox(
-        width: width,
-        height: height,
-        child: Stack(
-          children: [
-            mapa_google,
-            caja_menu,
-            busqueda,
-            configuracion,
-            pasos,
-            eventos,
-            lost_property
-          ],
-        ),
-      )),
+            width: width,
+            height: height,
+            child: Stack(
+              children: [
+                mapa_google,
+                caja_menu,
+                busqueda,
+                configuracion,
+                pasos,
+                eventos,
+                lost_property
+              ],
+            ),
+          )),
     );
   }
 }

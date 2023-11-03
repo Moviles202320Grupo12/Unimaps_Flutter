@@ -38,14 +38,9 @@ class FeedScreen extends StatelessWidget {
               onPressed: () => controller.buttonPressed(4),
               child: Text(controller.buttons[4].name),
             ),
-            ElevatedButton(
-              onPressed: () => controller.buttonPressed(5),
-              child: Text(controller.buttons[5].name),
-            ),
           ],
         ),
       ),
     );
   }
 }
-

@@ -21,13 +21,13 @@ class SelectTutorPage extends StatelessWidget {
                 childAspectRatio: 0.8,
                 children: <Widget>[
                   _buildCard('Mobile Development', 'Juana Cabrera', 'lib/imgs/tutors.png',
-                     context),
+                      context),
                   _buildCard('PMC', 'Juan Carlos Garcia', 'lib/imgs/tutor2.png',
                       context),
                   _buildCard('Calculus', 'Santiago Restrepo',
                       'lib/imgs/tutor3.png', context),
                   _buildCard('Biology', 'Jorge Ardila', 'lib/imgs/tutor4.png',
-                     context)
+                      context)
                 ],
               )),
           SizedBox(height: 15.0)
@@ -40,9 +40,9 @@ class SelectTutorPage extends StatelessWidget {
     return Padding(
         padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
         child: InkWell(
-            
+
             child: Container(
-              
+
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15.0),
                     boxShadow: [
@@ -53,7 +53,7 @@ class SelectTutorPage extends StatelessWidget {
                     ],
                     color: Colors.white),
                 child: Column(children: [
-                  
+
                   Hero(
                       tag: imgPath,
                       child: Container(
@@ -80,14 +80,14 @@ class SelectTutorPage extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.only(left: 5.0, right: 5.0),
                       child: Row(
-                        
+
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            
+
                             Container(height: 20,child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
-                    primary: Color.fromRGBO(254, 211, 83, 0.7),
-                    //side: const BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid)
-                  ),child: const Text('Book a session', style: TextStyle(color: Colors.black, fontSize: 11),)),)                           
+                              primary: Color.fromRGBO(254, 211, 83, 0.7),
+                              //side: const BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid)
+                            ),child: const Text('Book a session', style: TextStyle(color: Colors.black, fontSize: 11),)),)
                           ]))
                 ]))));
   }

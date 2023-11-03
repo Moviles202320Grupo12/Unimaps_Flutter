@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/src/constants/sizes.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
-import 'package:stuzonefinal/src/features/core/screens/map.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
@@ -16,130 +15,70 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Variables
-
-    var mediaQuery = MediaQuery.of(context);
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-    var brightness = mediaQuery.platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
-
-    // Otros widgets
-    final ingresar = Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 100,
-          vertical: 15, // Margen simétrico para centrar el botón
-        ),
-        height: 45.0, // Altura del botón
-        width: 200.0, // Ancho del botón
-
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor:
-                Color.fromARGB(186, 29, 160, 79), // Fondo de color café
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              // Bordes redondeados
-            ),
-            // Altura y ancho del botón
-          ),
-          onPressed: () {
-            /*
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => WelcomeScreen()),
-            );*/
-          },
-          child: Text('Ingresar', style: TextStyle(color: Colors.white)),
-        ));
-
-    final photoImage = Container(
-      width: width - 50,
-      height: (height / 2) - 150,
-      margin: const EdgeInsets.only(top: 80, bottom: 10, left: 20),
-      decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(tWelcomeScreenImage)),
-        borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
-      ),
-    );
-
-    final crear_cuenta = Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 100,
-          vertical: 10, // Margen simétrico para centrar el botón
-        ),
-        height: 45.0, // Altura del botón
-        width: 200.0, // Ancho del botón
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            // ignore: use_full_hex_values_for_flutter_colors
-            backgroundColor: Colors.black, // Fondo de color café
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              // Bordes redondeados
-            ),
-            // Altura y ancho del botón
-          ),
-          onPressed: () {
-            /*
-            
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => WelcomeScreen()),
-            );
-            */
-          },
-          child: const Text(
-            'Crear cuenta',
-            style: TextStyle(color: Colors.white),
-          ),
-        ));
-
-    final invitado = Container(
-        margin: const EdgeInsets.symmetric(
-            horizontal: 110, // Margen horizontal
-            vertical: 50),
-        height: 100.0, // Altura del texto interactivo
-        width: 400.0, // Ancho del texto interactivo
-        child: InkWell(
-          onTap: () {
-            // Acción al tocar el texto
-          },
-          child: const Text(
-            'Continuar como Invitado',
-            style: TextStyle(
-              color: Colors.black, // Color del texto
-              decoration: TextDecoration.underline,
-              // Subrayado
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ));
-
     final controller = Get.put(FadeInAnimationController());
     controller.animationIn();
 
+    var mediaQuery = MediaQuery.of(context);
+    var width = mediaQuery.size.width;
+    var height = mediaQuery.size.height;
+    var brightness = mediaQuery.platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: isDarkMode ? tSecondaryColor : tWhiteColor,
+        backgroundColor: isDarkMode ? tSecondaryColor : tPrimaryColor,
         body: Stack(
           children: [
             TFadeInAnimation(
-                isTwoWayAnimation: false,
-                durationInMs: 1000,
-                animate: TAnimatePosition(
-                  bottomAfter: 0,
-                  bottomBefore: -100,
-                  leftBefore: 0,
-                  leftAfter: 0,
-                  topAfter: 0,
-                  topBefore: 0,
-                  rightAfter: 0,
-                  rightBefore: 0,
-                ),
+              isTwoWayAnimation: false,
+              durationInMs: 1200,
+              animate: TAnimatePosition(
+                bottomAfter: 0,
+                bottomBefore: -100,
+                leftBefore: 0,
+                leftAfter: 0,
+                topAfter: 0,
+                topBefore: 0,
+                rightAfter: 0,
+                rightBefore: 0,
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(tDefaultSize),
                 child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [photoImage, ingresar, crear_cuenta, invitado])),
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Hero(
+                        tag: 'welcome-image-tag',
+                        child: Image(
+                            image: const AssetImage(tWelcomeScreenImage), width: width * 0.5, height: height * 0.4)),
+                    Column(
+                      children: [
+                        Text(tWelcomeTitle, style: Theme.of(context).textTheme.displayMedium),
+                        Text(tWelcomeSubTitle,
+                            style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () => Get.to(() => const LoginScreen()),
+                            child: Text(tLogin.toUpperCase()),
+                          ),
+                        ),
+                        const SizedBox(width: 10.0),
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () => Get.to(() => const SignUpScreen()),
+                            child: Text(tSignup.toUpperCase()),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

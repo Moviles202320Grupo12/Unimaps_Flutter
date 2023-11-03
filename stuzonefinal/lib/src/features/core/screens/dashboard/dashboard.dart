@@ -44,15 +44,15 @@ class Dashboard extends StatelessWidget {
                 const SizedBox(height: tDashboardPadding),
 
                 Align(
-                  alignment: Alignment.center,
-                  child:
-                  ElevatedButton(
-                    onPressed: () => controller.buttonPressed(0),
-                    child: Text(controller.buttons[0].name),
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(200, 10),
-                    ),
-                  )
+                    alignment: Alignment.center,
+                    child:
+                    ElevatedButton(
+                      onPressed: () => controller.buttonPressed(0),
+                      child: Text(controller.buttons[0].name),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(200, 10),
+                      ),
+                    )
                 ),
                 const SizedBox(height: 5),
                 Align(
@@ -113,9 +113,6 @@ class Dashboard extends StatelessWidget {
     );
   }
 }
-
-
-
 
 
 

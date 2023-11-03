@@ -59,7 +59,7 @@ class EventsHome extends StatelessWidget {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
+                EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
               ),
             ),
           ),

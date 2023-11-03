@@ -1,10 +1,11 @@
+import 'package:stuzonefinal/src/features/events/screens/todos_los_eventos.dart';
 import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
 import 'package:get/get.dart';
-
+import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
+import 'package:stuzonefinal/src/features/tutors/screens/todos_los_tutores.dart';
 import 'package:stuzonefinal/src/features/walkingpoints/screens/screenwalk.dart';
 import 'package:stuzonefinal/src/features/core/screens/map.dart';
-import 'package:stuzonefinal/src/features/tutors/screens/select_tutor.dart';
 import 'package:stuzonefinal/src/features/events/screens/events.dart';
 
 import 'package:stuzonefinal/src/features/lostproperty/screens/lost_property.dart';
@@ -32,10 +33,10 @@ class FeedController {
       Get.to(() => ScreenWalk());
     } else if (index == 3) {
       print('C');
-      Get.to(() => Events());
+      Get.to(() => AllEvents());
     } else if (index == 4) {
       print('C');
-      Get.to(() => SelectTutorPage());
+      Get.to(() => AllTutors());
     } else {
       print('D');
     }

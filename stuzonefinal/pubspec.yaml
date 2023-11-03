@@ -14,6 +14,9 @@ dependencies:
 
   ## -- STATE MANAGEMENT
   get: ^4.6.5
+  url_launcher: ^6.2.1
+  cached_network_image: ^3.3.0
+  provider: ^6.0.5
 
   ## -- OnBoarding PACKAGES
   liquid_swipe: ^3.0.0
@@ -28,6 +31,7 @@ dependencies:
   cloud_firestore: ^4.2.0
   flutter_facebook_auth: ^5.0.7
   google_sign_in: ^5.4.2
+  intl: ^0.18.1
 
 
   ## -- ICON PACKAGES
@@ -71,7 +75,7 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: "path/to/image.png"
-    
+
 
 flutter:
   uses-material-design: true
@@ -79,11 +83,10 @@ flutter:
     - assets/logo/
     - assets/icon/
     - assets/images/
+    - assets/images/lostProperty/
     - assets/images/profile/
     - assets/images/dashboard/
     - assets/images/splash_images/
     - assets/images/welcome_images/
     - assets/images/forget_password/
     - assets/images/on_boarding_images/
-    - assets/images/on_boarding_images/
-    - assets/logo/stuZone.png

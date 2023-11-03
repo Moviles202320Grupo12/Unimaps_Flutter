@@ -48,7 +48,7 @@ class AuthenticationRepository extends GetxController {
   _setInitialScreen(User? user) async {
     user == null
         ? Get.offAll(() => Map())
-        // : await UserRepository.instance.recordExist(user.email ?? "")
+    // : await UserRepository.instance.recordExist(user.email ?? "")
         : Get.offAll(() => Dashboard());
     // : Get.offAll(() => const WelcomeScreen());
   }

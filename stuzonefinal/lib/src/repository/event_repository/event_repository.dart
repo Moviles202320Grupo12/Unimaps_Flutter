@@ -1,21 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
+import 'package:stuzonefinal/src/features/events/models/event_model.dart';
 import '../authentication_repository/exceptions/t_exceptions.dart';
 
-class LostRepository extends GetxController {
-  static LostRepository get instance => Get.find();
+class EventRepository extends GetxController {
+  static EventRepository get instance => Get.find();
 
   final _db = FirebaseFirestore.instance;
 
   /// Store user data
-  Future<void> createLost(LostModel lost) async {
+  Future<void> createEvent(EventModel event) async {
     try {
-      await recordExist(lost.description) ? throw "Record Already Exists" : await _db.collection("lostproperty").add(lost.toJson());
-    } on FirebaseAuthException catch (e) {
-      final result = TExceptions.fromCode(e.code);
-      throw result.message;
+      await recordExist(event.nombre) ? throw "Record Already Exists" : await _db.collection("events").add(event.toJson());
     } on FirebaseException catch (e) {
       throw e.message.toString();
     } catch (e) {
@@ -24,12 +21,12 @@ class LostRepository extends GetxController {
   }
 
   /// Fetch User Specific details
-  Future<LostModel> getLostDetails(String name) async {
+  Future<EventModel> getEventDetails(String nombre) async {
     try {
-      final snapshot = await _db.collection("lostproperty").where("name", isEqualTo: name).get();
+      final snapshot = await _db.collection("events").where("nombre", isEqualTo: nombre).get();
       if (snapshot.docs.isEmpty) throw 'No such item found';
-      final lostData = snapshot.docs.map((e) => LostModel.fromSnapshot(e)).single;
-      return lostData;
+      final eventData = snapshot.docs.map((e) => EventModel.fromSnapshot(e)).single;
+      return eventData;
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;
@@ -41,11 +38,11 @@ class LostRepository extends GetxController {
   }
 
   /// Fetch All Users
-  Future<List<LostModel>> allLosts() async {
+  Future<List<EventModel>> allEvents() async {
     try {
-      final snapshot = await _db.collection("lostproperty").get();
-      final losts = snapshot.docs.map((e) => LostModel.fromSnapshot(e)).toList();
-      return losts;
+      final snapshot = await _db.collection("events").get();
+      final events = snapshot.docs.map((e) => EventModel.fromSnapshot(e)).toList();
+      return events;
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;
@@ -57,9 +54,9 @@ class LostRepository extends GetxController {
   }
 
   /// Update User details
-  Future<void> updateLostRecord(LostModel item) async {
+  Future<void> updateEventRecord(EventModel item) async {
     try {
-      await _db.collection("lostproperty").doc(item.name).update(item.toJson());
+      await _db.collection("events").doc(item.id).update(item.toJson());
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;
@@ -71,9 +68,9 @@ class LostRepository extends GetxController {
   }
 
   /// Delete Item Data
-  Future<void> deleteLost(String name) async {
+  Future<void> deleteEvent(String id) async {
     try {
-      await _db.collection("lostproperty").doc(name).delete();
+      await _db.collection("events").doc(id).delete();
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;
@@ -85,9 +82,9 @@ class LostRepository extends GetxController {
   }
 
   /// Check if user exists with email or phoneNo
-  Future<bool> recordExist(String name) async {
+  Future<bool> recordExist(String nombre) async {
     try {
-      final snapshot = await _db.collection("lostproperty").where("name", isEqualTo: name).get();
+      final snapshot = await _db.collection("events").where("nombre", isEqualTo: nombre).get();
       return snapshot.docs.isEmpty ? false : true;
     } catch (e) {
       throw "Error fetching record.";

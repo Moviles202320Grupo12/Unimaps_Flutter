@@ -49,10 +49,10 @@ class ProfileScreen extends StatelessWidget {
   itemProfile(String title, String subtitle, IconData iconData) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Color.fromRGBO(254, 211, 83, 0.7),width: 2),
-          borderRadius: BorderRadius.circular(10),
-          
+        color: Colors.white,
+        border: Border.all(color: Color.fromRGBO(254, 211, 83, 0.7),width: 2),
+        borderRadius: BorderRadius.circular(10),
+
       ),
       child: ListTile(
         title: Text(title),

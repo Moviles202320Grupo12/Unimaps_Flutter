@@ -17,7 +17,7 @@ const String tSignInWithGoogle = "Sign-In with Google";
 
 
 // -- Splash Screen Text
-const String tAppName = "StuZone";
+const String tAppName = "/appable:";
 const String tAppTagLine = "Learn To Code. \nFree For Everyone";
 
 
@@ -40,7 +40,7 @@ const String tWelcomeSubTitle = "Fast Solutions to your university life";
 
 // -- Login Screen Text
 const String tLoginTitle = "Welcome Back,";
-const String tLoginSubTitle = "Make it fast.";
+const String tLoginSubTitle = "Make it work, make it right, make it fast.";
 const String tRememberMe = "Remember Me?";
 const String tDontHaveAnAccount = "Don't have an Account? ";
 
@@ -71,8 +71,8 @@ const String tOtpMessage = "Enter the verification code sent at ";
 
 
 // -- Dashboard Screen - Text
-const String tDashboardTitle = "Uniandes Student, Welcome!!";
-const String tDashboardHeading = "Explore";
+const String tDashboardTitle = "Hey, Coding with T";
+const String tDashboardHeading = "Explore Courses";
 const String tDashboardSearch = "Search...";
 const String tDashboardBannerTitle2 = "JAVA";
 const String tDashboardButton = "View All";
@@ -86,8 +86,8 @@ const String tDashboardBannerTitle1 = "Android for Beginners";
 const String tProfile = "Profile";
 const String tEditProfile = "Edit Profile";
 const String tLogoutDialogHeading = "Logout";
-const String tProfileHeading = "Diego Gonzalez";
-const String tProfileSubHeading = "diego_go@yahoo.es";
+const String tProfileHeading = "Coding with T";
+const String tProfileSubHeading = "superAdmin@codingwitht.com";
 // -- Menu
 const String tMenu5 = tLogout;
 const String tMenu1 = "Settings";

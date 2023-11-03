@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
+import 'package:stuzonefinal/src/features/lostproperty/models/time_register_model.dart';
 import '../authentication_repository/exceptions/t_exceptions.dart';
 
-class LostRepository extends GetxController {
-  static LostRepository get instance => Get.find();
+class LostTimerRepository extends GetxController {
+  static LostTimerRepository get instance => Get.find();
 
   final _db = FirebaseFirestore.instance;
 
   /// Store user data
-  Future<void> createLost(LostModel lost) async {
+  Future<void> createLostTimer(LostTimerModel lost) async {
     try {
-      await recordExist(lost.description) ? throw "Record Already Exists" : await _db.collection("lostproperty").add(lost.toJson());
+      await _db.collection("timeRegLosts").add(lost.toJson());
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;
@@ -23,12 +23,12 @@ class LostRepository extends GetxController {
     }
   }
 
-  /// Fetch User Specific details
-  Future<LostModel> getLostDetails(String name) async {
+  /// SI ESTE PONE PROBLEMAS LO BORRO
+  Future<LostTimerModel> getLostTimerDetails(String id) async {
     try {
-      final snapshot = await _db.collection("lostproperty").where("name", isEqualTo: name).get();
+      final snapshot = await _db.collection("timeRegLosts").where("id", isEqualTo: id).get();
       if (snapshot.docs.isEmpty) throw 'No such item found';
-      final lostData = snapshot.docs.map((e) => LostModel.fromSnapshot(e)).single;
+      final lostData = snapshot.docs.map((e) => LostTimerModel.fromSnapshot(e)).single;
       return lostData;
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
@@ -41,10 +41,10 @@ class LostRepository extends GetxController {
   }
 
   /// Fetch All Users
-  Future<List<LostModel>> allLosts() async {
+  Future<List<LostTimerModel>> allLostTimers() async {
     try {
-      final snapshot = await _db.collection("lostproperty").get();
-      final losts = snapshot.docs.map((e) => LostModel.fromSnapshot(e)).toList();
+      final snapshot = await _db.collection("timeRegLosts").get();
+      final losts = snapshot.docs.map((e) => LostTimerModel.fromSnapshot(e)).toList();
       return losts;
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
@@ -57,9 +57,9 @@ class LostRepository extends GetxController {
   }
 
   /// Update User details
-  Future<void> updateLostRecord(LostModel item) async {
+  Future<void> updateLostTimerRecord(LostTimerModel item) async {
     try {
-      await _db.collection("lostproperty").doc(item.name).update(item.toJson());
+      await _db.collection("timeRegLosts").doc(item.id).update(item.toJson());
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;
@@ -71,9 +71,9 @@ class LostRepository extends GetxController {
   }
 
   /// Delete Item Data
-  Future<void> deleteLost(String name) async {
+  Future<void> deleteLostTimer(String id) async {
     try {
-      await _db.collection("lostproperty").doc(name).delete();
+      await _db.collection("timeRegLosts").doc(id).delete();
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;
@@ -85,9 +85,9 @@ class LostRepository extends GetxController {
   }
 
   /// Check if user exists with email or phoneNo
-  Future<bool> recordExist(String name) async {
+  Future<bool> recordExist(String id) async {
     try {
-      final snapshot = await _db.collection("lostproperty").where("name", isEqualTo: name).get();
+      final snapshot = await _db.collection("timeRegLosts").where("id", isEqualTo: id).get();
       return snapshot.docs.isEmpty ? false : true;
     } catch (e) {
       throw "Error fetching record.";
