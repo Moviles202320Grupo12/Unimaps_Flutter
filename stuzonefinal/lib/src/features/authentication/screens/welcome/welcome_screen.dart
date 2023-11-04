@@ -187,30 +187,31 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-
-    final ingresar = Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 15, // Margen simétrico para centrar el botón
-        ),
-        height: 50.0, // Altura del botón
-        width: 400.0, // Ancho del botón
-
+    final ingresar = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: SizedBox(
+        width: double.infinity, // Expand the button
+        height: 65.0, // Puedes aumentar la altura según sea necesario
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black, // Fondo de color café
+            backgroundColor: Colors.black,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              // Bordes redondeados
+              borderRadius: BorderRadius.circular(70),
             ),
-            // Altura y ancho del botón
+            // Aquí puedes ajustar el padding si necesitas más espacio interno
           ),
-          onPressed: () {},
+          onPressed: () {
+            // Define la funcionalidad del botón aquí
+          },
           child: const Text(
             'Ingresar',
-            style: TextStyle(color: Colors.amber, fontSize: 17),
+            style: TextStyle(
+                color: Colors.amber,
+                fontSize: 18), // Puedes aumentar el tamaño de la fuente aquí
           ),
-        ));
+        ),
+      ),
+    );
 
     final otroIngreso = Container(
         margin: EdgeInsets.only(top: 10),
