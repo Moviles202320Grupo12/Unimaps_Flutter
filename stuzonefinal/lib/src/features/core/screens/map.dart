@@ -98,7 +98,9 @@ class _Map extends State<Map> {
               borderRadius: BorderRadius.circular(1),
             ),
           ),
-          onPressed: () {Get.to(() => const WelcomeScreen());},
+          onPressed: () {
+            Get.to(() => LoginPage());
+          },
           child: Icon(
             Icons.directions_walk,
             color: Colors.amber,
@@ -119,7 +121,9 @@ class _Map extends State<Map> {
               borderRadius: BorderRadius.circular(1),
             ),
           ),
-          onPressed: () {Get.to(() => const WelcomeScreen());},
+          onPressed: () {
+            Get.to(() => LoginPage());
+          },
           child: Icon(
             Icons.settings,
             color: Colors.amber,
@@ -141,7 +145,9 @@ class _Map extends State<Map> {
               borderRadius: BorderRadius.circular(1),
             ),
           ),
-          onPressed: () {Get.to(() => const WelcomeScreen());},
+          onPressed: () {
+            Get.to(() => LoginPage());
+          },
           child: Icon(
             Icons.event,
             color: Colors.amber,
@@ -163,7 +169,9 @@ class _Map extends State<Map> {
               borderRadius: BorderRadius.circular(1),
             ),
           ),
-          onPressed: () {Get.to(() => const WelcomeScreen());},
+          onPressed: () {
+            Get.to(() => LoginPage());
+          },
           child: Icon(
             Icons.backpack,
             color: Colors.amber,
@@ -179,20 +187,20 @@ class _Map extends State<Map> {
       ),
       home: Scaffold(
           body: SizedBox(
-            width: width,
-            height: height,
-            child: Stack(
-              children: [
-                mapa_google,
-                caja_menu,
-                busqueda,
-                configuracion,
-                pasos,
-                eventos,
-                lost_property
-              ],
-            ),
-          )),
+        width: width,
+        height: height,
+        child: Stack(
+          children: [
+            mapa_google,
+            caja_menu,
+            busqueda,
+            configuracion,
+            pasos,
+            eventos,
+            lost_property
+          ],
+        ),
+      )),
     );
   }
 }
