@@ -10,88 +10,8 @@ import '../../../../utils/animations/fade_in_animation/fade_in_animation_control
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_model.dart';
 import '../login/login_screen.dart';
 
-/*
-
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(FadeInAnimationController());
-    controller.animationIn();
-
-    var mediaQuery = MediaQuery.of(context);
-    var width = mediaQuery.size.width;
-    var height = mediaQuery.size.height;
-    var brightness = mediaQuery.platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
-
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: isDarkMode ? tSecondaryColor : tPrimaryColor,
-        body: Stack(
-          children: [
-            TFadeInAnimation(
-              isTwoWayAnimation: false,
-              durationInMs: 1200,
-              animate: TAnimatePosition(
-                bottomAfter: 0,
-                bottomBefore: -100,
-                leftBefore: 0,
-                leftAfter: 0,
-                topAfter: 0,
-                topBefore: 0,
-                rightAfter: 0,
-                rightBefore: 0,
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(tDefaultSize),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Hero(
-                        tag: 'welcome-image-tag',
-                        child: Image(
-                            image: const AssetImage(tWelcomeScreenImage),
-                            width: width * 0.5,
-                            height: height * 0.4)),
-                    Column(
-                      children: [
-                        Text(tWelcomeTitle,
-                            style: Theme.of(context).textTheme.displayMedium),
-                        Text(tWelcomeSubTitle,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () => Get.to(() => const LoginScreen()),
-                            child: Text(tLogin.toUpperCase()),
-                          ),
-                        ),
-                        const SizedBox(width: 10.0),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => Get.to(() => const SignUpScreen()),
-                            child: Text(tSignup.toUpperCase()),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
+// LoginScreen
+// SignUpScreen
 
 class LoginPage extends StatelessWidget {
   // Variables
@@ -130,7 +50,8 @@ class LoginPage extends StatelessWidget {
     final ingresarCorreo = Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(left: 20, right: 20),
-      child: const TextField(
+      child: TextField(
+        controller: usernameController,
         obscureText: false,
         decoration: InputDecoration(
             filled: true,
@@ -146,7 +67,8 @@ class LoginPage extends StatelessWidget {
     final ingresarContrasena = Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-      child: const TextField(
+      child: TextField(
+        controller: passwordController,
         obscureText: false,
         decoration: InputDecoration(
             filled: true,
@@ -191,23 +113,32 @@ class LoginPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: SizedBox(
         width: double.infinity, // Expand the button
-        height: 65.0, // Puedes aumentar la altura según sea necesario
+        height: 65.0,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(70),
             ),
-            // Aquí puedes ajustar el padding si necesitas más espacio interno
           ),
           onPressed: () {
-            // Define la funcionalidad del botón aquí
+            String email = usernameController.text.trim();
+            String password = passwordController.text.trim();
+
+            if (email.isEmpty || password.isEmpty) {
+              Get.snackbar(
+                "Ops ! ",
+                "Por favor ingrese un correo y contraseña validos",
+                snackPosition: SnackPosition.BOTTOM,
+                duration: Duration(seconds: 3),
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+              );
+            } else {}
           },
           child: const Text(
             'Ingresar',
-            style: TextStyle(
-                color: Colors.amber,
-                fontSize: 18), // Puedes aumentar el tamaño de la fuente aquí
+            style: TextStyle(color: Colors.amber, fontSize: 18),
           ),
         ),
       ),
