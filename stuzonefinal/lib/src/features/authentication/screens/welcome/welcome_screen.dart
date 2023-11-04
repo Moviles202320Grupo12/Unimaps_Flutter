@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 import 'package:stuzonefinal/src/constants/sizes.dart';
+import 'package:stuzonefinal/src/features/authentication/controllers/login_controller.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
@@ -10,88 +14,8 @@ import '../../../../utils/animations/fade_in_animation/fade_in_animation_control
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_model.dart';
 import '../login/login_screen.dart';
 
-/*
-
-class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.put(FadeInAnimationController());
-    controller.animationIn();
-
-    var mediaQuery = MediaQuery.of(context);
-    var width = mediaQuery.size.width;
-    var height = mediaQuery.size.height;
-    var brightness = mediaQuery.platformBrightness;
-    final isDarkMode = brightness == Brightness.dark;
-
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: isDarkMode ? tSecondaryColor : tPrimaryColor,
-        body: Stack(
-          children: [
-            TFadeInAnimation(
-              isTwoWayAnimation: false,
-              durationInMs: 1200,
-              animate: TAnimatePosition(
-                bottomAfter: 0,
-                bottomBefore: -100,
-                leftBefore: 0,
-                leftAfter: 0,
-                topAfter: 0,
-                topBefore: 0,
-                rightAfter: 0,
-                rightBefore: 0,
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(tDefaultSize),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Hero(
-                        tag: 'welcome-image-tag',
-                        child: Image(
-                            image: const AssetImage(tWelcomeScreenImage),
-                            width: width * 0.5,
-                            height: height * 0.4)),
-                    Column(
-                      children: [
-                        Text(tWelcomeTitle,
-                            style: Theme.of(context).textTheme.displayMedium),
-                        Text(tWelcomeSubTitle,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                            textAlign: TextAlign.center),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () => Get.to(() => const LoginScreen()),
-                            child: Text(tLogin.toUpperCase()),
-                          ),
-                        ),
-                        const SizedBox(width: 10.0),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () => Get.to(() => const SignUpScreen()),
-                            child: Text(tSignup.toUpperCase()),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
+// LoginScreen
+// SignUpScreen
 
 class LoginPage extends StatelessWidget {
   // Variables
@@ -101,6 +25,8 @@ class LoginPage extends StatelessWidget {
   String path_google = tGoogleLogoImage;
   String path_outlook = tLogoOutlook;
   String path_huella = tHuella;
+  // Change to ValueNotifier
+  final ValueNotifier<bool> passwordVisible = ValueNotifier<bool>(false);
   // text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -130,9 +56,10 @@ class LoginPage extends StatelessWidget {
     final ingresarCorreo = Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(left: 20, right: 20),
-      child: const TextField(
+      child: TextField(
+        controller: usernameController,
         obscureText: false,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             filled: true,
             fillColor: Color(0xbbbbbf7f8f9),
             border: OutlineInputBorder(),
@@ -144,20 +71,37 @@ class LoginPage extends StatelessWidget {
     );
 
     final ingresarContrasena = Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-      child: const TextField(
-        obscureText: false,
-        decoration: InputDecoration(
-            filled: true,
-            fillColor: Color(0xbbbbbf7f8f9),
-            border: OutlineInputBorder(),
-            labelText: 'Ingresa tu contraseña',
-            labelStyle: TextStyle(color: Colors.black45),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 1.5, color: Colors.black))),
-      ),
-    );
+        margin: EdgeInsets.only(right: 20, left: 20, top: 15),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: passwordVisible,
+          builder: (context, bool isVisible, child) {
+            return TextField(
+              controller: passwordController,
+              obscureText: !isVisible,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color(0xbbbbbf7f8f9),
+                border: OutlineInputBorder(),
+                labelText: 'Ingresa tu contraseña',
+                labelStyle: TextStyle(color: Colors.black45),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1.5, color: Colors.black),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Cambiar el ícono según el estado de la visibilidad
+                    isVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.black45,
+                  ),
+                  onPressed: () {
+                    // Cambiar el estado de la visibilidad
+                    passwordVisible.value = !isVisible;
+                  },
+                ),
+              ),
+            );
+          },
+        ));
 
     final olvideContrasena = Align(
       alignment: Alignment.centerRight,
@@ -187,30 +131,43 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-
-    final ingresar = Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 15, // Margen simétrico para centrar el botón
-        ),
-        height: 50.0, // Altura del botón
-        width: 400.0, // Ancho del botón
-
+    final ingresar = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: SizedBox(
+        width: double.infinity, // Expand the button
+        height: 65.0,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black, // Fondo de color café
+            backgroundColor: Colors.black,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-              // Bordes redondeados
+              borderRadius: BorderRadius.circular(70),
             ),
-            // Altura y ancho del botón
           ),
-          onPressed: () {},
+          onPressed: () {
+            String email = usernameController.text.trim();
+            String password = passwordController.text.trim();
+
+            if (email.isEmpty || password.isEmpty) {
+              Get.snackbar(
+                "Ops ! ",
+                "Por favor ingrese un correo y contraseña validos",
+                snackPosition: SnackPosition.BOTTOM,
+                duration: Duration(seconds: 3),
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+              );
+            } else {
+              // enviar al back las credenciales
+              LoginController.instance.loginUser(email, password);
+            }
+          },
           child: const Text(
             'Ingresar',
-            style: TextStyle(color: Colors.amber, fontSize: 17),
+            style: TextStyle(color: Colors.amber, fontSize: 18),
           ),
-        ));
+        ),
+      ),
+    );
 
     final otroIngreso = Container(
         margin: EdgeInsets.only(top: 10),

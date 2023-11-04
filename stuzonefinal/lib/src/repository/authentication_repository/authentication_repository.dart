@@ -3,6 +3,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/inicio_crear_sesion.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:stuzonefinal/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:stuzonefinal/src/features/lostproperty/screens/find_lost_property.dart';
@@ -45,9 +46,9 @@ class AuthenticationRepository extends GetxController {
   /// Setting initial screen onLOAD (optional)
   _setInitialScreen(User? user) async {
     user == null
-        ? Get.offAll(() => Map())
+        ? Get.offAll(() => InicioCrearSesion())
         // : await UserRepository.instance.recordExist(user.email ?? "")
-        : Get.offAll(() => Dashboard());
+        : Get.offAll(() => const Dashboard());
     // : Get.offAll(() => const WelcomeScreen());
   }
 

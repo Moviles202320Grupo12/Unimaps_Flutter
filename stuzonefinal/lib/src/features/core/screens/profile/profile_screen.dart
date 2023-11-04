@@ -101,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
               /// -- MENU
               ProfileMenuWidget(
                   title: "Settings",
-                  icon: LineAwesomeIcons.cog,
+                  icon: LineAwesomeIcons.acquisitions_incorporated,
                   onPress: () {}),
               ProfileMenuWidget(
                   title: "Billing Details",
