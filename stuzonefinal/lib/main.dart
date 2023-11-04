@@ -13,6 +13,7 @@ import 'package:stuzonefinal/src/utils/theme/theme.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
   /// Show Splash Screen till data loads & when loaded call FlutterNativeSplash.remove();
   /// In this case I'm removing it inside AuthenticationRepository() -> onReady() method.
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -26,9 +27,7 @@ void main() {
     Get.put(TutorRepository());
     Get.put(EventRepository());
     Get.put(LostTimerRepository());
-
   });
-
 
   runApp(const App());
 }
@@ -39,7 +38,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding: AppBinding(), // Solves the issues of Get.lazyPut and Get.Put() by defining all Controllers in single class
+      initialBinding:
+          AppBinding(), // Solves the issues of Get.lazyPut and Get.Put() by defining all Controllers in single class
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
@@ -47,9 +47,9 @@ class App extends StatelessWidget {
       defaultTransition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
       home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+
       /// Show Progress Indicator OR SPLASH SCREEN until Screen Loads all its data from cloud.
       /// Let the AuthenticationRepository decide which screen to appear as first.
     );
   }
 }
-

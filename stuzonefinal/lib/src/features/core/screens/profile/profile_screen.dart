@@ -31,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
             onPressed: () => Get.back(),
             icon: const Icon(LineAwesomeIcons.angle_left)),
         title:
-        Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
+            Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
         actions: [
           IconButton(
               onPressed: () {},
@@ -53,9 +53,9 @@ class ProfileScreen extends StatelessWidget {
                       //Controllers
                       final email = TextEditingController(text: user.email);
                       final password =
-                      TextEditingController(text: user.password);
+                          TextEditingController(text: user.password);
                       final fullName =
-                      TextEditingController(text: user.fullName);
+                          TextEditingController(text: user.fullName);
                       final phoneNo = TextEditingController(text: user.phoneNo);
 
                       return Column(
@@ -65,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                           const SizedBox(height: 50),
                           Text(user.email,
                               style:
-                              Theme.of(context).textTheme.headlineMedium),
+                                  Theme.of(context).textTheme.headlineMedium),
                           Text(user.fullName,
                               style: Theme.of(context).textTheme.bodyMedium)
                         ],
@@ -134,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             AuthenticationRepository.instance.logout();
-                            Get.to(() => const WelcomeScreen());
+                            Get.to(() => LoginPage());
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.redAccent,
