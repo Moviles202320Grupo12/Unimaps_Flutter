@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:flutter/foundation.dart';
 import 'package:stuzonefinal/src/constants/sizes.dart';
+import 'package:stuzonefinal/src/features/authentication/controllers/login_controller.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
@@ -21,6 +25,8 @@ class LoginPage extends StatelessWidget {
   String path_google = tGoogleLogoImage;
   String path_outlook = tLogoOutlook;
   String path_huella = tHuella;
+  // Change to ValueNotifier
+  final ValueNotifier<bool> passwordVisible = ValueNotifier<bool>(false);
   // text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -53,7 +59,7 @@ class LoginPage extends StatelessWidget {
       child: TextField(
         controller: usernameController,
         obscureText: false,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             filled: true,
             fillColor: Color(0xbbbbbf7f8f9),
             border: OutlineInputBorder(),
@@ -65,21 +71,37 @@ class LoginPage extends StatelessWidget {
     );
 
     final ingresarContrasena = Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 30, left: 20, right: 20),
-      child: TextField(
-        controller: passwordController,
-        obscureText: false,
-        decoration: InputDecoration(
-            filled: true,
-            fillColor: Color(0xbbbbbf7f8f9),
-            border: OutlineInputBorder(),
-            labelText: 'Ingresa tu contraseña',
-            labelStyle: TextStyle(color: Colors.black45),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 1.5, color: Colors.black))),
-      ),
-    );
+        margin: EdgeInsets.only(right: 20, left: 20, top: 15),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: passwordVisible,
+          builder: (context, bool isVisible, child) {
+            return TextField(
+              controller: passwordController,
+              obscureText: !isVisible,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Color(0xbbbbbf7f8f9),
+                border: OutlineInputBorder(),
+                labelText: 'Ingresa tu contraseña',
+                labelStyle: TextStyle(color: Colors.black45),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(width: 1.5, color: Colors.black),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Cambiar el ícono según el estado de la visibilidad
+                    isVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.black45,
+                  ),
+                  onPressed: () {
+                    // Cambiar el estado de la visibilidad
+                    passwordVisible.value = !isVisible;
+                  },
+                ),
+              ),
+            );
+          },
+        ));
 
     final olvideContrasena = Align(
       alignment: Alignment.centerRight,
@@ -134,7 +156,10 @@ class LoginPage extends StatelessWidget {
                 backgroundColor: Colors.red,
                 colorText: Colors.white,
               );
-            } else {}
+            } else {
+              // enviar al back las credenciales
+              LoginController.instance.loginUser(email, password);
+            }
           },
           child: const Text(
             'Ingresar',
