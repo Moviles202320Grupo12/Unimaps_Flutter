@@ -92,6 +92,57 @@ class _AddTutorState extends State<AddTutor> {
                   return null;
                 },
               ),
+              IconButton(
+                  onPressed: () async {
+                    /*
+                * Step 1. Pick/Capture an image   (image_picker)
+                * Step 2. Upload the image to Firebase storage
+                * Step 3. Get the URL of the uploaded image
+                * Step 4. Store the image URL inside the corresponding
+                *         document of the database.
+                * Step 5. Display the image on the list
+                *
+                * */
+
+                    /*Step 1:Pick image*/
+                    //Install image_picker
+                    //Import the corresponding library
+
+                    ImagePicker imagePicker = ImagePicker();
+                    XFile? file =
+                    await imagePicker.pickImage(source: ImageSource.camera);
+                    print('${file?.path}');
+
+                    if (file == null) return;
+                    //Import dart:core
+                    String uniqueFileName =
+                    DateTime.now().millisecondsSinceEpoch.toString();
+
+                    /*Step 2: Upload to Firebase storage*/
+                    //Install firebase_storage
+                    //Import the library
+
+                    //Get a reference to storage root
+                    Reference referenceRoot = FirebaseStorage.instance.ref();
+                    Reference referenceDirImages =
+                    referenceRoot.child('tutorImages');
+
+                    //Create a reference for the image to be stored
+                    Reference referenceImageToUpload =
+                    referenceDirImages.child(uniqueFileName);
+
+                    //Handle errors/success
+                    try {
+                      //Store the file
+                      await referenceImageToUpload.putFile(File(file!.path));
+                      //Success: get the download URL
+                      imageUrl = await referenceImageToUpload.getDownloadURL();
+                    } catch (error) {
+                      //Some error occurred
+                    }
+                  },
+                  icon: Icon(Icons.camera_alt)),
+
               for (var controller in materiasControllers)
                 TextFormField(
                   controller: controller,
@@ -114,6 +165,13 @@ class _AddTutorState extends State<AddTutor> {
               ElevatedButton(
                   onPressed: () async {
 
+                    if (imageUrl.isEmpty) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text('Please upload an image')));
+
+                      return;
+                    }
+
                     if (key.currentState!.validate()) {
                       String tutorName = _controllerName.text;
                       String tutorEmail = _controllerEmail.text;
@@ -128,7 +186,7 @@ class _AddTutorState extends State<AddTutor> {
                       }
 
                       //Create a Map of data
-                      final tutor = TutorModel(name: tutorName, email: tutorEmail, phoneNo: tutorPhoneNoo, subjects: materias, topics: topics);
+                      final tutor = TutorModel(name: tutorName, email: tutorEmail, phoneNo: tutorPhoneNoo, image: imageUrl, subjects: materias, topics: topics);
 
                       //Add a new item
                       TutorRepository.instance.createTutor(tutor);

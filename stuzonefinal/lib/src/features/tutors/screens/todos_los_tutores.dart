@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:stuzonefinal/src/features/tutors/models/tutor_model.dart';
 import 'package:stuzonefinal/src/features/tutors/controllers/tutor_controller.dart';
 import 'package:stuzonefinal/src/features/tutors/screens/crear_tutor.dart';
+import 'package:stuzonefinal/src/constants/image_strings.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/sizes.dart';
@@ -21,10 +23,7 @@ class AllTutors extends StatelessWidget {
         leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left,)),
         title: Text("Tutors", style: Theme.of(context).textTheme.headlineMedium),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(tDefaultSize),
-          child: Column(
+      body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("All Tutors", style: Theme.of(context).textTheme.headlineMedium),
@@ -46,14 +45,13 @@ class AllTutors extends StatelessWidget {
                   ),
                 ),
               ),
+              Expanded(child:
               FutureBuilder<List<TutorModel>>(
                 future: controller.getAllTutors(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       return ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (c, index) {
@@ -62,31 +60,42 @@ class AllTutors extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
-                                      color: tPrimaryColor.withOpacity(0.1),
+                                      color: Color(0xBBBB87400),
                                       borderRadius: BorderRadius.circular(10.0),
                                       border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
                                   ),
-                                  child: ListTile(
-                                    leading: Container(
-                                      padding: const EdgeInsets.all(10.0),
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: tPrimaryColor,
-                                      ),
-                                      child: const Icon(LineAwesomeIcons.user_1, color: Colors.black),
-                                    ),
-                                    title: Text(snapshot.data![index].name, style: Theme.of(context).textTheme.headlineMedium,),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(snapshot.data![index].phoneNo),
-                                        Text(snapshot.data![index].email, overflow: TextOverflow.ellipsis),
-                                        Text(snapshot.data![index].subjects[0], overflow: TextOverflow.ellipsis),
-                                        Text(snapshot.data![index].topics[0], overflow: TextOverflow.ellipsis),
-                                      ],
-                                    ),
-                                  ),
+
                                 ),
+                                Text(snapshot.data![index].name,
+                                    style: TextStyle(
+                                        color: Color(0xFFF6A700),
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                                Text(snapshot.data![index].email,
+                                    style: TextStyle(
+                                        color: Color(0xFFF6A700),
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10)),
+                                Text(snapshot.data![index].phoneNo,
+                                    style: TextStyle(
+                                        color: Color(0xFFF6A700),
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15)),
+                                CachedNetworkImage(
+                                  imageUrl: snapshot.data![index].image,
+                                  placeholder: (context, url) {
+                                    // Si no hay conexión o la imagen no se puede cargar, muestra la imagen predeterminada desde el almacenamiento local
+                                    return Image.asset(defaultLostProperty);
+                                  },
+                                  errorWidget: (context, url, error) {
+                                    // Si ocurre un error al cargar la imagen, muestra la imagen predeterminada desde el almacenamiento local
+                                    return Image.asset(defaultLostProperty);
+                                  },
+                                ),
+
                                 const SizedBox(
                                   height: 10,
                                 )
@@ -103,10 +112,10 @@ class AllTutors extends StatelessWidget {
                   }
                 },
               ),
+              ),
             ],
           ),
-        ),
-      ),
+
     );
   }
 }
