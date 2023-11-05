@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stuzonefinal/src/constants/sizes.dart';
 import 'package:stuzonefinal/src/features/authentication/controllers/login_controller.dart';
+import 'package:stuzonefinal/src/features/authentication/screens/forget_password/olvidocontrasena.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
@@ -109,15 +110,12 @@ class LoginPage extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10, right: 25, bottom: 25),
         child: InkWell(
           onTap: () {
-            /*
             Navigator.push(
-                
-
               context,
-              MaterialPageRoute(), //builder: (context) => OlvidoContrasena()),
-              
-                );
-                */
+              MaterialPageRoute(
+                  builder: (context) =>
+                      OlvidoContrasena()), //builder: (context) => OlvidoContrasena()),
+            );
           },
           child: const Text(
             'Olvide mi contraseña',
