@@ -6,10 +6,11 @@ class UserModel {
   final String email;
   final String phoneNo;
   final String password;
+  final int steps;
 
   /// Constructor
   const UserModel(
-      {this.id, required this.email, required this.password, required this.fullName, required this.phoneNo});
+      {this.id, required this.email, required this.password, required this.fullName, required this.phoneNo,required this.steps});
 
   /// convert model to Json structure so that you can it to store data in Firesbase
   toJson() {
@@ -18,6 +19,7 @@ class UserModel {
       "Email": email,
       "Phone": phoneNo,
       "Password": password,
+      "steps": steps,
     };
   }
 
@@ -30,6 +32,7 @@ class UserModel {
       password: data["Password"],
       fullName: data["FullName"],
       phoneNo: data["Phone"],
+      steps: data["steps"]
     );
   }
 }

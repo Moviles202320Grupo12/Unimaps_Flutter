@@ -7,8 +7,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:stuzonefinal/src/features/walkingpoints/screens/cupones.dart';
+import 'package:stuzonefinal/src/features/walkingpoints/screens/ranking.dart';
 import '../../../constants/colors.dart';
-
+import 'package:get/get.dart';
 import 'package:decimal/decimal.dart';
 
 class ScreenWalk extends StatefulWidget {
@@ -122,7 +124,40 @@ class _MyAppState extends State<ScreenWalk> {
                       ? TextStyle(color: isDarkMode ? tPrimaryColor : tSecondaryColor,fontSize: 30)
                       : TextStyle(fontSize: 20, color: Colors.red),
                 ),
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => CuponesView());
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.black, minimumSize: Size(40, 40)),
+                    child: const Text("Cupones",
+                        style: TextStyle(
+                            color: Color(0xFFF6A700),
+                            fontFamily: 'Urbanist',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => Ranking());
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.black, minimumSize: Size(40, 40)),
+                    child: const Text("Ranking",
+                        style: TextStyle(
+                            color: Color(0xFFF6A700),
+                            fontFamily: 'Urbanist',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20)),
+                  ),
+
+                ],
+              ),
             ],
           ),
         ),

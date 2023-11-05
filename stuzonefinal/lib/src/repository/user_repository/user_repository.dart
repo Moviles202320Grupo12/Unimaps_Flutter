@@ -56,6 +56,26 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<List<UserModel>> allUsersOrderedBySteps() async {
+    try {
+      final snapshot = await _db.collection("Users").get();
+      final users = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
+
+      // Ordenar la lista de usuarios por el atributo "steps" de mayor a menor.
+      users.sort((a, b) => b.steps.compareTo(a.steps));
+
+      return users;
+    } on FirebaseAuthException catch (e) {
+      final result = TExceptions.fromCode(e.code);
+      throw result.message;
+    } on FirebaseException catch (e) {
+      throw e.message.toString();
+    } catch (_) {
+      throw 'Something went wrong. Please Try Again';
+    }
+  }
+
+
   /// Update User details
   Future<void> updateUserRecord(UserModel user) async {
     try {
