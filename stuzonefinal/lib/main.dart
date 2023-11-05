@@ -4,6 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/firebase_options.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/inicio_crear_sesion.dart';
+import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/lost_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
@@ -39,18 +40,19 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding:
-          AppBinding(), // Solves the issues of Get.lazyPut and Get.Put() by defining all Controllers in single class
-      themeMode: ThemeMode.system,
-      theme: TAppTheme.lightTheme,
-      darkTheme: TAppTheme.darkTheme,
-      debugShowCheckedModeBanner: false,
-      defaultTransition: Transition.leftToRightWithFade,
-      transitionDuration: const Duration(milliseconds: 500),
-      home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+        initialBinding:
+            AppBinding(), // Solves the issues of Get.lazyPut and Get.Put() by defining all Controllers in single class
+        themeMode: ThemeMode.system,
+        theme: TAppTheme.lightTheme,
+        darkTheme: TAppTheme.darkTheme,
+        debugShowCheckedModeBanner: false,
+        defaultTransition: Transition.leftToRightWithFade,
+        transitionDuration: const Duration(milliseconds: 500),
+        //home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+        home: LoginPage()
 
-      /// Show Progress Indicator OR SPLASH SCREEN until Screen Loads all its data from cloud.
-      /// Let the AuthenticationRepository decide which screen to appear as first.
-    );
+        /// Show Progress Indicator OR SPLASH SCREEN until Screen Loads all its data from cloud.
+        /// Let the AuthenticationRepository decide which screen to appear as first.
+        );
   }
 }

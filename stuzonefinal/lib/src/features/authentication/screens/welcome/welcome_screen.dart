@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stuzonefinal/src/constants/sizes.dart';
@@ -20,6 +23,11 @@ import '../login/login_screen.dart';
 
 class LoginPage extends StatelessWidget {
   // Variables
+
+  // Biometric auth
+  final LocalAuthentication auth = LocalAuthentication();
+  bool isBiometricAvailable = false;
+  bool isDeviceSupported = false;
 
   // ignore: non_constant_identifier_names
   String path_image = tLogoStuZone;
@@ -129,6 +137,7 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+
     final ingresar = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: SizedBox(
@@ -238,8 +247,49 @@ class LoginPage extends StatelessWidget {
     );
 
     final huella = InkWell(
-      onTap: () {
-        // Acción al tocar el texto
+      onTap: () async {
+        print("Entro");
+        try {
+          isBiometricAvailable = await auth.canCheckBiometrics;
+        } catch (e) {
+          print("error biome trics $e");
+          Get.snackbar(
+            "Ops ! ",
+            "Tu dispositivo no puede realizar la verifiación por huella. Intenta otros métodos",
+            snackPosition: SnackPosition.BOTTOM,
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+
+        print("biometric is available: $isBiometricAvailable");
+        try {
+          final isDeviceSupported = await auth.isDeviceSupported();
+        } catch (e) {
+          print("No es posible usar la huella");
+          Get.snackbar(
+            "Ops ! ",
+            "Tu dispositivo no puede realizar la verifiación por huella. Intenta otros métodos",
+            snackPosition: SnackPosition.BOTTOM,
+            duration: Duration(seconds: 3),
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
+
+        print("Devices is available : $isDeviceSupported");
+
+        print("Incio autentificacion");
+        bool authenticated = false;
+        try {
+          authenticated = await auth.authenticate(
+            localizedReason: 'Touch your finger on the sensor to login',
+          );
+        } catch (e) {
+          print("error using biometric auth: $e");
+        }
+        print("authenticated: $authenticated");
       },
       child: Container(
         height: 30,
