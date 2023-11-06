@@ -32,7 +32,7 @@ class LoginController extends GetxController {
       await AuthenticationRepository.instance.signInWithGoogle();
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Error, no se pudo iniciar con Google", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 

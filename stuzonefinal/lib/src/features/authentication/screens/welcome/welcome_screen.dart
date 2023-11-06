@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
+import 'package:stuzonefinal/src/features/core/screens/map.dart';
 import 'package:flutter/foundation.dart';
-import 'package:stuzonefinal/src/constants/sizes.dart';
 import 'package:stuzonefinal/src/features/authentication/controllers/login_controller.dart';
-import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
+import 'package:stuzonefinal/src/features/authentication/screens/forget_password/olvidocontrasena.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
@@ -20,6 +23,12 @@ import '../login/login_screen.dart';
 class LoginPage extends StatelessWidget {
   // Variables
 
+  // Biometric auth
+  final LocalAuthentication auth = LocalAuthentication();
+  bool isBiometricAvailable = false;
+  bool isDeviceSupported = false;
+  
+
   // ignore: non_constant_identifier_names
   String path_image = tLogoStuZone;
   String path_google = tGoogleLogoImage;
@@ -31,6 +40,8 @@ class LoginPage extends StatelessWidget {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  // firebase 
+  
   LoginPage({super.key});
 
   // sign user in method
@@ -38,6 +49,24 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
     final texto = Container(
         height: 130,
         alignment: Alignment.topLeft,
@@ -109,15 +138,12 @@ class LoginPage extends StatelessWidget {
         margin: const EdgeInsets.only(top: 10, right: 25, bottom: 25),
         child: InkWell(
           onTap: () {
-            /*
             Navigator.push(
-                
-
               context,
-              MaterialPageRoute(), //builder: (context) => OlvidoContrasena()),
-              
-                );
-                */
+              MaterialPageRoute(
+                  builder: (context) =>
+                      OlvidoContrasena()), //builder: (context) => OlvidoContrasena()),
+            );
           },
           child: const Text(
             'Olvide mi contraseña',
@@ -131,6 +157,7 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+
     final ingresar = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: SizedBox(
@@ -207,9 +234,23 @@ class LoginPage extends StatelessWidget {
         ));
 
     final googleButton = InkWell(
-      onTap: () {
-        // Acción al tocar el texto
-      },
+      onTap: () async {
+      try {
+          UserCredential userCredential = await signInWithGoogle();  
+          Navigator.of(context).pushReplacement(MaterialPageRoute( builder: (context) => Map(),)); 
+        
+        } catch (error) {
+            Get.snackbar(
+                "Ops ! ",
+                "La autentificación con Google no fue posible",
+                snackPosition: SnackPosition.BOTTOM,
+                duration: Duration(seconds: 3),
+                backgroundColor: Colors.red,
+            );
+          print(error);
+          // Considera mostrar algún mensaje de error al usuario
+        }
+         },
       child: Container(
         height: 30,
         width: 30,
@@ -239,22 +280,53 @@ class LoginPage extends StatelessWidget {
       ),
     );
 
-    final huella = InkWell(
-      onTap: () {
-        // Acción al tocar el texto
-      },
-      child: Container(
-        height: 30,
-        width: 30,
-        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(path_huella)),
-          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
-          shape: BoxShape.rectangle,
-        ),
-      ),
-    );
+    
+// Generar un identificador de sesión único
+String generateBioSessionId() {
+  return DateTime.now().millisecondsSinceEpoch.toString();
+}    
+/*
+  final huella = InkWell(
+              onTap: () async {
+            bool authenticated = false;
+            try {
+              // Comenzar la autenticación biométrica
+              authenticated = await auth.authenticate(
+                localizedReason: 'Autentíquese para iniciar sesión',
+                options: const AuthenticationOptions(
+                  biometricOnly: true,
+                ),
+              );
 
+              if (authenticated) {
+                // El usuario se ha autenticado con éxito
+                String bioSessionId = generateBioSessionId(); // Asegúrate de que esta función esté definida
+                User? user = _auth.currentUser;
+
+                // Guarda la sesión biométrica en Firestore
+                await _firestore.collection('biometric_sessions').doc(user?.uid).set({
+                  'session_id': bioSessionId,
+                  'timestamp': FieldValue.serverTimestamp(),
+                  'used_biometric': true,
+                });
+
+                // Navegar al MapPage después de la autenticación exitosa
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => Map(), // Asegúrate de que tienes un widget llamado MapPage
+                ));
+              }
+            } catch (e) {
+              // Manejo de errores, como el caso de que la autenticación falle
+              print(e); // Considera usar un enfoque más robusto para manejar el error
+            }
+          },
+          child: Container(
+            // Agrega estilos a tu InkWell si es necesario
+            padding: EdgeInsets.all(20),
+            child: Text('Iniciar sesión con huella dactilar'),
+          ),
+        );
+*/
     final metodosIngreso = Container(
       margin: EdgeInsets.symmetric(
         vertical: MediaQuery.of(context).size.width * 0.05,
@@ -265,7 +337,7 @@ class LoginPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment:
             MainAxisAlignment.center, // Center the children horizontally
-        children: [googleButton, outlookButton, huella],
+        children: [googleButton]//, outlookButton, huella],
       ),
     );
 
@@ -311,6 +383,8 @@ class LoginPage extends StatelessWidget {
         ],
       ),
     );
+
+
 
     return Scaffold(
         backgroundColor: Colors.white,
