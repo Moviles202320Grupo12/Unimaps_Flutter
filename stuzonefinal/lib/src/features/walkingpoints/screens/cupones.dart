@@ -67,6 +67,17 @@ class CuponesView extends StatelessWidget {
                       ),
                     );
                   }
+
+                  final couponData = Coupon(
+                    id: coupon.id,
+                      title: coupon.title,
+                      description: coupon.description,
+                      imageQr: coupon.imageQr,
+                      pasosNecesarios: coupon.pasosNecesarios,
+                      reclamados: coupon.reclamados+1
+                  );
+
+                  controller.updateRecord(couponData);
                 },
                         style: ElevatedButton.styleFrom(
                             primary: Colors.black, minimumSize: Size(40, 40)),

@@ -60,7 +60,7 @@ class CouponRepository extends GetxController {
   /// Update User details
   Future<void> updateCouponRecord(Coupon item) async {
     try {
-      await _db.collection("cupones").doc(item.title).update(item.toJson());
+      await _db.collection("cupones").doc(item.id).update(item.toJson());
     } on FirebaseAuthException catch (e) {
       final result = TExceptions.fromCode(e.code);
       throw result.message;

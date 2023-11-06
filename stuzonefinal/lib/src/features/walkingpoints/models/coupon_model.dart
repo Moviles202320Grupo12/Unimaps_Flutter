@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Coupon {
+  final String? id;
   final String title;
   final String description;
   final String imageQr;
   final int pasosNecesarios;
   final int reclamados;
 
-  Coupon({required this.title, required this.description, required this.imageQr, required this.pasosNecesarios, required this.reclamados});
+  Coupon({this.id, required this.title, required this.description, required this.imageQr, required this.pasosNecesarios, required this.reclamados});
 
   toJson() {
     return {
@@ -23,6 +24,7 @@ class Coupon {
   factory Coupon.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
     return Coupon(
+        id: document.id,
       title: data["title"],
       description: data["description"],
       imageQr: data["imageQr"],
