@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:stuzonefinal/firebase_options.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/inicio_crear_sesion.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
+import 'package:stuzonefinal/src/repository/coupon_repository/coupon_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/lost_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 import 'package:stuzonefinal/src/repository/tutor_repository/tutor_repository.dart';
@@ -28,6 +29,7 @@ void main() {
     Get.put(TutorRepository());
     Get.put(EventRepository());
     Get.put(LostTimerRepository());
+    Get.put(CouponRepository());
   });
 
   runApp(const App());

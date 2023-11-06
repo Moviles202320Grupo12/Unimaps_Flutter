@@ -40,6 +40,24 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<int> getUserSteps(String email) async {
+    try {
+      final snapshot = await _db.collection("Users").where("Email", isEqualTo: email).get();
+      if (snapshot.docs.isEmpty) throw 'No such user found';
+      final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).single;
+      return userData.steps;
+    } on FirebaseAuthException catch (e) {
+      final result = TExceptions.fromCode(e.code);
+      throw result.message;
+    } on FirebaseException catch (e) {
+      throw e.message.toString();
+    } catch (e) {
+      throw e.toString().isEmpty ? 'Something went wrong. Please Try Again' : e.toString();
+    }
+  }
+
+
+
   /// Fetch All Users
   Future<List<UserModel>> allUsers() async {
     try {

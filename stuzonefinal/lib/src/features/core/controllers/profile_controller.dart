@@ -27,6 +27,22 @@ class ProfileController extends GetxController {
     }
   }
 
+  getUserSteps() {
+    try {
+      final currentUserEmail = _authRepo.getUserEmail;
+      if (currentUserEmail.isEmpty) {
+        Get.snackbar("Error", "No user found!",
+            snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
+        return 0;
+      } else {
+        return _userRepo.getUserSteps(currentUserEmail);
+      }
+    } catch (e) {
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
+      return 0;
+    }
+  }
   /// Fetch List of user records.
   Future<List<UserModel>> getAllUsers() async => await _userRepo.allUsers();
 
