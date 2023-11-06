@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:get/get.dart';
+import 'package:stuzonefinal/src/features/core/screens/map.dart';
 import 'package:flutter/foundation.dart';
-import 'package:stuzonefinal/src/constants/sizes.dart';
 import 'package:stuzonefinal/src/features/authentication/controllers/login_controller.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/forget_password/olvidocontrasena.dart';
-import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
@@ -28,6 +26,7 @@ class LoginPage extends StatelessWidget {
   final LocalAuthentication auth = LocalAuthentication();
   bool isBiometricAvailable = false;
   bool isDeviceSupported = false;
+  
 
   // ignore: non_constant_identifier_names
   String path_image = tLogoStuZone;
@@ -39,6 +38,11 @@ class LoginPage extends StatelessWidget {
   // text editing controllers
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // firebase 
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   LoginPage({super.key});
 
@@ -246,62 +250,52 @@ class LoginPage extends StatelessWidget {
       ),
     );
 
-    final huella = InkWell(
-      onTap: () async {
-        print("Entro");
-        try {
-          isBiometricAvailable = await auth.canCheckBiometrics;
-        } catch (e) {
-          print("error biome trics $e");
-          Get.snackbar(
-            "Ops ! ",
-            "Tu dispositivo no puede realizar la verifiación por huella. Intenta otros métodos",
-            snackPosition: SnackPosition.BOTTOM,
-            duration: Duration(seconds: 3),
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-        }
+    
+// Generar un identificador de sesión único
+String generateBioSessionId() {
+  return DateTime.now().millisecondsSinceEpoch.toString();
+}    
 
-        print("biometric is available: $isBiometricAvailable");
-        try {
-          final isDeviceSupported = await auth.isDeviceSupported();
-        } catch (e) {
-          print("No es posible usar la huella");
-          Get.snackbar(
-            "Ops ! ",
-            "Tu dispositivo no puede realizar la verifiación por huella. Intenta otros métodos",
-            snackPosition: SnackPosition.BOTTOM,
-            duration: Duration(seconds: 3),
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-        }
+  final huella = InkWell(
+              onTap: () async {
+            bool authenticated = false;
+            try {
+              // Comenzar la autenticación biométrica
+              authenticated = await auth.authenticate(
+                localizedReason: 'Autentíquese para iniciar sesión',
+                options: const AuthenticationOptions(
+                  biometricOnly: true,
+                ),
+              );
 
-        print("Devices is available : $isDeviceSupported");
+              if (authenticated) {
+                // El usuario se ha autenticado con éxito
+                String bioSessionId = generateBioSessionId(); // Asegúrate de que esta función esté definida
+                User? user = _auth.currentUser;
 
-        print("Incio autentificacion");
-        bool authenticated = false;
-        try {
-          authenticated = await auth.authenticate(
-            localizedReason: 'Touch your finger on the sensor to login',
-          );
-        } catch (e) {
-          print("error using biometric auth: $e");
-        }
-        print("authenticated: $authenticated");
-      },
-      child: Container(
-        height: 30,
-        width: 30,
-        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(path_huella)),
-          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
-          shape: BoxShape.rectangle,
-        ),
-      ),
-    );
+                // Guarda la sesión biométrica en Firestore
+                await _firestore.collection('biometric_sessions').doc(user?.uid).set({
+                  'session_id': bioSessionId,
+                  'timestamp': FieldValue.serverTimestamp(),
+                  'used_biometric': true,
+                });
+
+                // Navegar al MapPage después de la autenticación exitosa
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => Map(), // Asegúrate de que tienes un widget llamado MapPage
+                ));
+              }
+            } catch (e) {
+              // Manejo de errores, como el caso de que la autenticación falle
+              print(e); // Considera usar un enfoque más robusto para manejar el error
+            }
+          },
+          child: Container(
+            // Agrega estilos a tu InkWell si es necesario
+            padding: EdgeInsets.all(20),
+            child: Text('Iniciar sesión con huella dactilar'),
+          ),
+        );
 
     final metodosIngreso = Container(
       margin: EdgeInsets.symmetric(
@@ -313,7 +307,7 @@ class LoginPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment:
             MainAxisAlignment.center, // Center the children horizontally
-        children: [googleButton, outlookButton, huella],
+        children: [googleButton]//, outlookButton, huella],
       ),
     );
 
