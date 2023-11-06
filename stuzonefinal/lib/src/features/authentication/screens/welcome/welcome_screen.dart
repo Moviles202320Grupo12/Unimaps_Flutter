@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/src/features/core/screens/map.dart';
 import 'package:flutter/foundation.dart';
@@ -40,10 +41,7 @@ class LoginPage extends StatelessWidget {
   final passwordController = TextEditingController();
 
   // firebase 
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  
   LoginPage({super.key});
 
   // sign user in method
@@ -51,6 +49,24 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
     final texto = Container(
         height: 130,
         alignment: Alignment.topLeft,
@@ -218,9 +234,23 @@ class LoginPage extends StatelessWidget {
         ));
 
     final googleButton = InkWell(
-      onTap: () {
-        // Acción al tocar el texto
-      },
+      onTap: () async {
+      try {
+          UserCredential userCredential = await signInWithGoogle();  
+          Navigator.of(context).pushReplacement(MaterialPageRoute( builder: (context) => Map(),)); 
+        
+        } catch (error) {
+            Get.snackbar(
+                "Ops ! ",
+                "La autentificación con Google no fue posible",
+                snackPosition: SnackPosition.BOTTOM,
+                duration: Duration(seconds: 3),
+                backgroundColor: Colors.red,
+            );
+          print(error);
+          // Considera mostrar algún mensaje de error al usuario
+        }
+         },
       child: Container(
         height: 30,
         width: 30,
@@ -255,7 +285,7 @@ class LoginPage extends StatelessWidget {
 String generateBioSessionId() {
   return DateTime.now().millisecondsSinceEpoch.toString();
 }    
-
+/*
   final huella = InkWell(
               onTap: () async {
             bool authenticated = false;
@@ -296,7 +326,7 @@ String generateBioSessionId() {
             child: Text('Iniciar sesión con huella dactilar'),
           ),
         );
-
+*/
     final metodosIngreso = Container(
       margin: EdgeInsets.symmetric(
         vertical: MediaQuery.of(context).size.width * 0.05,
@@ -353,6 +383,8 @@ String generateBioSessionId() {
         ],
       ),
     );
+
+
 
     return Scaffold(
         backgroundColor: Colors.white,
