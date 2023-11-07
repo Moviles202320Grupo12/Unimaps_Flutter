@@ -3,11 +3,12 @@ import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_s
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:stuzonefinal/src/features/core/screens/map.dart';
-
+import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/BQ4.dart';
 class InicioCrearSesion extends StatelessWidget {
   // Variables
 
   String path_image = tLogoStuZone;
+  String timerimg = timer;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,37 @@ class InicioCrearSesion extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
       ),
     );
+
+    final timer = Align(
+      alignment: Alignment.centerRight,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 10.0,
+        ),
+        child: Container(
+          margin: const EdgeInsets.only(top: 10, bottom: 10),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                shape: CircleBorder(),
+                padding: const EdgeInsets.all(10)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AppLifecycleReactorState ()),
+              );
+            },
+            child: Image.asset(
+              timerimg, 
+             width: 40, // Establece el ancho de la imagen
+          height: 40, // Establece la altura de la imagen
+          fit: BoxFit.contain,
+            ),
+          ),
+        ),
+      ),
+    );
+
     final crear_cuenta = Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -100,6 +132,6 @@ class InicioCrearSesion extends StatelessWidget {
     return Material(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [photoImage, ingresar, crear_cuenta, invitado]));
+            children: [timer, photoImage, ingresar, crear_cuenta, invitado ]));
   }
 }

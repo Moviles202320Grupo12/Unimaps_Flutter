@@ -13,6 +13,7 @@ import 'package:stuzonefinal/src/repository/tutor_repository/tutor_repository.da
 import 'package:stuzonefinal/src/repository/event_repository/event_repository.dart';
 import 'package:stuzonefinal/src/utils/app_bindings.dart';
 import 'package:stuzonefinal/src/utils/theme/theme.dart';
+import 'dart:async';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,8 @@ void main() {
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
+  
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -57,4 +60,56 @@ class App extends StatelessWidget {
         /// Let the AuthenticationRepository decide which screen to appear as first.
         );
   }
+}
+
+
+class AppLifecycleReactorState extends StatefulWidget{
+  @override
+  _AppLifecycleReactorState createState()=>_AppLifecycleReactorState();
+
+}
+
+class _AppLifecycleReactorState extends State<AppLifecycleReactorState> with WidgetsBindingObserver{
+  late Timer timer;
+  int count=0;
+  bool active=true;
+  
+  @override
+  void initState(){
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    timer=Timer.periodic(Duration(seconds: 1), (tm) { 
+     if(active){
+       setState(() {
+        count+=1;
+      });
+     }
+    });
+  }
+
+  @override
+  void dispose(){
+    super.dispose();
+    timer.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+    if(state==AppLifecycleState.resumed){active=true;print("resumed");}
+    else if(state==AppLifecycleState.inactive){active=false;print("inactive");}
+    else if(state==AppLifecycleState.detached){print("detached");}
+    else if(state==AppLifecycleState.paused){active=false;print("paused");}
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      body: Center(child: Text("$count", style: TextStyle(fontSize: 45,fontWeight: FontWeight.bold),),),
+    );
+  }
+
 }
