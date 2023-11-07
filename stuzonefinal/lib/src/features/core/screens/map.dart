@@ -1,8 +1,12 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
-
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
+// ignore: depend_on_referenced_packages
+import 'package:location/location.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Map extends StatefulWidget {
   const Map({super.key});
@@ -13,6 +17,8 @@ class Map extends StatefulWidget {
 
 class _Map extends State<Map> {
   late GoogleMapController mapController;
+  late LocationData currentLocation;
+  Location location = Location();
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;

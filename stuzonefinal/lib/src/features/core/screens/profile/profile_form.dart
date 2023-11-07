@@ -70,6 +70,7 @@ class ProfileFormScreen extends StatelessWidget {
                   password: password.text.trim(),
                   fullName: fullName.text.trim(),
                   phoneNo: phoneNo.text.trim(),
+                  steps: 0
                 );
 
                 await controller.updateRecord(userData);

@@ -21,6 +21,7 @@ const String tOnBoardingImage3 =
 const String tLogoOutlook = "assets/logo/logo_outlook.png";
 const String tLogoStuZone = "assets/logo/stuzone_logo.png";
 const String tHuella = "assets/images/welcome_images/huella.png";
+const String timer = "assets/images/welcome_images/timer2.png";
 
 // -- Login & SignUp Images
 const String tGoogleLogoImage = "assets/logo/google-logo.png";

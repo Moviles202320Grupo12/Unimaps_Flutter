@@ -7,10 +7,11 @@ class EventModel {
   final String fecha;
   final String categoria;
   final String activo;
+  final String image;
 
   /// Constructor
   const EventModel(
-      {this.id, required this.nombre, required this.lugar, required this.fecha, required this.categoria, required this.activo});
+      {this.id, required this.nombre, required this.lugar, required this.fecha, required this.categoria, required this.activo, required this.image});
 
   /// convert model to Json structure so that you can it to store data in Firesbase
   toJson() {
@@ -19,7 +20,8 @@ class EventModel {
       "lugar": lugar,
       "fecha": fecha,
       "categoria": categoria,
-      "activo": activo
+      "activo": activo,
+      "image" : image,
     };
   }
 
@@ -33,6 +35,7 @@ class EventModel {
       fecha: data["fecha"],
       categoria: data["categoria"],
       activo: data["activo"],
+      image: data["image"]
     );
   }
 }

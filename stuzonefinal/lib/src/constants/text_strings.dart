@@ -17,17 +17,17 @@ const String tSignInWithGoogle = "Sign-In with Google";
 
 
 // -- Splash Screen Text
-const String tAppName = "/appable:";
-const String tAppTagLine = "Learn To Code. \nFree For Everyone";
+const String tAppName = "Stuzone";
+const String tAppTagLine = "";
 
 
 // -- On Boarding Text
-const String tOnBoardingTitle1 = "Build Awesome Apps";
-const String tOnBoardingTitle2 = "Learn from YouTube";
-const String tOnBoardingTitle3 = "Get Code & Resources";
-const String tOnBoardingSubTitle1 = "Let's start your journey with us on this amazing and easy platform.";
-const String tOnBoardingSubTitle2 = "Get Video Tutorials of each topic to learn things easily.";
-const String tOnBoardingSubTitle3 = "Save time by just copy pasting complete apps you learned from videos.";
+const String tOnBoardingTitle1 = "";
+const String tOnBoardingTitle2 = "";
+const String tOnBoardingTitle3 = "";
+const String tOnBoardingSubTitle1 = "";
+const String tOnBoardingSubTitle2 = "";
+const String tOnBoardingSubTitle3 = "";
 const String tOnBoardingCounter1 = "1/3";
 const String tOnBoardingCounter2 = "2/3";
 const String tOnBoardingCounter3 = "3/3";
@@ -71,14 +71,14 @@ const String tOtpMessage = "Enter the verification code sent at ";
 
 
 // -- Dashboard Screen - Text
-const String tDashboardTitle = "Hey, Coding with T";
+const String tDashboardTitle = "Hey, Student";
 const String tDashboardHeading = "Explore Courses";
 const String tDashboardSearch = "Search...";
 const String tDashboardBannerTitle2 = "JAVA";
 const String tDashboardButton = "View All";
 const String tDashboardTopCourses = "Top Courses";
 const String tDashboardBannerSubTitle = "10 Lessons";
-const String tDashboardBannerTitle1 = "Android for Beginners";
+const String tDashboardBannerTitle1 = "";
 
 
 

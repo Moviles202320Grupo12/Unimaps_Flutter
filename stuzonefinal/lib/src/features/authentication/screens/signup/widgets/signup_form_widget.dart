@@ -65,6 +65,7 @@ class SignUpFormWidget extends StatelessWidget {
                         password: controller.password.text.trim(),
                         fullName: controller.fullName.text.trim(),
                         phoneNo: controller.phoneNo.text.trim(),
+                        steps: 0
                       );
                       SignUpController.instance.createUser(user);
                     }

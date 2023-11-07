@@ -3,8 +3,8 @@ import 'package:stuzonefinal/src/features/authentication/models/user_model.dart'
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/user_repository/user_repository.dart';
 
-class ProfileController extends GetxController {
-  static ProfileController get instance => Get.find();
+class WalkingController extends GetxController {
+  static WalkingController get instance => Get.find();
 
   /// Repositories
   final _authRepo = AuthenticationRepository.instance;
@@ -27,24 +27,8 @@ class ProfileController extends GetxController {
     }
   }
 
-  getUserSteps() {
-    try {
-      final currentUserEmail = _authRepo.getUserEmail;
-      if (currentUserEmail.isEmpty) {
-        Get.snackbar("Error", "No user found!",
-            snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
-        return 0;
-      } else {
-        return _userRepo.getUserSteps(currentUserEmail);
-      }
-    } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
-      return 0;
-    }
-  }
   /// Fetch List of user records.
-  Future<List<UserModel>> getAllUsers() async => await _userRepo.allUsers();
+  Future<List<UserModel>> getAllUsersOrdered() async => await _userRepo.allUsersOrderedBySteps();
 
   /// Update User Data
   updateRecord(UserModel user) async {
