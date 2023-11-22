@@ -16,6 +16,8 @@ import 'package:decimal/decimal.dart';
 
 import '../../core/controllers/profile_controller.dart';
 
+import 'package:connectivity/connectivity.dart';
+
 class ScreenWalk extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -31,6 +33,7 @@ class _MyAppState extends State<ScreenWalk> {
   final controller = Get.put(ProfileController());
   int inicia=0;
   int bajarlo=0;
+  bool _isConnected = true;
 
   @override
   void initState() {
@@ -39,6 +42,11 @@ class _MyAppState extends State<ScreenWalk> {
     //inicia+=bajarlo;
     initPlatformState();
     //resetStepCount();
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isConnected = (result != ConnectivityResult.none);
+      });
+    });
 
   }
 
@@ -206,6 +214,11 @@ class _MyAppState extends State<ScreenWalk> {
                       : TextStyle(fontSize: 20, color: Colors.red),
                 ),
               ),
+              Center(
+                child: _isConnected
+                    ? Text(' ')
+                    : Text('No hay conexión a Internet', style: TextStyle(color: isDarkMode ? tPrimaryColor : tSecondaryColor,fontSize: 30)),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -242,6 +255,7 @@ class _MyAppState extends State<ScreenWalk> {
             ],
           ),
         ),
+
       ),
       ),
     );

@@ -27,7 +27,7 @@ class FeedController {
       Get.to(() => Map());
     }else if (index == 1) {
       print('C');
-      Get.to(() => LostPropertyHome());
+      Get.to(() => LostProperty());
     }  else if (index == 2) {
       print('B');
       Get.to(() => ScreenWalk());

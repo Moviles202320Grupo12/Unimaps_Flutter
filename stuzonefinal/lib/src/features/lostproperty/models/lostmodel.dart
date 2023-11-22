@@ -19,6 +19,15 @@ class LostModel {
       "image": image,
     };
   }
+  factory LostModel.fromJson(Map<String, dynamic> json){
+    //print(json["FullName"]);
+    return LostModel(
+        name: json["name"],
+        description: json["description"],
+        location: json["location"],
+        image: json["image"]
+    );
+  }
 
   /// Map Json oriented document snapshot from Firebase to LostModel
   factory LostModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {

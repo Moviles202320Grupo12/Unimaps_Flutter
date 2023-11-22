@@ -23,6 +23,18 @@ class UserModel {
     };
   }
 
+  factory UserModel.fromJson(Map<String, dynamic> json){
+    //print(json["FullName"]);
+    return UserModel(
+        fullName: json["FullName"],
+        email: json["Email"],
+        phoneNo: json["Phone"],
+        password: json["Password"],
+        steps: json["steps"]
+
+    );
+  }
+
   /// Map Json oriented document snapshot from Firebase to UserModel
   factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;

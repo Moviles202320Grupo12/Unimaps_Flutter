@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/time_register_model.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 
+import 'package:connectivity/connectivity.dart';
+import 'package:stuzonefinal/src/utils/local_db_lost.dart';
 class AddItem extends StatefulWidget {
   const AddItem({Key? key}) : super(key: key);
 
@@ -21,12 +24,24 @@ class _AddItemState extends State<AddItem> {
   TextEditingController _controllerLocation = TextEditingController();
 
   GlobalKey<FormState> key = GlobalKey();
+  bool _isConnected = true;
 
   CollectionReference _reference =
   FirebaseFirestore.instance.collection('lostproperty');
 
   String imageUrl = '';
   final now = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    // Suscripción a los cambios de conectividad
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isConnected = (result != ConnectivityResult.none);
+      });
+    });
+  }
 
 
 
@@ -132,39 +147,75 @@ class _AddItemState extends State<AddItem> {
                     }
                   },
                   icon: Icon(Icons.camera_alt)),
-              ElevatedButton(
-                  onPressed: () async {
-                    if (imageUrl.isEmpty) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Please upload an image')));
+          Visibility(
+            visible: _isConnected == true,
+            child: ElevatedButton(
+                onPressed: () async {
+                  if (imageUrl.isEmpty) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text('Please upload an image')));
 
-                      return;
-                    }
+                    return;
+                  }
 
-                    if (key.currentState!.validate()) {
-                      String itemName = _controllerName.text;
-                      String itemLocation = _controllerLocation.text;
-                      String itemDescription = _controllerDescription.text;
+                  if (key.currentState!.validate()) {
+                    String itemName = _controllerName.text;
+                    String itemLocation = _controllerLocation.text;
+                    String itemDescription = _controllerDescription.text;
 
-                      //Create a Map of data
-                      Map<String, String> dataToSend = {
-                        'name': itemName,
-                        'description': itemDescription,
-                        'location': itemLocation,
-                        'image': imageUrl,
-                      };
-                      int timeSpent = DateTime.now().microsecondsSinceEpoch - now.microsecondsSinceEpoch;
+                    //Create a Map of data
+                    Map<String, String> dataToSend = {
+                      'name': itemName,
+                      'description': itemDescription,
+                      'location': itemLocation,
+                      'image': imageUrl,
+                    };
+                    int timeSpent = DateTime.now().microsecondsSinceEpoch - now.microsecondsSinceEpoch;
 
-                      //Add a new item
-                      _reference.add(dataToSend);
+                    //Add a new item
+                    _reference.add(dataToSend);
 
-                      final timerr = LostTimerModel(tiempo: timeSpent);
+                    final timerr = LostTimerModel(tiempo: timeSpent);
 
-                      //Add a new item
-                      LostTimerRepository.instance.createLostTimer(timerr);
-                    }
-                  },
-                  child: Text('Submit'))
+                    //Add a new item
+                    LostTimerRepository.instance.createLostTimer(timerr);
+                  }
+                },
+                child: Text('Submit'))),
+
+              Visibility(
+                  visible: _isConnected == false,
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        if (imageUrl.isEmpty) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(SnackBar(content: Text('Please upload an image')));
+
+                          return;
+                        }
+
+                        if (key.currentState!.validate()) {
+                          String itemName = _controllerName.text;
+                          String itemLocation = _controllerLocation.text;
+                          String itemDescription = _controllerDescription.text;
+
+                          //Create a Map of data
+                          LostModel elcoso = LostModel(description: itemDescription, image: "https://supercurioso.com/wp-content/uploads/2016/01/C%C3%B3mo-encontrar-cosas-perdidas.jpg", name: itemName, location: itemLocation);
+                          Map<String, String> dataToSend = {
+                            'name': itemName,
+                            'description': itemDescription,
+                            'location': itemLocation,
+                            'image': imageUrl,
+                          };
+                          int timeSpent = DateTime.now().microsecondsSinceEpoch - now.microsecondsSinceEpoch;
+                          DataLocalLost.addLost(elcoso);
+
+                          //Add a new item
+
+                          //Add a new item
+                        }
+                      },
+                      child: Text('Submit'))),
             ],
           ),
         ),

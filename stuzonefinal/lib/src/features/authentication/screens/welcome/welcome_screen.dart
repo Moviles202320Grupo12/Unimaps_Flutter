@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:local_auth/local_auth.dart';
@@ -16,17 +17,87 @@ import '../../../../utils/animations/fade_in_animation/animation_design.dart';
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_controller.dart';
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_model.dart';
 import '../login/login_screen.dart';
+import 'package:flutter_network_connectivity/flutter_network_connectivity.dart';
+import 'package:flutter/services.dart';
+import 'package:connectivity/connectivity.dart';
 
 // LoginScreen
 // SignUpScreen
 
-class LoginPage extends StatelessWidget {
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPage();
+}
+
+
+class _LoginPage  extends State<LoginPage> {
   // Variables
 
   // Biometric auth
   final LocalAuthentication auth = LocalAuthentication();
   bool isBiometricAvailable = false;
   bool isDeviceSupported = false;
+
+  final FlutterNetworkConnectivity _flutterNetworkConnectivity =
+  FlutterNetworkConnectivity(
+    isContinousLookUp: true,
+    // optional, false if you cont want continous lookup
+    lookUpDuration: const Duration(seconds: 5),
+    // optional, to override default lookup duration
+    lookUpUrl: 'example.com', // optional, to override default lookup url
+  );
+
+  bool? _isInternetAvailableOnCall;
+
+  bool? _isInternetAvailableStreamStatus;
+
+  StreamSubscription<bool>? _networkConnectionStream;
+  bool _isConnected = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Suscripción a los cambios de conectividad
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isConnected = (result != ConnectivityResult.none);
+      });
+    });
+  }
+
+  @override
+  void dispose() async {
+    _networkConnectionStream?.cancel();
+    _flutterNetworkConnectivity.unregisterAvailabilityListener();
+
+    super.dispose();
+  }
+
+  void init() async {
+    await _flutterNetworkConnectivity.registerAvailabilityListener();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> _checkInternetAvailability() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+    try {
+      _isInternetAvailableOnCall =
+      await _flutterNetworkConnectivity.isInternetConnectionAvailable();
+    } on PlatformException {
+      _isInternetAvailableOnCall = null;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {});
+  }
   
 
   // ignore: non_constant_identifier_names
@@ -42,7 +113,7 @@ class LoginPage extends StatelessWidget {
 
   // firebase 
   
-  LoginPage({super.key});
+  //LoginPage({super.key});
 
   // sign user in method
   void signUserIn() {}
@@ -81,6 +152,27 @@ class LoginPage extends StatelessWidget {
               color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
           textAlign: TextAlign.left,
         ));
+
+  final putaFunciona = Container(
+      height: 130,
+      alignment: Alignment.topLeft,
+      margin: const EdgeInsets.only(
+        top: 80,
+        left: 20,
+        right: 20,
+      ),
+      child: Center(
+        child: _isConnected
+            ? Text('Que bueno verte de nuevo !',
+            style: TextStyle(
+            color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.left,)
+            : Text('No hay conexión a Internet, regresa mas tarde!',
+          style: TextStyle(
+              color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.left,),
+      ));
+
 
     final ingresarCorreo = Container(
       alignment: Alignment.center,
@@ -285,48 +377,7 @@ class LoginPage extends StatelessWidget {
 String generateBioSessionId() {
   return DateTime.now().millisecondsSinceEpoch.toString();
 }    
-/*
-  final huella = InkWell(
-              onTap: () async {
-            bool authenticated = false;
-            try {
-              // Comenzar la autenticación biométrica
-              authenticated = await auth.authenticate(
-                localizedReason: 'Autentíquese para iniciar sesión',
-                options: const AuthenticationOptions(
-                  biometricOnly: true,
-                ),
-              );
 
-              if (authenticated) {
-                // El usuario se ha autenticado con éxito
-                String bioSessionId = generateBioSessionId(); // Asegúrate de que esta función esté definida
-                User? user = _auth.currentUser;
-
-                // Guarda la sesión biométrica en Firestore
-                await _firestore.collection('biometric_sessions').doc(user?.uid).set({
-                  'session_id': bioSessionId,
-                  'timestamp': FieldValue.serverTimestamp(),
-                  'used_biometric': true,
-                });
-
-                // Navegar al MapPage después de la autenticación exitosa
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => Map(), // Asegúrate de que tienes un widget llamado MapPage
-                ));
-              }
-            } catch (e) {
-              // Manejo de errores, como el caso de que la autenticación falle
-              print(e); // Considera usar un enfoque más robusto para manejar el error
-            }
-          },
-          child: Container(
-            // Agrega estilos a tu InkWell si es necesario
-            padding: EdgeInsets.all(20),
-            child: Text('Iniciar sesión con huella dactilar'),
-          ),
-        );
-*/
     final metodosIngreso = Container(
       margin: EdgeInsets.symmetric(
         vertical: MediaQuery.of(context).size.width * 0.05,
@@ -389,7 +440,7 @@ String generateBioSessionId() {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
-          texto,
+          putaFunciona,
           ingresarCorreo,
           ingresarContrasena,
           olvideContrasena,
