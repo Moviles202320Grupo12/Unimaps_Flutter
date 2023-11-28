@@ -169,7 +169,7 @@ class LostPropertyHome extends State<LostProperty> {
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
                 child: const Text(
-                  "Reportar Objeto perdido",
+                  "Reportar Objeto Encontrado",
                   style: TextStyle(
                       color: Color(0xFFF6A700),
                       fontFamily: 'Urbanist',
