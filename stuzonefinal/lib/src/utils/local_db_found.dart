@@ -12,27 +12,25 @@ import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRep
 
 import 'package:connectivity/connectivity.dart';
 import 'package:stuzonefinal/src/utils/local_db_lost.dart';
-class AddItem extends StatefulWidget {
-  const AddItem({Key? key}) : super(key: key);
+class AddItemFound extends StatefulWidget {
+  const AddItemFound({Key? key}) : super(key: key);
 
   @override
-  State<AddItem> createState() => _AddItemState();
+  State<AddItemFound> createState() => _AddItemFoundState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemFoundState extends State<AddItemFound> {
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerDescription = TextEditingController();
   TextEditingController _controllerLocation = TextEditingController();
 
   File? _imageFile;
 
-  late ConnectivityResult _connectionStatus;
-
   GlobalKey<FormState> key = GlobalKey();
   bool _isConnected = true;
 
   CollectionReference _reference =
-  FirebaseFirestore.instance.collection('lostproperty');
+  FirebaseFirestore.instance.collection('foundproperty');
 
   String imageUrl = '';
   String newImagePath = '';
@@ -45,7 +43,6 @@ class _AddItemState extends State<AddItem> {
     // Suscripción a los cambios de conectividad
     print("A VER QUE PUTAS");
     print(DataLocalLost.getAllLosts());
-    _checkConnectivity();
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
         _isConnected = (result != ConnectivityResult.none);
@@ -134,8 +131,6 @@ class _AddItemState extends State<AddItem> {
                     await imagePicker.pickImage(source: ImageSource.camera);
                     print('${file?.path}');
 
-                    print(" llego a tomar la fotico");
-
                     if (file == null) return;
                     //Import dart:core
                     String uniqueFileName =
@@ -146,23 +141,7 @@ class _AddItemState extends State<AddItem> {
                     //Import the library
 
                     //Get a reference to storage root
-
-
-                    if (_isConnected==false || _connectionStatus == ConnectivityResult.none){
-                      Directory appDir = await getApplicationDocumentsDirectory();
-                      String appDirPath = appDir.path;
-                      print("ENTRE DONDE ERA");
-
-
-                      // Creamos una nueva ruta para guardar la imagen en el directorio de almacenamiento local
-                      newImagePath = '$appDirPath/$uniqueFileName.jpg';
-
-                      // Copiamos la imagen en la nueva ruta
-                      File newImage = await File(file.path).copy(newImagePath);
-
-                    }
-                    else{
-                      print("DONDE MIERDAS ESTA ENTRANDO");
+                    if (_isConnected==true){
                       Reference referenceRoot = FirebaseStorage.instance.ref();
                       Reference referenceDirImages =
                       referenceRoot.child('lostImages');
@@ -180,7 +159,17 @@ class _AddItemState extends State<AddItem> {
                       } catch (error) {
                         //Some error occurred
                       }
+                    }
+                    else{
+                      Directory appDir = await getApplicationDocumentsDirectory();
+                      String appDirPath = appDir.path;
 
+
+                      // Creamos una nueva ruta para guardar la imagen en el directorio de almacenamiento local
+                      newImagePath = '$appDirPath/sample_image.jpg';
+
+                      // Copiamos la imagen en la nueva ruta
+                      File newImage = await File(file.path).copy(newImagePath);
                     }
 
                   },
@@ -283,45 +272,4 @@ class _AddItemState extends State<AddItem> {
       });
     }
   }
-
-  Future<void> _checkConnectivity() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    setState(() {
-      _connectionStatus = connectivityResult;
-    });
-
-    if (_connectionStatus == ConnectivityResult.none) {
-      _isConnected=false;
-      // Realizar un comportamiento específico cuando no hay conexión
-      // Por ejemplo, mostrar un diálogo o un mensaje
-      // Puedes usar showDialog() para mostrar un diálogo informativo
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Sin conexión'),
-            content: Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
-            actions: <Widget>[
-              ElevatedButton(
-                child: Text('Cerrar'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Realizar un comportamiento específico cuando hay conexión
-      // Por ejemplo, cargar datos desde una API o realizar alguna acción
-      // Puedes colocar aquí el código para realizar esa acción
-
-
-    }
-  }
-
-
-
-
 }

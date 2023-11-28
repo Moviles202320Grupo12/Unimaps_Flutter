@@ -279,7 +279,7 @@ class FoundPropertyHome extends State<FoundProperty> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Sin conexión'),
-            content: Text('No tienes conexión a internet.'),
+            content: Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
             actions: <Widget>[
               ElevatedButton(
                 child: Text('Cerrar'),

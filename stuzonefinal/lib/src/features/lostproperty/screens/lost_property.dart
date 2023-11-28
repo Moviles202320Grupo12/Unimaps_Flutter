@@ -27,11 +27,14 @@ class LostPropertyHome extends State<LostProperty> {
 
   bool _isConnected = true;
 
+  late ConnectivityResult _connectionStatus;
+
   final controller = Get.put(LostController());
 
   @override
   void initState() {
     super.initState();
+    _checkConnectivity();
     // Suscripción a los cambios de conectividad
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
@@ -255,6 +258,44 @@ class LostPropertyHome extends State<LostProperty> {
         ),
 
     );
+  }
+
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _connectionStatus = connectivityResult;
+    });
+
+    if (_connectionStatus == ConnectivityResult.none) {
+      // Realizar un comportamiento específico cuando no hay conexión
+      // Por ejemplo, mostrar un diálogo o un mensaje
+      // Puedes usar showDialog() para mostrar un diálogo informativo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Sin conexión'),
+            content: Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text('Cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Realizar un comportamiento específico cuando hay conexión
+      // Por ejemplo, cargar datos desde una API o realizar alguna acción
+      // Puedes colocar aquí el código para realizar esa acción
+      Future<List<LostModel>> popo = controller.getAllLosts();
+      print("por lo menos trata de hacer algoooo");
+      DataLocalLost.actualizarbd(popo);
+
+    }
   }
 
 }
