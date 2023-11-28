@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/time_register_model.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
@@ -23,6 +24,8 @@ class _AddItemFoundState extends State<AddItemFound> {
   TextEditingController _controllerDescription = TextEditingController();
   TextEditingController _controllerLocation = TextEditingController();
 
+  File? _imageFile;
+
   GlobalKey<FormState> key = GlobalKey();
   bool _isConnected = true;
 
@@ -30,12 +33,16 @@ class _AddItemFoundState extends State<AddItemFound> {
   FirebaseFirestore.instance.collection('foundproperty');
 
   String imageUrl = '';
+  String newImagePath = '';
   final now = DateTime.now();
+
 
   @override
   void initState() {
     super.initState();
     // Suscripción a los cambios de conectividad
+    print("A VER QUE PUTAS");
+    print(DataLocalLost.getAllLosts());
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
         _isConnected = (result != ConnectivityResult.none);
@@ -97,6 +104,12 @@ class _AddItemFoundState extends State<AddItemFound> {
                   return null;
                 },
               ),
+              ElevatedButton(
+                onPressed: () {
+                  _mostrarFoto();
+                },
+                child: Text('Mostrar Foto Guardada'),
+              ),
               IconButton(
                   onPressed: () async {
                     /*
@@ -128,23 +141,37 @@ class _AddItemFoundState extends State<AddItemFound> {
                     //Import the library
 
                     //Get a reference to storage root
-                    Reference referenceRoot = FirebaseStorage.instance.ref();
-                    Reference referenceDirImages =
-                    referenceRoot.child('lostImages');
+                    if (_isConnected==true){
+                      Reference referenceRoot = FirebaseStorage.instance.ref();
+                      Reference referenceDirImages =
+                      referenceRoot.child('lostImages');
 
-                    //Create a reference for the image to be stored
-                    Reference referenceImageToUpload =
-                    referenceDirImages.child(uniqueFileName);
+                      //Create a reference for the image to be stored
+                      Reference referenceImageToUpload =
+                      referenceDirImages.child(uniqueFileName);
 
-                    //Handle errors/success
-                    try {
-                      //Store the file
-                      await referenceImageToUpload.putFile(File(file!.path));
-                      //Success: get the download URL
-                      imageUrl = await referenceImageToUpload.getDownloadURL();
-                    } catch (error) {
-                      //Some error occurred
+                      //Handle errors/success
+                      try {
+                        //Store the file
+                        await referenceImageToUpload.putFile(File(file!.path));
+                        //Success: get the download URL
+                        imageUrl = await referenceImageToUpload.getDownloadURL();
+                      } catch (error) {
+                        //Some error occurred
+                      }
                     }
+                    else{
+                      Directory appDir = await getApplicationDocumentsDirectory();
+                      String appDirPath = appDir.path;
+
+
+                      // Creamos una nueva ruta para guardar la imagen en el directorio de almacenamiento local
+                      newImagePath = '$appDirPath/sample_image.jpg';
+
+                      // Copiamos la imagen en la nueva ruta
+                      File newImage = await File(file.path).copy(newImagePath);
+                    }
+
                   },
                   icon: Icon(Icons.camera_alt)),
               Visibility(
@@ -187,12 +214,16 @@ class _AddItemFoundState extends State<AddItemFound> {
                   visible: _isConnected == false,
                   child: ElevatedButton(
                       onPressed: () async {
-                        if (imageUrl.isEmpty) {
+                        if (newImagePath.isEmpty) {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(content: Text('Please upload an image')));
+                          print("PANICOOOOOOO");
+                          print(DataLocalLost.getAllLosts());
 
                           return;
                         }
+                        print("NECESITO QUE ESTA MIERDA SUCEDA");
+                        print(DataLocalLost.getAllLosts());
 
                         if (key.currentState!.validate()) {
                           String itemName = _controllerName.text;
@@ -200,14 +231,15 @@ class _AddItemFoundState extends State<AddItemFound> {
                           String itemDescription = _controllerDescription.text;
 
                           //Create a Map of data
-                          LostModel elcoso = LostModel(description: itemDescription, image: "https://supercurioso.com/wp-content/uploads/2016/01/C%C3%B3mo-encontrar-cosas-perdidas.jpg", name: itemName, location: itemLocation);
+                          LostModel elcoso = LostModel(description: itemDescription, image: newImagePath, name: itemName, location: itemLocation);
                           Map<String, String> dataToSend = {
                             'name': itemName,
                             'description': itemDescription,
                             'location': itemLocation,
-                            'image': imageUrl,
+                            'image': newImagePath,
                           };
                           int timeSpent = DateTime.now().microsecondsSinceEpoch - now.microsecondsSinceEpoch;
+                          print(DataLocalLost.getAllLosts());
                           DataLocalLost.addLost(elcoso);
 
                           //Add a new item
@@ -221,5 +253,23 @@ class _AddItemFoundState extends State<AddItemFound> {
         ),
       ),
     );
+  }
+  Future<void> _mostrarFoto() async {
+    // Mostrar la imagen guardada desde el almacenamiento local
+    Directory appDir = await getApplicationDocumentsDirectory();
+    String appDirPath = appDir.path;
+    String imagePath = '$appDirPath/sample_image.jpg';
+
+    File imageFile = File(imagePath);
+
+    if (await imageFile.exists()) {
+      setState(() {
+        _imageFile = imageFile;
+      });
+    } else {
+      setState(() {
+        _imageFile = null;
+      });
+    }
   }
 }

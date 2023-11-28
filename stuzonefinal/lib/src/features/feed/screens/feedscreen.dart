@@ -61,8 +61,8 @@ class FeedScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Diálogo con dos botones'),
-          content: Text('Este es un diálogo con dos botones.'),
+          title: Text('¿Que quieres hacer?'),
+          content: Text('Estas a punto de adentrarte en un mundo de cosas perdidas'),
           actions: <Widget>[
             TextButton(
               onPressed: () {

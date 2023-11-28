@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_found.dart';
 import 'package:stuzonefinal/src/utils/local_db_lost.dart';
 import '../controllers/found_controller.dart';
 import 'find_lost_property.dart';
@@ -30,15 +31,19 @@ class FoundPropertyHome extends State<FoundProperty> {
 
   final controller = Get.put(FoundController());
 
+  late ConnectivityResult _connectionStatus;
+
   @override
   void initState() {
     super.initState();
     // Suscripción a los cambios de conectividad
+    _checkConnectivity();
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
         _isConnected = (result != ConnectivityResult.none);
         if (_isConnected==true){
           Future<List<LostModel>> popo = controller.getAllFounds();
+          print("por lo menos trata de hacer algoooo");
           DataLocalLost.actualizarbd(popo);
 
         }
@@ -165,7 +170,7 @@ class FoundPropertyHome extends State<FoundProperty> {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Get.to(() => AddItem());
+                Get.to(() => AddItemFound());
               },
               style: ElevatedButton.styleFrom(
                   primary: Colors.black, minimumSize: Size(40, 40)),
@@ -256,6 +261,45 @@ class FoundPropertyHome extends State<FoundProperty> {
       ),
 
     );
+  }
+
+
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _connectionStatus = connectivityResult;
+    });
+
+    if (_connectionStatus == ConnectivityResult.none) {
+      // Realizar un comportamiento específico cuando no hay conexión
+      // Por ejemplo, mostrar un diálogo o un mensaje
+      // Puedes usar showDialog() para mostrar un diálogo informativo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Sin conexión'),
+            content: Text('No tienes conexión a internet.'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text('Cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Realizar un comportamiento específico cuando hay conexión
+      // Por ejemplo, cargar datos desde una API o realizar alguna acción
+      // Puedes colocar aquí el código para realizar esa acción
+      Future<List<LostModel>> popo = controller.getAllFounds();
+      print("por lo menos trata de hacer algoooo");
+      DataLocalLost.actualizarbd(popo);
+
+    }
   }
 
 }

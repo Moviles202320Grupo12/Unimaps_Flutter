@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +66,8 @@ class DataLocalLost {
   }
 
   static Future<void> actualizarbd(Future<List<LostModel>> popo) async {
+
+    print("creo que nunca entra");
     try {
       final List<LostModel> perdidos = await popo;
       final db = await _getDB();
@@ -71,18 +77,48 @@ class DataLocalLost {
       CollectionReference _reference =
       FirebaseFirestore.instance.collection('lostproperty');
       for (var perdida in lalista){
+
+        Reference referenceRoot = FirebaseStorage.instance.ref();
+        Reference referenceDirImages =
+        referenceRoot.child('lostImages');
+
+        Directory appDir = await getApplicationDocumentsDirectory();
+        String appDirPath = appDir.path;
+        String imagePath = perdida.image;
+
+        File imageFile = File(imagePath);
+
+        String uniqueFileName =
+        DateTime.now().millisecondsSinceEpoch.toString();
+
+        String imageUrl = '';
+
+
+        //Create a reference for the image to be stored
+        Reference referenceImageToUpload =
+        referenceDirImages.child(uniqueFileName);
+
+        //Handle errors/success
+        try {
+          //Store the file
+          await referenceImageToUpload.putFile(File(imageFile!.path));
+          //Success: get the download URL
+          imageUrl = await referenceImageToUpload.getDownloadURL();
+        } catch (error) {
+          //Some error occurred
+        }
         Map<String, String> dataToSend = {
           'name': perdida.name,
           'description': perdida.description,
           'location': perdida.location,
-          'image': perdida.image,
+          'image': imageUrl,
         };
 
         _reference.add(dataToSend);
       }
 
 
-      await db.delete('Lost');
+      db.delete('Lost');
 
 
     } catch (e) {

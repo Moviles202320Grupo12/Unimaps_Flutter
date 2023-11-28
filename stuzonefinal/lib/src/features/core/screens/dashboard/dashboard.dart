@@ -12,6 +12,7 @@ import 'package:stuzonefinal/src/features/core/screens/map.dart';
 import 'package:get/get.dart';
 
 import 'package:stuzonefinal/src/features/feed/controllers/feedcontroller.dart';
+import 'package:stuzonefinal/src/features/lostproperty/screens/pruebasDeMierda.dart';
 
 import '../../../lostproperty/screens/found_property.dart';
 import '../../../lostproperty/screens/lost_property.dart';
@@ -139,6 +140,8 @@ class Dashboard extends StatelessWidget {
                 // Acción al presionar el segundo botón del diálogo
                 print('Segundo botón presionado');
                 Get.to(() => FoundProperty());
+                //Get.to(() => PruebaDeMierda());
+
               },
               child: Text('Ver cosas Buscadas'),
             ),
