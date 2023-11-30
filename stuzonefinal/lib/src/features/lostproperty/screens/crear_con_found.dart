@@ -11,7 +11,7 @@ import 'package:stuzonefinal/src/features/lostproperty/models/time_register_mode
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:stuzonefinal/src/utils/local_db_lost.dart';
+import 'package:stuzonefinal/src/utils/local_db_found.dart';
 class AddItemFound extends StatefulWidget {
   const AddItemFound({Key? key}) : super(key: key);
 
@@ -25,6 +25,8 @@ class _AddItemFoundState extends State<AddItemFound> {
   TextEditingController _controllerLocation = TextEditingController();
 
   File? _imageFile;
+
+  late ConnectivityResult _connectionStatus;
 
   GlobalKey<FormState> key = GlobalKey();
   bool _isConnected = true;
@@ -42,7 +44,8 @@ class _AddItemFoundState extends State<AddItemFound> {
     super.initState();
     // Suscripción a los cambios de conectividad
     print("A VER QUE PUTAS");
-    print(DataLocalLost.getAllLosts());
+    print(DataLocalFound.getAllFounds());
+    _checkConnectivity();
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
         _isConnected = (result != ConnectivityResult.none);
@@ -104,12 +107,6 @@ class _AddItemFoundState extends State<AddItemFound> {
                   return null;
                 },
               ),
-              ElevatedButton(
-                onPressed: () {
-                  _mostrarFoto();
-                },
-                child: Text('Mostrar Foto Guardada'),
-              ),
               IconButton(
                   onPressed: () async {
                     /*
@@ -131,6 +128,8 @@ class _AddItemFoundState extends State<AddItemFound> {
                     await imagePicker.pickImage(source: ImageSource.camera);
                     print('${file?.path}');
 
+                    print(" llego a tomar la fotico");
+
                     if (file == null) return;
                     //Import dart:core
                     String uniqueFileName =
@@ -141,7 +140,23 @@ class _AddItemFoundState extends State<AddItemFound> {
                     //Import the library
 
                     //Get a reference to storage root
-                    if (_isConnected==true){
+
+
+                    if (_isConnected==false || _connectionStatus == ConnectivityResult.none){
+                      Directory appDir = await getApplicationDocumentsDirectory();
+                      String appDirPath = appDir.path;
+                      print("ENTRE DONDE ERA");
+
+
+                      // Creamos una nueva ruta para guardar la imagen en el directorio de almacenamiento local
+                      newImagePath = '$appDirPath/$uniqueFileName.jpg';
+
+                      // Copiamos la imagen en la nueva ruta
+                      File newImage = await File(file.path).copy(newImagePath);
+
+                    }
+                    else{
+                      print("DONDE MIERDAS ESTA ENTRANDO");
                       Reference referenceRoot = FirebaseStorage.instance.ref();
                       Reference referenceDirImages =
                       referenceRoot.child('lostImages');
@@ -159,17 +174,7 @@ class _AddItemFoundState extends State<AddItemFound> {
                       } catch (error) {
                         //Some error occurred
                       }
-                    }
-                    else{
-                      Directory appDir = await getApplicationDocumentsDirectory();
-                      String appDirPath = appDir.path;
 
-
-                      // Creamos una nueva ruta para guardar la imagen en el directorio de almacenamiento local
-                      newImagePath = '$appDirPath/sample_image.jpg';
-
-                      // Copiamos la imagen en la nueva ruta
-                      File newImage = await File(file.path).copy(newImagePath);
                     }
 
                   },
@@ -218,12 +223,12 @@ class _AddItemFoundState extends State<AddItemFound> {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(content: Text('Please upload an image')));
                           print("PANICOOOOOOO");
-                          print(DataLocalLost.getAllLosts());
+                          print(DataLocalFound.getAllFounds());
 
                           return;
                         }
                         print("NECESITO QUE ESTA MIERDA SUCEDA");
-                        print(DataLocalLost.getAllLosts());
+                        print(DataLocalFound.getAllFounds());
 
                         if (key.currentState!.validate()) {
                           String itemName = _controllerName.text;
@@ -239,8 +244,8 @@ class _AddItemFoundState extends State<AddItemFound> {
                             'image': newImagePath,
                           };
                           int timeSpent = DateTime.now().microsecondsSinceEpoch - now.microsecondsSinceEpoch;
-                          print(DataLocalLost.getAllLosts());
-                          DataLocalLost.addLost(elcoso);
+                          print(DataLocalFound.getAllFounds());
+                          DataLocalFound.addFound(elcoso);
 
                           //Add a new item
 
@@ -254,22 +259,45 @@ class _AddItemFoundState extends State<AddItemFound> {
       ),
     );
   }
-  Future<void> _mostrarFoto() async {
-    // Mostrar la imagen guardada desde el almacenamiento local
-    Directory appDir = await getApplicationDocumentsDirectory();
-    String appDirPath = appDir.path;
-    String imagePath = '$appDirPath/sample_image.jpg';
 
-    File imageFile = File(imagePath);
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _connectionStatus = connectivityResult;
+    });
 
-    if (await imageFile.exists()) {
-      setState(() {
-        _imageFile = imageFile;
-      });
+    if (_connectionStatus == ConnectivityResult.none) {
+      _isConnected=false;
+      // Realizar un comportamiento específico cuando no hay conexión
+      // Por ejemplo, mostrar un diálogo o un mensaje
+      // Puedes usar showDialog() para mostrar un diálogo informativo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Sin conexión'),
+            content: Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text('Cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     } else {
-      setState(() {
-        _imageFile = null;
-      });
+      // Realizar un comportamiento específico cuando hay conexión
+      // Por ejemplo, cargar datos desde una API o realizar alguna acción
+      // Puedes colocar aquí el código para realizar esa acción
+
+
     }
   }
+
+
+
+
 }

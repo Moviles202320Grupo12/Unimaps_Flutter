@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_found.dart';
-import 'package:stuzonefinal/src/utils/local_db_lost.dart';
-import '../controllers/found_controller.dart';
+import 'package:stuzonefinal/src/utils/local_db_found.dart';
 import 'find_lost_property.dart';
-import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_back.dart';
+import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_found.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
-import 'package:stuzonefinal/src/features/lostproperty/controllers/lost_controller.dart';
+import 'package:stuzonefinal/src/features/lostproperty/controllers/found_controller.dart';
 import 'package:stuzonefinal/src/constants/image_strings.dart';
 import 'package:get/get.dart';
 
@@ -29,22 +27,21 @@ class FoundPropertyHome extends State<FoundProperty> {
 
   bool _isConnected = true;
 
-  final controller = Get.put(FoundController());
-
   late ConnectivityResult _connectionStatus;
+
+  final controller = Get.put(FoundController());
 
   @override
   void initState() {
     super.initState();
-    // Suscripción a los cambios de conectividad
     _checkConnectivity();
+    // Suscripción a los cambios de conectividad
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
         _isConnected = (result != ConnectivityResult.none);
         if (_isConnected==true){
           Future<List<LostModel>> popo = controller.getAllFounds();
-          print("por lo menos trata de hacer algoooo");
-          DataLocalLost.actualizarbd(popo);
+          DataLocalFound.actualizarbd(popo);
 
         }
       });
@@ -64,7 +61,7 @@ class FoundPropertyHome extends State<FoundProperty> {
           ),
           onPressed: () {
             Navigator.pop(context,
-                '/lost_property.dart'); // Regresar a la ventana anterior
+                '/found_property.dart'); // Regresar a la ventana anterior
           },
         ),
         centerTitle: true,
@@ -175,7 +172,7 @@ class FoundPropertyHome extends State<FoundProperty> {
               style: ElevatedButton.styleFrom(
                   primary: Colors.black, minimumSize: Size(40, 40)),
               child: const Text(
-                "Reportar Objeto perdido",
+                "Reportar Objeto Buscado",
                 style: TextStyle(
                     color: Color(0xFFF6A700),
                     fontFamily: 'Urbanist',
@@ -263,7 +260,6 @@ class FoundPropertyHome extends State<FoundProperty> {
     );
   }
 
-
   Future<void> _checkConnectivity() async {
     var connectivityResult = await Connectivity().checkConnectivity();
     setState(() {
@@ -297,7 +293,7 @@ class FoundPropertyHome extends State<FoundProperty> {
       // Puedes colocar aquí el código para realizar esa acción
       Future<List<LostModel>> popo = controller.getAllFounds();
       print("por lo menos trata de hacer algoooo");
-      DataLocalLost.actualizarbd(popo);
+      DataLocalFound.actualizarbd(popo);
 
     }
   }
