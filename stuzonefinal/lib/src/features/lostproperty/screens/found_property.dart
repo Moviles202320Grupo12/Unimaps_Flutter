@@ -186,74 +186,106 @@ class FoundPropertyHome extends State<FoundProperty> {
                 'NO TIENES CONEXION A INTERNET',
                 style: TextStyle(fontSize: 24),
               )),
-          Expanded(child:
-          FutureBuilder<List<LostModel>>(
-            future: controller.getAllFounds(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (c, index) {
-                        return Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10.0),
-                              decoration: BoxDecoration(
-                                  color: Color(0xBBBB87400),
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
+          Expanded(
+            child: FutureBuilder<List<LostModel>>(
+              future: controller.getAllFounds(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    List<LostModel> foundItems = snapshot.data!;
+                    return GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                      ),
+                      itemCount: foundItems.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 16 / 9, // Proporción de aspecto deseada
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(10.0)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: foundItems[index].image,
+                                    placeholder: (context, url) {
+                                      return Image.asset(defaultLostProperty);
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      return Image.asset(defaultLostProperty);
+                                    },
+                                    fit: BoxFit.cover, // Ajustar la imagen al tamaño del contenedor
+                                  ),
+                                ),
                               ),
-
-                            ),
-                            Text(snapshot.data![index].name,
-                                style: TextStyle(
-                                    color: Color(0xFFF6A700),
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20)),
-                            Text(snapshot.data![index].description,
-                                style: TextStyle(
-                                    color: Color(0xFFF6A700),
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 10)),
-                            Text(snapshot.data![index].location,
-                                style: TextStyle(
-                                    color: Color(0xFFF6A700),
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15)),
-                            CachedNetworkImage(
-                              imageUrl: snapshot.data![index].image,
-                              placeholder: (context, url) {
-                                // Si no hay conexión o la imagen no se puede cargar, muestra la imagen predeterminada desde el almacenamiento local
-                                return Image.asset(defaultLostProperty);
-                              },
-                              errorWidget: (context, url, error) {
-                                // Si ocurre un error al cargar la imagen, muestra la imagen predeterminada desde el almacenamiento local
-                                return Image.asset(defaultLostProperty);
-                              },
-                            ),
-
-                            const SizedBox(
-                              height: 10,
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      foundItems[index].name,
+                                      style: TextStyle(
+                                        color: Color(0xFFF6A700),
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      foundItems[index].description,
+                                      style: TextStyle(
+                                        color: Color(0xFFF6A700),
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      foundItems[index].location,
+                                      style: TextStyle(
+                                        color: Color(0xFFF6A700),
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12,
+                                      ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         );
-                      });
-                } else if (snapshot.hasError) {
-                  return Center(child: Text(snapshot.error.toString()));
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text(snapshot.error.toString()));
+                  } else {
+                    return const Center(child: Text('Something went wrong'));
+                  }
                 } else {
-                  return const Center(child: Text('Something went wrong'));
+                  return const Center(child: CircularProgressIndicator());
                 }
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+              },
+            ),
           )
+
+
         ],
       ),
 
