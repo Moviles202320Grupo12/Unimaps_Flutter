@@ -7,6 +7,8 @@ class Events extends StatelessWidget {
     return MaterialApp(home: EventsHome());
   }
 }
+
+
 class EventsHome extends StatelessWidget {
   static const black_titles = Color(0x00090909);
 
@@ -192,12 +194,12 @@ class EventsHome extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "FOPRE",
+                              "Fopre",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
                             Text(
-                              "Sept 5-9:",
+                              "Septiembre 5-9:",
                               style: TextStyle(
                                   fontSize: 15, color: Color(0xBBBB87400)),
                             ),
@@ -207,7 +209,7 @@ class EventsHome extends StatelessWidget {
                           children: [
                             SizedBox(width: 2),
                             Text(
-                              "Finalizado",
+                              "Activo",
                               style: TextStyle(
                                   color: Color(0xBBBB87400), fontSize: 18),
                             ),

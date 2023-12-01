@@ -78,8 +78,6 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-
-
   ///[FacebookAuthentication]
   Future<UserCredential> signInWithFacebook() async {
     try {

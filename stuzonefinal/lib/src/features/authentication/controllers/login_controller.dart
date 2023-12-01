@@ -46,5 +46,4 @@ class LoginController extends GetxController {
       Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
-
 }
