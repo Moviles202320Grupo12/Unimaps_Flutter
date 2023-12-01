@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:stuzonefinal/firebase_options.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/inicio_crear_sesion.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
+import 'package:stuzonefinal/src/features/core/screens/repo_trabajos.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/coupon_repository/coupon_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/found_repository.dart';
@@ -29,6 +30,7 @@ void main() {
       .then((value) {
     Get.put(AuthenticationRepository());
     Get.put(LostRepository());
+    Get.put(RepoTrabajos());
     Get.put(TutorRepository());
     Get.put(EventRepository());
     Get.put(LostTimerRepository());
@@ -42,8 +44,6 @@ void main() {
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
-  
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -56,7 +56,7 @@ class App extends StatelessWidget {
         defaultTransition: Transition.leftToRightWithFade,
         transitionDuration: const Duration(milliseconds: 500),
         //home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-        home: LoginPage()
+        home: const LoginPage() // RepoTrabajos() // LoginPage()
 
         /// Show Progress Indicator OR SPLASH SCREEN until Screen Loads all its data from cloud.
         /// Let the AuthenticationRepository decide which screen to appear as first.
@@ -64,33 +64,32 @@ class App extends StatelessWidget {
   }
 }
 
-
-class AppLifecycleReactorState extends StatefulWidget{
+class AppLifecycleReactorState extends StatefulWidget {
   @override
-  _AppLifecycleReactorState createState()=>_AppLifecycleReactorState();
-
+  _AppLifecycleReactorState createState() => _AppLifecycleReactorState();
 }
 
-class _AppLifecycleReactorState extends State<AppLifecycleReactorState> with WidgetsBindingObserver{
+class _AppLifecycleReactorState extends State<AppLifecycleReactorState>
+    with WidgetsBindingObserver {
   late Timer timer;
-  int count=0;
-  bool active=true;
-  
+  int count = 0;
+  bool active = true;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    timer=Timer.periodic(Duration(seconds: 1), (tm) { 
-     if(active){
-       setState(() {
-        count+=1;
-      });
-     }
+    timer = Timer.periodic(Duration(seconds: 1), (tm) {
+      if (active) {
+        setState(() {
+          count += 1;
+        });
+      }
     });
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
     timer.cancel();
     WidgetsBinding.instance.removeObserver(this);
@@ -100,18 +99,30 @@ class _AppLifecycleReactorState extends State<AppLifecycleReactorState> with Wid
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // TODO: implement didChangeAppLifecycleState
     super.didChangeAppLifecycleState(state);
-    if(state==AppLifecycleState.resumed){active=true;print("resumed");}
-    else if(state==AppLifecycleState.inactive){active=false;print("inactive");}
-    else if(state==AppLifecycleState.detached){print("detached");}
-    else if(state==AppLifecycleState.paused){active=false;print("paused");}
+    if (state == AppLifecycleState.resumed) {
+      active = true;
+      print("resumed");
+    } else if (state == AppLifecycleState.inactive) {
+      active = false;
+      print("inactive");
+    } else if (state == AppLifecycleState.detached) {
+      print("detached");
+    } else if (state == AppLifecycleState.paused) {
+      active = false;
+      print("paused");
+    }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Center(child: Text("$count", style: TextStyle(fontSize: 45,fontWeight: FontWeight.bold),),),
+      body: Center(
+        child: Text(
+          "$count",
+          style: TextStyle(fontSize: 45, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
-
 }
