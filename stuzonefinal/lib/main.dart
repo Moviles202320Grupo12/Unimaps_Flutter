@@ -17,9 +17,24 @@ import 'package:stuzonefinal/src/utils/app_bindings.dart';
 import 'package:stuzonefinal/src/utils/theme/theme.dart';
 import 'dart:async';
 
+
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
+  var device = DeviceInfoPlugin();
+ // Check the operating system
+   if (Platform.isAndroid) {
+     print('Android');
+   } else if (Platform.isIOS) {
+     print('iOS');
+   } else if (Platform.isMacOS) {
+     print('macOS');
+   } else if (Platform.isWindows) {
+     print('Windows');
+   } else if (Platform.isLinux) {
+     print('Linux');
+   } else {
+     print('Unknown operating system');
+   }
   /// Show Splash Screen till data loads & when loaded call FlutterNativeSplash.remove();
   /// In this case I'm removing it inside AuthenticationRepository() -> onReady() method.
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
