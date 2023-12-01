@@ -5,6 +5,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:stuzonefinal/src/features/tutors/models/tutor_model.dart';
 import 'package:stuzonefinal/src/features/tutors/controllers/tutor_controller.dart';
 import 'package:stuzonefinal/src/features/tutors/screens/crear_tutor.dart';
+import 'package:stuzonefinal/src/features/tutors/screens/ranking_tutores.dart';
 import 'package:stuzonefinal/src/constants/image_strings.dart';
 
 import '../../../constants/colors.dart';
@@ -37,6 +38,23 @@ class AllTutors extends StatelessWidget {
                       primary: Colors.black, minimumSize: Size(40, 40)),
                   child: const Text(
                     "Crear Nuevo tutor",
+                    style: TextStyle(
+                        color: Color(0xFFF6A700),
+                        fontFamily: 'Urbanist',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => RankingTutor());
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black, minimumSize: Size(40, 40)),
+                  child: const Text(
+                    "Ranking",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',

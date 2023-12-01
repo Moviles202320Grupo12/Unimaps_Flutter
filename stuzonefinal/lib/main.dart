@@ -15,6 +15,7 @@ import 'package:stuzonefinal/src/utils/app_bindings.dart';
 import 'package:stuzonefinal/src/utils/theme/theme.dart';
 import 'dart:async';
 
+
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
