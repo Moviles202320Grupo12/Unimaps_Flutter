@@ -7,6 +7,7 @@ import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome
 // ignore: depend_on_referenced_packages
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:google_maps_webservice/places.dart';
 
 import 'package:connectivity/connectivity.dart';
 
@@ -39,6 +40,16 @@ class _Map extends State<Map> {
     mapController = controller;
   }
 
+  final GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: 'YOUR_API_KEY');
+
+   Future<List<PlacesSearchResult>> _performSearch(String query) async {
+    PlacesSearchResponse result = await _places.searchByText(query);
+    if (result.status == 'OK') {
+      return result.results;
+    } else {
+      throw Exception('Error occurred during search: ${result.errorMessage}');
+   + }
+
   @override
   Widget build(BuildContext context) {
     // Get screen dimensions
@@ -57,7 +68,6 @@ class _Map extends State<Map> {
       mapType: MapType.normal,
       compassEnabled: true,
     );
-
     final caja_menu = Container(
       margin: EdgeInsets.only(top: height - 120),
       decoration: const ShapeDecoration(
