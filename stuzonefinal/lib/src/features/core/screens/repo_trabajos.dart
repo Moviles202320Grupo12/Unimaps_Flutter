@@ -12,19 +12,7 @@ class RepoTrabajos extends StatefulWidget {
 class _RepoTrabajos extends State<RepoTrabajos> {
   File? file;
   String? fileName;
-/*
-  Future selectFile() async {
-    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
-    if (result == null) return;
-    final path = result.files.single.path!;
-
-    setState(() {
-      file = File(path);
-      fileName = result.files.single.name;
-    });
-  }
-*/
   Future uploadFile() async {
     if (file == null) return;
 
