@@ -1,8 +1,12 @@
-import 'package:flutter/material.dart';
-//import 'package:file_picker/file_picker.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:math';
+import 'dart:typed_data';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:io';
+import 'package:flutter/material.dart';
 
 class RepoTrabajos extends StatefulWidget {
   @override
@@ -10,46 +14,51 @@ class RepoTrabajos extends StatefulWidget {
 }
 
 class _RepoTrabajos extends State<RepoTrabajos> {
-  File? file;
-  String? fileName;
+  final DatabaseReference mainReference =
+      FirebaseDatabase.instance.reference().child('Database');
 
-  Future uploadFile() async {
-    if (file == null) return;
+  String createCryptoRandomString([int length = 32]) {
+    final Random random = Random.secure();
+    var values = List<int>.generate(length, (i) => random.nextInt(256));
+    return base64Url.encode(values);
+  }
 
-    final filePath = 'uploads/$fileName';
-    final destination = FirebaseStorage.instance.ref().child(filePath);
+  void documentFileUpload(String url) {
+    var data = {
+      "PDF": url,
+      "FileName": "My new Book",
+    };
 
-    await destination.putFile(file!);
-    final url = await destination.getDownloadURL();
-
-    await FirebaseFirestore.instance.collection('uploads').add({
-      'url': url,
-      'name': fileName,
-      // Add more metadata if needed
+    mainReference.child(createCryptoRandomString()).set(data).then((v) {
+      print("Saved Successfully");
     });
+  }
 
-    setState(() {
-      file = null;
-      fileName = null;
-    });
+  Future savePdf(List<int> asset, String name) async {
+    final reference = FirebaseStorage.instance.ref().child(name);
+    UploadTask uploadTask = reference
+        .putData(Uint8List.fromList(asset)); // Convert to Uint8List here
+    String url = await (await uploadTask).ref.getDownloadURL();
+    documentFileUpload(url);
+  }
+
+  Future getPdfAndUpload() async {
+    var rng = Random();
+    String randomName =
+        List.generate(20, (_) => rng.nextInt(100).toString()).join();
+
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(type: FileType.custom);
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      String fileName = '${randomName}.pdf';
+      savePdf(await file.readAsBytes(), fileName);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Future getPdfAndUpload() async {
-      var rng = new Random();
-      String randomName = "";
-
-      for (var i = 0; i < 20; i++) {
-        print(rng.nextInt(100));
-        randomName += rng.nextInt(100);
-      }
-
-      File file = await FilePicker.getFile(type: FileType.custom);
-      String fileName = '${randomName}.pdf';
-      savePdf(file.readAsBytesSync(), fileName);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Repositorio de Trabajos UniAndes'),
@@ -57,27 +66,14 @@ class _RepoTrabajos extends State<RepoTrabajos> {
         foregroundColor: Colors.amber,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: Navigator.push(getPdfAndUpload()),
+        onPressed: getPdfAndUpload,
         child: const Icon(
           Icons.add,
           color: Colors.amber,
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (file != null) Text(fileName!),
-            ElevatedButton(
-              onPressed: null, //selectFile,
-              child: Text('Seleccionar Archivo'),
-            ),
-            ElevatedButton(
-              onPressed: uploadFile,
-              child: Text('Subir Archivo'),
-            ),
-          ],
-        ),
+        child: Text("Upload your files"),
       ),
     );
   }
