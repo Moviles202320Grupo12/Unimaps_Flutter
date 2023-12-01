@@ -72,12 +72,12 @@ const String tOtpMessage = "Enter the verification code sent at ";
 
 // -- Dashboard Screen - Text
 const String tDashboardTitle = "Hey, Student";
-const String tDashboardHeading = "Explore Courses";
-const String tDashboardSearch = "Search...";
+const String tDashboardHeading = "Stuzone";
+const String tDashboardSearch = "";
 const String tDashboardBannerTitle2 = "JAVA";
 const String tDashboardButton = "View All";
-const String tDashboardTopCourses = "Top Courses";
-const String tDashboardBannerSubTitle = "10 Lessons";
+const String tDashboardTopCourses = "";
+const String tDashboardBannerSubTitle = "";
 const String tDashboardBannerTitle1 = "";
 
 
