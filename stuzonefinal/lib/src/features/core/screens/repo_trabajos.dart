@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +15,18 @@ class RepoTrabajos extends StatefulWidget {
 }
 
 class _RepoTrabajos extends State<RepoTrabajos> {
+  Future<void> requestStoragePermission() async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+  }
+
+  Future<bool> checkStoragePermission() async {
+    var status = await Permission.storage.status;
+    return status.isGranted;
+  }
+
   final DatabaseReference mainReference =
       FirebaseDatabase.instance.reference().child('Database');
 
@@ -43,13 +56,26 @@ class _RepoTrabajos extends State<RepoTrabajos> {
   }
 
   Future getPdfAndUpload() async {
+    bool isGranted = await checkStoragePermission();
+    if (!isGranted) {
+      await requestStoragePermission();
+      // Re-check after requesting
+      isGranted = await checkStoragePermission();
+      if (!isGranted) {
+        // Handle the scenario when permission is denied
+        print('Storage permission denied');
+        return;
+      }
+    }
     var rng = Random();
     String randomName =
         List.generate(20, (_) => rng.nextInt(100).toString()).join();
 
-    FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.custom);
-
+    // Updated FilePicker call
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'] // Specify 'pdf' here without the dot
+        );
     if (result != null) {
       File file = File(result.files.single.path!);
       String fileName = '${randomName}.pdf';
