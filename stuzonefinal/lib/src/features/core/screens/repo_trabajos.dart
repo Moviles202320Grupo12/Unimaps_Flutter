@@ -9,12 +9,43 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+class FileData {
+  final String url;
+  final String name;
+
+  FileData({required this.url, required this.name});
+}
+
 class RepoTrabajos extends StatefulWidget {
   @override
   _RepoTrabajos createState() => _RepoTrabajos();
 }
 
 class _RepoTrabajos extends State<RepoTrabajos> {
+  List<FileData> files = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadFiles();
+  }
+
+  void loadFiles() async {
+    final ListResult result =
+        await FirebaseStorage.instance.ref('trabajos/').listAll();
+    List<FileData> filesData = [];
+    for (var item in result.items) {
+      final String url = await item.getDownloadURL();
+      filesData.add(FileData(url: url, name: item.name));
+    }
+    setState(() {
+      files = filesData;
+    });
+
+    print("--->");
+    print(files);
+  }
+
   Future<void> requestStoragePermission() async {
     var status = await Permission.storage.status;
     if (!status.isGranted) {
@@ -98,9 +129,22 @@ class _RepoTrabajos extends State<RepoTrabajos> {
           color: Colors.amber,
         ),
       ),
-      body: Center(
-        child: Text("Upload your files"),
-      ),
+      body: files.isEmpty
+          ? Center(child: Text("No fi555les uploaded"))
+          : ListView.builder(
+              itemCount: files.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: Icon(Icons.picture_as_pdf,
+                      color: Colors.red), // Icono de PDF
+                  title: Text(files[index].name),
+                  onTap: () {
+                    // Aquí puedes implementar la lógica para abrir el archivo PDF
+                    // Por ejemplo, usando un visualizador de PDF
+                  },
+                );
+              },
+            ),
     );
   }
 }
