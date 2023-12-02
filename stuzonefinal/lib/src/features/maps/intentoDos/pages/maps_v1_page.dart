@@ -223,6 +223,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../ui/pages/home/utils/image_to_bytes.dart';
 import '../data_dummy.dart';
 import '../map_type_google.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -263,7 +265,21 @@ class _MapsV1PageState extends State<MapsV1Page> {
       body: Stack(
         children: [
           // GOOGLE MAPS
-          _buildGoogleMaps(),
+      FutureBuilder<Widget>(
+      future: _buildGoogleMaps(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Mientras se espera la resolución del futuro
+          return CircularProgressIndicator(); // o cualquier otro indicador de carga
+        } else if (snapshot.hasError) {
+          // Si ocurre un error al resolver el futuro
+          return Text('Error al cargar el widget');
+        } else {
+          // Cuando el futuro se resuelve exitosamente
+          return snapshot.data ?? Container(); // El widget resuelto del futuro
+        }
+      },
+    ),
 
           // KARTU TEMPAT
           _buildDetailCard()
@@ -272,14 +288,46 @@ class _MapsV1PageState extends State<MapsV1Page> {
     );
   }
 
-  Widget _buildGoogleMaps() {
+  Future<Widget> _buildGoogleMaps() async {
+    Set<Marker> remarkers = {
+      Marker(
+          markerId: const MarkerId("edificioML"),
+          position: const LatLng(4.602936, -74.064827),
+          infoWindow: const InfoWindow(title: "EdificioML"),
+          icon: BitmapDescriptor.fromBytes(
+    await  imageToBytes("https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fml.jpg?alt=media&token=693d3a4a-bccf-4564-a669-00a9a8a47d7a", fromNetwork: true),
+    )),
+      Marker(
+          markerId: const MarkerId("edificioC"),
+          position: const LatLng(4.601182, -74.065069),
+          infoWindow: const InfoWindow(title: "edificioC"),
+          icon: BitmapDescriptor.fromBytes(
+            await  imageToBytes("https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fc.jpg?alt=media&token=5a17bf07-2bf8-4113-b2ed-4ea496545c3d", fromNetwork: true),
+          )),
+      Marker(
+          markerId: const MarkerId("biblioDerecho"),
+          position: const LatLng(4.601924, -74.065561),
+          infoWindow: const InfoWindow(title: "biblioDerecho"),
+          icon: BitmapDescriptor.fromBytes(
+            await  imageToBytes("https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fder.jpg?alt=media&token=20127e23-a0fd-414f-a656-30b08178f5dc", fromNetwork: true),
+          )),
+      Marker(
+          markerId: const MarkerId("EdificioB"),
+          position: const LatLng(4.601457, -74.065677),
+          infoWindow: const InfoWindow(title: "EdificioB"),
+          icon: BitmapDescriptor.fromBytes(
+            await  imageToBytes("https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fb.jpg?alt=media&token=75e8000c-63d6-4fd6-9eb3-04161434f154", fromNetwork: true),
+          ))
+    };
     return GoogleMap(
       mapType: mapType,
       initialCameraPosition: CameraPosition(
         target: LatLng(latitude, longitude),
-        zoom: 17,
+        zoom: 18,
+
       ),
-      markers: markers,
+      zoomGesturesEnabled: false,
+      markers: remarkers,
       onMapCreated: (GoogleMapController controller) {
         _controller.complete(controller);
       },
@@ -323,25 +371,31 @@ class _MapsV1PageState extends State<MapsV1Page> {
               ),
               _displayPlaceCard(
                   "https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fml.jpg?alt=media&token=693d3a4a-bccf-4564-a669-00a9a8a47d7a",
-                  "edificioML",
+                  "Edificio ML",
                   4.602936,
-                  -74.064827),
+                  -74.064827,
+              "Mario Laserna",
+              "Click para ir!"),
               const SizedBox(
                 width: 10,
               ),
               _displayPlaceCard(
                   "https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fc.jpg?alt=media&token=5a17bf07-2bf8-4113-b2ed-4ea496545c3d",
-                  "edificioC",
+                  "Edificio C",
                   4.601182,
-                  -74.065069),
+                  -74.065069,
+                  "Dpto Arquitectura",
+                  "Click para ir!"),
               const SizedBox(
                 width: 10,
               ),
               _displayPlaceCard(
                   "https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fder.jpg?alt=media&token=20127e23-a0fd-414f-a656-30b08178f5dc",
-                  "biblioDerecho",
+                  "Biblioteca Derecho",
                   4.601924,
-                  -74.065561),
+                  -74.065561,
+                  "Eduardo Correa",
+                  "Click para ir!"),
               const SizedBox(
                 width: 10,
               ),
@@ -349,7 +403,9 @@ class _MapsV1PageState extends State<MapsV1Page> {
                   "https://firebasestorage.googleapis.com/v0/b/stuzone-8afd7.appspot.com/o/maps%2Fb.jpg?alt=media&token=75e8000c-63d6-4fd6-9eb3-04161434f154",
                   "EdificioB",
                   4.601457,
-                  -74.065677),
+                  -74.065677,
+                  "Labs Fisica",
+                  "Click para ir!"),
               const SizedBox(
                 width: 10,
               ),
@@ -358,7 +414,7 @@ class _MapsV1PageState extends State<MapsV1Page> {
         ));
   }
 
-  _displayPlaceCard(String imageUrl, String name, double lat, double lgn) {
+  _displayPlaceCard(String imageUrl, String name, double lat, double lgn, String desc1, String desc2) {
     return GestureDetector(
       onTap: () {
         _onClickPlaceCard(lat, lgn);
@@ -371,62 +427,89 @@ class _MapsV1PageState extends State<MapsV1Page> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
           elevation: 10,
-          child: Row(
+          child: Stack(
             children: [
-              Container(
-                width: 90,
-                height: 90,
-                margin: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                        image: NetworkImage(imageUrl), fit: BoxFit.cover)),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          "4.9",
-                          style: TextStyle(fontSize: 15),
-                        ),
-                        Row(
-                          children: stars(),
-                        )
-                      ],
-                    ),
-                    const Text(
-                      "Indonesia \u00B7 Jakarta Barat",
-                      style: TextStyle(color: Colors.black, fontSize: 15),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const Expanded(
-                      child: Text(
-                        "Closed \u00B7 Open 09.00 Monday",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
+              Row(
+                children: [
+                  Container(
+                    width: 90,
+                    height: 90,
+                    margin: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: NetworkImage(imageUrl),
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ],
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black
+                          ),
+                        ),
+                        Text(
+                          desc1,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Expanded(
+                          child: Text(
+                            desc2,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    openInGoogleMaps(lat, lgn);
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.deepOrange,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
     );
   }
+
 
   List<Widget> stars() {
     List<Widget> list1 = [];
@@ -448,8 +531,26 @@ class _MapsV1PageState extends State<MapsV1Page> {
 
     GoogleMapController controller = await _controller.future;
     final cameraPosition = CameraPosition(
-        target: LatLng(latitude, longitude), zoom: 17, bearing: 192, tilt: 55);
+        target: LatLng(latitude, longitude), zoom: 18, bearing: 192, tilt: 55);
     final cameraUpdate = CameraUpdate.newCameraPosition(cameraPosition);
     controller.animateCamera(cameraUpdate);
+  }
+}
+
+Future<void> openInGoogleMaps(double latitude, double longitude) async {
+  final Uri toLaunch = Uri(
+    scheme: 'https',
+    host: 'www.waze.com',
+    path: 'ul',
+    queryParameters: {
+      'll': '$latitude,$longitude',
+      'navigate': 'yes',
+    },
+  );
+  if (!await launchUrl(
+    toLaunch,
+    mode: LaunchMode.externalApplication,
+  )) {
+    throw Exception('Could not launch $toLaunch');
   }
 }

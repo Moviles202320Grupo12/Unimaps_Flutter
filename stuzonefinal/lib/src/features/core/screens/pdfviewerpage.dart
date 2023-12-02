@@ -56,8 +56,8 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : PDFView(
-              filePath: localPath,
-            ),
+        filePath: localPath,
+      ),
     );
   }
 }
