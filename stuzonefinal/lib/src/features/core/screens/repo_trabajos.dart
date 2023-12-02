@@ -6,10 +6,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:stuzonefinal/src/features/core/screens/pdfviewerpage.dart';
 
-// Simple model class to represent file data
 class FileData {
   final String url;
   final String name;
@@ -23,8 +24,7 @@ class RepoTrabajos extends StatefulWidget {
 }
 
 class _RepoTrabajos extends State<RepoTrabajos> {
-  final DatabaseReference mainReference =
-      FirebaseDatabase.instance.reference().child('Database');
+
   List<FileData> files = [];
 
   @override
@@ -33,20 +33,21 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     loadFiles();
   }
 
-  // Function to load files from Firebase
-  void loadFiles() {
-    mainReference.onValue.listen((event) {
-      var filesData = <FileData>[];
-      event.snapshot.children.forEach((child) {
-        filesData.add(FileData(
-          url: child.child('PDF').value as String,
-          name: child.child('FileName').value as String,
-        ));
-      });
-      setState(() {
-        files = filesData;
-      });
+  void loadFiles() async {
+    final ListResult result =
+        await FirebaseStorage.instance.ref('trabajos/').listAll();
+    List<FileData> filesData = [];
+    for (var item in result.items) {
+      final String url = await item.getDownloadURL();
+      filesData.add(FileData(url: url, name: item.name));
+    }
+    setState(() {
+      files = filesData;
     });
+
+    print("--->");
+    print(files);
+
   }
 
   Future<void> requestStoragePermission() async {
@@ -184,10 +185,33 @@ class PDFViewPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Ver PDF'),
       ),
-      body: PDFView(
-        filePath: url,
-        // Aquí puedes agregar más opciones de visualización si lo necesitas
-      ),
+      body: files.isEmpty
+          ? Center(child: Text("Cargando archivos ..."))
+          : ListView.builder(
+              itemCount: files.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: Icon(Icons.picture_as_pdf,
+                      color: Colors.red), // Icono de PDF
+                  title: Text(files[index].name),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PdfViewerPage(url: files[index].url),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+
     );
   }
 }
+
+/*
+PDFView(
+        filePath: widget.url,
+      )
+*/
