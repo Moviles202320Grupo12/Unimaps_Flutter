@@ -49,6 +49,11 @@
 		<false/>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>We need access to your photo library for file selection</string>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		</dict>
 
 	</dict>
 </plist>

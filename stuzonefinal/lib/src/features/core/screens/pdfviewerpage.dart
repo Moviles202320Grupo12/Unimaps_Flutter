@@ -15,6 +15,7 @@ class PdfViewerPage extends StatefulWidget {
 
 class _PdfViewerPageState extends State<PdfViewerPage> {
   String localPath = '';
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -23,14 +24,25 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
   }
 
   Future<void> downloadFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/temp.pdf';
-    final response = await http.get(Uri.parse(widget.url));
-    final file = File(filePath);
-    await file.writeAsBytes(response.bodyBytes);
-    setState(() {
-      localPath = filePath;
-    });
+    try {
+      final response = await http.get(Uri.parse(widget.url));
+      if (response.statusCode == 200) {
+        final directory = await getApplicationDocumentsDirectory();
+        final filePath = '${directory.path}/downloaded.pdf';
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+        setState(() {
+          localPath = filePath;
+          isLoading = false;
+        });
+      } else {
+        print('Error en la descarga: ${response.statusCode}');
+        setState(() => isLoading = false);
+      }
+    } catch (e) {
+      print('Error durante la descarga: $e');
+      setState(() => isLoading = false);
+    }
   }
 
   @override
@@ -41,7 +53,7 @@ class _PdfViewerPageState extends State<PdfViewerPage> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.amber,
       ),
-      body: localPath.isEmpty
+      body: isLoading
           ? Center(child: CircularProgressIndicator())
           : PDFView(
               filePath: localPath,
