@@ -6,8 +6,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:stuzonefinal/src/features/core/screens/pdfviewerpage.dart';
 
 class FileData {
   final String url;
@@ -130,7 +132,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
         ),
       ),
       body: files.isEmpty
-          ? Center(child: Text("No fi555les uploaded"))
+          ? Center(child: Text("Cargando archivos ..."))
           : ListView.builder(
               itemCount: files.length,
               itemBuilder: (context, index) {
@@ -139,8 +141,12 @@ class _RepoTrabajos extends State<RepoTrabajos> {
                       color: Colors.red), // Icono de PDF
                   title: Text(files[index].name),
                   onTap: () {
-                    // Aquí puedes implementar la lógica para abrir el archivo PDF
-                    // Por ejemplo, usando un visualizador de PDF
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            PdfViewerPage(url: files[index].url),
+                      ),
+                    );
                   },
                 );
               },
@@ -148,3 +154,9 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     );
   }
 }
+
+/*
+PDFView(
+        filePath: widget.url,
+      )
+*/
