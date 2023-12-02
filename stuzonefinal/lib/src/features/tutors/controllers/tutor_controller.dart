@@ -14,14 +14,12 @@ class TutorController extends GetxController {
       return _tutorsRepo.getTutorDetails(email);
     } catch (e) {
       Get.snackbar("Error", e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 3));
+          snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
     }
   }
 
   /// Fetch List of user records.
-  Future<List<TutorModel>> getAllTutors() async =>
-      await _tutorsRepo.allTutors();
+  Future<List<TutorModel>> getAllTutors() async => await _tutorsRepo.allTutors();
 
   /// Update User Data
   updateRecord(TutorModel tutoritem) async {

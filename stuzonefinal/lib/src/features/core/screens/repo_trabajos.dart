@@ -24,6 +24,7 @@ class RepoTrabajos extends StatefulWidget {
 }
 
 class _RepoTrabajos extends State<RepoTrabajos> {
+
   List<FileData> files = [];
 
   @override
@@ -46,6 +47,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
 
     print("--->");
     print(files);
+
   }
 
   Future<void> requestStoragePermission() async {
@@ -60,16 +62,13 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     return status.isGranted;
   }
 
-  final DatabaseReference mainReference =
-      FirebaseDatabase.instance.reference().child('Database');
-
   String createCryptoRandomString([int length = 32]) {
     final Random random = Random.secure();
     var values = List<int>.generate(length, (i) => random.nextInt(256));
     return base64Url.encode(values);
   }
 
-  void documentFileUpload(String url) {
+  void documentFileUpload(String url, Function onUploadComplete) {
     var data = {
       "PDF": url,
       "FileName": "My new Book",
@@ -77,15 +76,38 @@ class _RepoTrabajos extends State<RepoTrabajos> {
 
     mainReference.child(createCryptoRandomString()).set(data).then((v) {
       print("Saved Successfully");
+      onUploadComplete();
     });
   }
 
   Future savePdf(List<int> asset, String name) async {
-    final reference = FirebaseStorage.instance.ref().child(name);
-    UploadTask uploadTask = reference
-        .putData(Uint8List.fromList(asset)); // Convert to Uint8List here
-    String url = await (await uploadTask).ref.getDownloadURL();
-    documentFileUpload(url);
+    try {
+      final reference = FirebaseStorage.instance.ref().child('trabajos/$name');
+      UploadTask uploadTask = reference.putData(Uint8List.fromList(asset));
+      String url = await (await uploadTask).ref.getDownloadURL();
+      documentFileUpload(url, () {
+        print("Callback Triggered"); // Debug print
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Upload Complete"),
+              content: Text("Archivo subido correctamente"),
+              actions: <Widget>[
+                TextButton(
+                  child: Text("OK"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      });
+    } catch (e) {
+      print("An error occurred: $e"); // Print any errors
+    }
   }
 
   Future getPdfAndUpload() async {
@@ -116,6 +138,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     }
   }
 
+  // Build function for the UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,10 +149,41 @@ class _RepoTrabajos extends State<RepoTrabajos> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: getPdfAndUpload,
-        child: const Icon(
-          Icons.add,
-          color: Colors.amber,
-        ),
+        child: const Icon(Icons.add, color: Colors.amber),
+      ),
+      body: files.isEmpty
+          ? Center(child: Text("No files uploadessd"))
+          : ListView.builder(
+              itemCount: files.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(files[index].name),
+                  subtitle: Text(files[index].url),
+                  onTap: () => _openPdf(context, files[index].url),
+                );
+              },
+            ),
+    );
+  }
+
+  void _openPdf(BuildContext context, String url) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => PDFViewPage(url: url),
+    ));
+  }
+}
+
+// Una nueva pantalla para mostrar el PDF
+class PDFViewPage extends StatelessWidget {
+  final String url;
+
+  PDFViewPage({required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Ver PDF'),
       ),
       body: files.isEmpty
           ? Center(child: Text("Cargando archivos ..."))
@@ -151,6 +205,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
                 );
               },
             ),
+
     );
   }
 }
