@@ -6,6 +6,7 @@ import '../../../../constants/sizes.dart';
 import 'widgets/login_footer_widget.dart';
 import 'widgets/login_form_widget.dart';
 
+
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -26,6 +27,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 LoginFormWidget(),
                 LoginFooterWidget(),
+
               ],
             ),
           ),

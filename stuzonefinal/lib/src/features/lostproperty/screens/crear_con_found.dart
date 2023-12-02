@@ -11,15 +11,15 @@ import 'package:stuzonefinal/src/features/lostproperty/models/time_register_mode
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:stuzonefinal/src/utils/local_db_lost.dart';
-class AddItem extends StatefulWidget {
-  const AddItem({Key? key}) : super(key: key);
+import 'package:stuzonefinal/src/utils/local_db_found.dart';
+class AddItemFound extends StatefulWidget {
+  const AddItemFound({Key? key}) : super(key: key);
 
   @override
-  State<AddItem> createState() => _AddItemState();
+  State<AddItemFound> createState() => _AddItemFoundState();
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemFoundState extends State<AddItemFound> {
   TextEditingController _controllerName = TextEditingController();
   TextEditingController _controllerDescription = TextEditingController();
   TextEditingController _controllerLocation = TextEditingController();
@@ -32,7 +32,7 @@ class _AddItemState extends State<AddItem> {
   bool _isConnected = true;
 
   CollectionReference _reference =
-  FirebaseFirestore.instance.collection('lostproperty');
+  FirebaseFirestore.instance.collection('foundproperty');
 
   String imageUrl = '';
   String newImagePath = '';
@@ -44,7 +44,7 @@ class _AddItemState extends State<AddItem> {
     super.initState();
     // Suscripción a los cambios de conectividad
     print("A VER QUE PUTAS");
-    print(DataLocalLost.getAllLosts());
+    print(DataLocalFound.getAllFounds());
     _checkConnectivity();
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
@@ -106,12 +106,6 @@ class _AddItemState extends State<AddItem> {
 
                   return null;
                 },
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _mostrarFoto();
-                },
-                child: Text('Mostrar Foto Guardada'),
               ),
               IconButton(
                   onPressed: () async {
@@ -229,12 +223,12 @@ class _AddItemState extends State<AddItem> {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(SnackBar(content: Text('Please upload an image')));
                           print("PANICOOOOOOO");
-                          print(DataLocalLost.getAllLosts());
+                          print(DataLocalFound.getAllFounds());
 
                           return;
                         }
                         print("NECESITO QUE ESTA MIERDA SUCEDA");
-                        print(DataLocalLost.getAllLosts());
+                        print(DataLocalFound.getAllFounds());
 
                         if (key.currentState!.validate()) {
                           String itemName = _controllerName.text;
@@ -250,8 +244,8 @@ class _AddItemState extends State<AddItem> {
                             'image': newImagePath,
                           };
                           int timeSpent = DateTime.now().microsecondsSinceEpoch - now.microsecondsSinceEpoch;
-                          print(DataLocalLost.getAllLosts());
-                          DataLocalLost.addLost(elcoso);
+                          print(DataLocalFound.getAllFounds());
+                          DataLocalFound.addFound(elcoso);
 
                           //Add a new item
 
@@ -264,24 +258,6 @@ class _AddItemState extends State<AddItem> {
         ),
       ),
     );
-  }
-  Future<void> _mostrarFoto() async {
-    // Mostrar la imagen guardada desde el almacenamiento local
-    Directory appDir = await getApplicationDocumentsDirectory();
-    String appDirPath = appDir.path;
-    String imagePath = '$appDirPath/sample_image.jpg';
-
-    File imageFile = File(imagePath);
-
-    if (await imageFile.exists()) {
-      setState(() {
-        _imageFile = imageFile;
-      });
-    } else {
-      setState(() {
-        _imageFile = null;
-      });
-    }
   }
 
   Future<void> _checkConnectivity() async {

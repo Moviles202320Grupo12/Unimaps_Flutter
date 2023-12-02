@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:stuzonefinal/src/utils/local_db_lost.dart';
 import 'find_lost_property.dart';
 import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_back.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
@@ -7,19 +8,47 @@ import 'package:stuzonefinal/src/features/lostproperty/controllers/lost_controll
 import 'package:stuzonefinal/src/constants/image_strings.dart';
 import 'package:get/get.dart';
 
-class LostProperty extends StatelessWidget {
+import 'package:connectivity/connectivity.dart';
+class LostProperty extends StatefulWidget {
+  const LostProperty({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: LostPropertyHome());
-  }
+  State createState() => LostPropertyHome();
+  //Widget build(BuildContext context) {
+  //  return MaterialApp(home: LostPropertyHome());
+  //}
 }
 
-class LostPropertyHome extends StatelessWidget {
-  static const black_titles = Color(0x00090909);
+class LostPropertyHome extends State<LostProperty> {
+
+
+  bool? _isInternetAvailableOnCall;
+
+  bool? _isInternetAvailableStreamStatus;
+
+  bool _isConnected = true;
+
+  late ConnectivityResult _connectionStatus;
 
   final controller = Get.put(LostController());
 
-  LostPropertyHome({super.key});
+  @override
+  void initState() {
+    super.initState();
+    _checkConnectivity();
+    // Suscripción a los cambios de conectividad
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isConnected = (result != ConnectivityResult.none);
+        if (_isConnected==true){
+          Future<List<LostModel>> popo = controller.getAllLosts();
+          DataLocalLost.actualizarbd(popo);
+
+        }
+      });
+    });
+  }
+  static const black_titles = Color(0x00090909);
+
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +172,7 @@ class LostPropertyHome extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     primary: Colors.black, minimumSize: Size(40, 40)),
                 child: const Text(
-                  "Reportar Objeto perdido",
+                  "Reportar Objeto Encontrado",
                   style: TextStyle(
                       color: Color(0xFFF6A700),
                       fontFamily: 'Urbanist',
@@ -151,7 +180,12 @@ class LostPropertyHome extends StatelessWidget {
                       fontSize: 20),
                 ),
               ),
-            ),
+            ),Visibility(
+                visible: _isConnected == false,
+                child: Text(
+                  'NO TIENES CONEXION A INTERNET',
+                  style: TextStyle(fontSize: 24),
+            )),
             Expanded(child:
             FutureBuilder<List<LostModel>>(
               future: controller.getAllLosts(),
@@ -192,16 +226,16 @@ class LostPropertyHome extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15)),
                               CachedNetworkImage(
-                                        imageUrl: snapshot.data![index].image,
-                                        placeholder: (context, url) {
-                                          // Si no hay conexión o la imagen no se puede cargar, muestra la imagen predeterminada desde el almacenamiento local
-                                          return Image.asset(defaultLostProperty);
-                                        },
-                                        errorWidget: (context, url, error) {
-                                          // Si ocurre un error al cargar la imagen, muestra la imagen predeterminada desde el almacenamiento local
-                                          return Image.asset(defaultLostProperty);
-                                        },
-                                      ),
+                                imageUrl: snapshot.data![index].image,
+                                placeholder: (context, url) {
+                                  // Si no hay conexión o la imagen no se puede cargar, muestra la imagen predeterminada desde el almacenamiento local
+                                  return Image.asset(defaultLostProperty);
+                                },
+                                errorWidget: (context, url, error) {
+                                  // Si ocurre un error al cargar la imagen, muestra la imagen predeterminada desde el almacenamiento local
+                                  return Image.asset(defaultLostProperty);
+                                },
+                              ),
 
                               const SizedBox(
                                 height: 10,
@@ -219,11 +253,49 @@ class LostPropertyHome extends StatelessWidget {
                 }
               },
             ),
-            ),
+            )
           ],
         ),
 
     );
+  }
+
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _connectionStatus = connectivityResult;
+    });
+
+    if (_connectionStatus == ConnectivityResult.none) {
+      // Realizar un comportamiento específico cuando no hay conexión
+      // Por ejemplo, mostrar un diálogo o un mensaje
+      // Puedes usar showDialog() para mostrar un diálogo informativo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Sin conexión'),
+            content: Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text('Cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Realizar un comportamiento específico cuando hay conexión
+      // Por ejemplo, cargar datos desde una API o realizar alguna acción
+      // Puedes colocar aquí el código para realizar esa acción
+      Future<List<LostModel>> popo = controller.getAllLosts();
+      print("por lo menos trata de hacer algoooo");
+      DataLocalLost.actualizarbd(popo);
+
+    }
   }
 
 }

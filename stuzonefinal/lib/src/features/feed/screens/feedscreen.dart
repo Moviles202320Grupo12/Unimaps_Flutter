@@ -1,6 +1,10 @@
 // screen.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stuzonefinal/src/features/feed/controllers/feedcontroller.dart';
+
+import '../../lostproperty/screens/found_property.dart';
+import '../../lostproperty/screens/lost_property.dart';
 
 class FeedScreen extends StatelessWidget {
 
@@ -23,7 +27,9 @@ class FeedScreen extends StatelessWidget {
               child: Text(controller.buttons[0].name),
             ),
             ElevatedButton(
-              onPressed: () => controller.buttonPressed(1),
+            onPressed: () {
+            _mostrarDialogo(context);
+            },
               child: Text(controller.buttons[1].name),
             ),
             ElevatedButton(
@@ -38,9 +44,43 @@ class FeedScreen extends StatelessWidget {
               onPressed: () => controller.buttonPressed(4),
               child: Text(controller.buttons[4].name),
             ),
+            ElevatedButton(
+              onPressed: () {
+                _mostrarDialogo(context);
+              },
+              child: Text("ESTA MIERDA NO FUNCIONA"),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  void _mostrarDialogo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('¿Que quieres hacer?'),
+          content: Text('Estas a punto de adentrarte en un mundo de cosas perdidas'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Get.to(() => LostProperty());
+              },
+              child: Text('Ver cosas encontradas'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Acción al presionar el segundo botón del diálogo
+                print('Segundo botón presionado');
+                Get.to(() => FoundProperty());
+              },
+              child: Text('Ver cosas Buscadas'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

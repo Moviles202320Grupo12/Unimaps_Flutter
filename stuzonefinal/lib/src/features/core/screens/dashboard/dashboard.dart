@@ -9,7 +9,17 @@ import 'package:stuzonefinal/src/features/core/screens/dashboard/widgets/top_cou
 import 'package:stuzonefinal/src/features/feed/screens/feedscreen.dart';
 import 'package:stuzonefinal/src/features/core/screens/map.dart';
 
+import 'package:get/get.dart';
+
 import 'package:stuzonefinal/src/features/feed/controllers/feedcontroller.dart';
+import 'package:stuzonefinal/src/features/lostproperty/screens/pruebasDeMierda.dart';
+import 'package:stuzonefinal/src/features/maps/intentoCuatro/mapasfinal.dart';
+import 'package:stuzonefinal/src/features/maps/intentoDos/pages/home_page.dart';
+import 'package:stuzonefinal/src/features/maps/intentoTres/mapaTres.dart';
+import 'package:stuzonefinal/src/features/maps/ui/pages/home/home_map.dart';
+
+import '../../../lostproperty/screens/found_property.dart';
+import '../../../lostproperty/screens/lost_property.dart';
 
 
 class Dashboard extends StatelessWidget {
@@ -48,6 +58,12 @@ class Dashboard extends StatelessWidget {
                     child:
                     ElevatedButton(
                       onPressed: () => controller.buttonPressed(0),
+                      //onPressed: () {
+                      //  Navigator.push(
+                      //    context,
+                      //    MaterialPageRoute(builder: (context) => const HomePage()), // Navega a HomeMap
+                      //  );
+                      //},
                       child: Text(controller.buttons[0].name),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(200, 10),
@@ -59,7 +75,9 @@ class Dashboard extends StatelessWidget {
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
-                      onPressed: () => controller.buttonPressed(1),
+                        onPressed: () {
+                          _mostrarDialogo(context);
+                        },
                       child: Text(controller.buttons[1].name),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(200, 10),
@@ -110,6 +128,36 @@ class Dashboard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _mostrarDialogo(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Diálogo con dos botones'),
+          content: Text('Este es un diálogo con dos botones.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Get.to(() => LostProperty());
+              },
+              child: Text('Ver cosas encontradas'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Acción al presionar el segundo botón del diálogo
+                print('Segundo botón presionado');
+                Get.to(() => FoundProperty());
+                //Get.to(() => PruebaDeMierda());
+
+              },
+              child: Text('Ver cosas Buscadas'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

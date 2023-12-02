@@ -8,6 +8,8 @@ import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:connectivity/connectivity.dart';
+
 class Map extends StatefulWidget {
   const Map({super.key});
 
@@ -19,6 +21,19 @@ class _Map extends State<Map> {
   late GoogleMapController mapController;
   late LocationData currentLocation;
   Location location = Location();
+
+  bool _isConnected = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // Suscripción a los cambios de conectividad
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isConnected = (result != ConnectivityResult.none);
+      });
+    });
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -197,7 +212,16 @@ class _Map extends State<Map> {
         height: height,
         child: Stack(
           children: [
-            mapa_google,
+          Visibility(
+          visible: _isConnected == false,
+          child: Text(
+            'Estas SIN INTERNET, no puedo mostrarte el mapa :(',
+            style: TextStyle(
+                color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
+          ),),
+            Visibility(
+              visible: _isConnected == true,
+              child: mapa_google),
             caja_menu,
             busqueda,
             configuracion,

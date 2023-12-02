@@ -7,6 +7,7 @@ import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/i
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/coupon_repository/coupon_repository.dart';
+import 'package:stuzonefinal/src/repository/lost_repository/found_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/lost_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 import 'package:stuzonefinal/src/repository/tutor_repository/tutor_repository.dart';
@@ -33,6 +34,7 @@ void main() {
     Get.put(EventRepository());
     Get.put(LostTimerRepository());
     Get.put(CouponRepository());
+    Get.put(FoundRepository());
   });
 
   runApp(const App());
