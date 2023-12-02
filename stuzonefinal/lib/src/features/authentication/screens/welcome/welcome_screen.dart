@@ -163,11 +163,11 @@ class _LoginPage  extends State<LoginPage> {
       ),
       child: Center(
         child: _isConnected
-            ? Text('Que bueno verte de nuevo !',
+            ? const Text('Que bueno verte de nuevo !',
             style: TextStyle(
             color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
         textAlign: TextAlign.left,)
-            : Text('No hay conexión a Internet, regresa mas tarde!',
+            : const Text('No hay conexión a Internet, regresa mas tarde!',
           style: TextStyle(
               color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
           textAlign: TextAlign.left,),
@@ -192,7 +192,7 @@ class _LoginPage  extends State<LoginPage> {
     );
 
     final ingresarContrasena = Container(
-        margin: EdgeInsets.only(right: 20, left: 20, top: 15),
+        margin: const EdgeInsets.only(right: 20, left: 20, top: 15),
         child: ValueListenableBuilder<bool>(
           valueListenable: passwordVisible,
           builder: (context, bool isVisible, child) {
@@ -201,11 +201,11 @@ class _LoginPage  extends State<LoginPage> {
               obscureText: !isVisible,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Color(0xbbbbbf7f8f9),
-                border: OutlineInputBorder(),
+                fillColor: const Color(0xbbbbbf7f8f9),
+                border: const OutlineInputBorder(),
                 labelText: 'Ingresa tu contraseña',
-                labelStyle: TextStyle(color: Colors.black45),
-                enabledBorder: OutlineInputBorder(
+                labelStyle: const TextStyle(color: Colors.black45),
+                enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(width: 1.5, color: Colors.black),
                 ),
                 suffixIcon: IconButton(
@@ -234,7 +234,7 @@ class _LoginPage  extends State<LoginPage> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      OlvidoContrasena()), //builder: (context) => OlvidoContrasena()),
+                      const OlvidoContrasena()), //builder: (context) => OlvidoContrasena()),
             );
           },
           child: const Text(
@@ -271,7 +271,7 @@ class _LoginPage  extends State<LoginPage> {
                 "Ops ! ",
                 "Por favor ingrese un correo y contraseña validos",
                 snackPosition: SnackPosition.BOTTOM,
-                duration: Duration(seconds: 3),
+                duration: const Duration(seconds: 3),
                 backgroundColor: Colors.red,
                 colorText: Colors.white,
               );
@@ -289,13 +289,13 @@ class _LoginPage  extends State<LoginPage> {
     );
 
     final otroIngreso = Container(
-        margin: EdgeInsets.only(top: 10),
+        margin: const EdgeInsets.only(top: 10),
         child: Stack(
           children: [
             Container(
               width: MediaQuery.of(context).size.width - 40,
               margin: const EdgeInsets.only(left: 20, right: 20),
-              child: Divider(
+              child: const Divider(
                 color: Colors.black12,
                 thickness: 2,
                 height: 36,
@@ -329,14 +329,14 @@ class _LoginPage  extends State<LoginPage> {
       onTap: () async {
       try {
           UserCredential userCredential = await signInWithGoogle();  
-          Navigator.of(context).pushReplacement(MaterialPageRoute( builder: (context) => Map(),)); 
+          Navigator.of(context).pushReplacement(MaterialPageRoute( builder: (context) => const Map(),)); 
         
         } catch (error) {
             Get.snackbar(
                 "Ops ! ",
                 "La autentificación con Google no fue posible",
                 snackPosition: SnackPosition.BOTTOM,
-                duration: Duration(seconds: 3),
+                duration: const Duration(seconds: 3),
                 backgroundColor: Colors.red,
             );
           print(error);
@@ -346,7 +346,7 @@ class _LoginPage  extends State<LoginPage> {
       child: Container(
         height: 30,
         width: 30,
-        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        margin: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
         decoration: BoxDecoration(
           image: DecorationImage(image: AssetImage(path_google)),
           borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
@@ -363,7 +363,7 @@ class _LoginPage  extends State<LoginPage> {
         alignment: Alignment.center,
         height: 30,
         width: 30,
-        margin: EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
+        margin: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
         decoration: BoxDecoration(
           image: DecorationImage(image: AssetImage(path_outlook)),
           borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
@@ -392,7 +392,7 @@ String generateBioSessionId() {
       ),
     );
 
-    final crear_cuenta = Container(
+    final crearCuenta = Container(
       margin: EdgeInsets.symmetric(
         vertical: MediaQuery.of(context).size.width * 0.1,
         horizontal: MediaQuery.of(context).size.width *
@@ -447,7 +447,7 @@ String generateBioSessionId() {
           ingresar,
           otroIngreso,
           metodosIngreso,
-          crear_cuenta
+          crearCuenta
         ]));
   }
 }

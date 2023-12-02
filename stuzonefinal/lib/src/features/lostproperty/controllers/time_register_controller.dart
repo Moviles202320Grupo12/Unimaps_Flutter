@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
-import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/time_reg_lostpropRepo.dart';
 
 import '../models/time_register_model.dart';

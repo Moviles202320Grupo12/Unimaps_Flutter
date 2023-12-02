@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/firebase_options.dart';
-import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/inicio_crear_sesion.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/coupon_repository/coupon_repository.dart';
@@ -57,7 +56,7 @@ class App extends StatelessWidget {
         defaultTransition: Transition.leftToRightWithFade,
         transitionDuration: const Duration(milliseconds: 500),
         //home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-        home: LoginPage()
+        home: const LoginPage()
 
         /// Show Progress Indicator OR SPLASH SCREEN until Screen Loads all its data from cloud.
         /// Let the AuthenticationRepository decide which screen to appear as first.
@@ -67,6 +66,8 @@ class App extends StatelessWidget {
 
 
 class AppLifecycleReactorState extends StatefulWidget{
+  const AppLifecycleReactorState({super.key});
+
   @override
   _AppLifecycleReactorState createState()=>_AppLifecycleReactorState();
 
@@ -81,7 +82,7 @@ class _AppLifecycleReactorState extends State<AppLifecycleReactorState> with Wid
   void initState(){
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    timer=Timer.periodic(Duration(seconds: 1), (tm) { 
+    timer=Timer.periodic(const Duration(seconds: 1), (tm) { 
      if(active){
        setState(() {
         count+=1;
@@ -111,7 +112,7 @@ class _AppLifecycleReactorState extends State<AppLifecycleReactorState> with Wid
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Center(child: Text("$count", style: TextStyle(fontSize: 45,fontWeight: FontWeight.bold),),),
+      body: Center(child: Text("$count", style: const TextStyle(fontSize: 45,fontWeight: FontWeight.bold),),),
     );
   }
 

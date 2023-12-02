@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:stuzonefinal/src/features/events/screens/specific_event.dart';
 
 class Events extends StatelessWidget {
+  const Events({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: EventsHome());
+    return const MaterialApp(home: EventsHome());
   }
 }
 
@@ -19,7 +21,7 @@ class EventsHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -54,12 +56,12 @@ class EventsHome extends StatelessWidget {
               },
               decoration: InputDecoration(
                 labelText: '',
-                prefixIcon: Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 contentPadding:
-                EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
+                const EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
               ),
             ),
           ),
@@ -75,14 +77,14 @@ class EventsHome extends StatelessWidget {
                   fontSize: 20),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.black, minimumSize: Size(40, 40)),
+                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                 child: const Text("Académicos",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
@@ -95,7 +97,7 @@ class EventsHome extends StatelessWidget {
                   // Acción del botón 2
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.black, minimumSize: Size(40, 40)),
+                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                 child: const Text("Gastronómicos",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
@@ -108,7 +110,7 @@ class EventsHome extends StatelessWidget {
                   // Acción del botón 3
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.black, minimumSize: Size(40, 40)),
+                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                 child: const Text("Culturales",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
@@ -121,7 +123,7 @@ class EventsHome extends StatelessWidget {
                   // Acción del botón 3
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.black, minimumSize: Size(40, 40)),
+                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                 child: const Text("Musicales",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
@@ -145,7 +147,7 @@ class EventsHome extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                  primary: Colors.black, minimumSize: Size(40, 40)),
+                  backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
               child: const Text(
                 "Crear evento",
                 style: TextStyle(
@@ -174,7 +176,7 @@ class EventsHome extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    SpecificEvent(),
+                    const SpecificEvent(),
               ),
             );
           },
@@ -201,7 +203,7 @@ class EventsHome extends StatelessWidget {
                             Text(
                               "Septiembre 5-9:",
                               style: TextStyle(
-                                  fontSize: 15, color: Color(0xBBBB87400)),
+                                  fontSize: 15, color: Color(0xbbbb87400)),
                             ),
                           ],
                         ),
@@ -211,7 +213,7 @@ class EventsHome extends StatelessWidget {
                             Text(
                               "Activo",
                               style: TextStyle(
-                                  color: Color(0xBBBB87400), fontSize: 18),
+                                  color: Color(0xbbbb87400), fontSize: 18),
                             ),
                           ],
                         ),

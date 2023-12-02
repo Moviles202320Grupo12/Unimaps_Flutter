@@ -1,13 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:stuzonefinal/src/features/authentication/models/user_model.dart';
-import 'package:stuzonefinal/src/features/walkingpoints/controllers/walking_controller.dart';
 
-import '../../../constants/colors.dart';
 import '../../../constants/image_strings.dart';
-import '../../../constants/sizes.dart';
 import '../controllers/coupons_controller.dart';
 import '../models/coupon_model.dart';
 
@@ -24,7 +19,7 @@ class CuponesView extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: Text('Galería de Cupones',
+          title: const Text('Galería de Cupones',
               style: TextStyle(
                   color: Color(0xFFF6A700),
                   fontFamily: 'Urbanist',
@@ -44,14 +39,14 @@ class CuponesView extends StatelessWidget {
           itemBuilder: (context, index) {
             final coupon = snapshot.data![index];
             return ListTile(
-                contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                contentPadding: const EdgeInsets.symmetric(vertical: 20.0),
               title: Text(coupon.title),
               subtitle: Text(coupon.description),
               trailing: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("Pasos: ${initialValue} / ${coupon.pasosNecesarios} "),
+                    Text("Pasos: $initialValue / ${coupon.pasosNecesarios} "),
                 Expanded(
                     child:
 
@@ -62,7 +57,7 @@ class CuponesView extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return QRCodeScreen();
+                          return const QRCodeScreen();
                         },
                       ),
                     );
@@ -80,8 +75,8 @@ class CuponesView extends StatelessWidget {
                   controller.updateRecord(couponData);
                 },
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.black, minimumSize: Size(40, 40)),
-                child: Text('Ver Código QR',style: TextStyle(
+                            backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
+                child: const Text('Ver Código QR',style: TextStyle(
                     color: Color(0xFFF6A700),
                     fontFamily: 'Urbanist',
                     fontWeight: FontWeight.bold,
@@ -113,12 +108,14 @@ class CuponesView extends StatelessWidget {
 }
 
 class QRCodeScreen extends StatelessWidget {
+  const QRCodeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text('Código QR', style: TextStyle(
+        title: const Text('Código QR', style: TextStyle(
             color: Color(0xFFF6A700),
             fontFamily: 'Urbanist',
             fontWeight: FontWeight.bold,

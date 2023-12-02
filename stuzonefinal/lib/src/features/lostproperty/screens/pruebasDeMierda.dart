@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 
 
 class PruebaDeMierda extends StatelessWidget {
+  const PruebaDeMierda({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,12 +14,14 @@ class PruebaDeMierda extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -29,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Guardar y Mostrar Imagen'),
+        title: const Text('Guardar y Mostrar Imagen'),
       ),
       body: Center(
         child: Column(
@@ -40,20 +44,20 @@ class _MyHomePageState extends State<MyHomePage> {
               _imageFile!,
               height: 200,
             )
-                : Text('No hay imagen guardada'),
-            SizedBox(height: 20),
+                : const Text('No hay imagen guardada'),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 _tomarFoto();
               },
-              child: Text('Tomar Foto'),
+              child: const Text('Tomar Foto'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 _mostrarFoto();
               },
-              child: Text('Mostrar Foto Guardada'),
+              child: const Text('Mostrar Foto Guardada'),
             ),
           ],
         ),
@@ -62,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _tomarFoto() async {
-    final ImagePicker _picker = ImagePicker();
-    XFile? pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    final ImagePicker picker = ImagePicker();
+    XFile? pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     if (pickedFile != null) {
       // Obtenemos la ruta del directorio de almacenamiento local

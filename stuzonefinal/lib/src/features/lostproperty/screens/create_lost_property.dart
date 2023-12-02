@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CreateLostProperty extends StatelessWidget {
+  const CreateLostProperty({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: CreateLostPropertyHome());
+    return const MaterialApp(home: CreateLostPropertyHome());
   }
 }
 
@@ -14,7 +16,7 @@ class CreateLostPropertyHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -51,9 +53,9 @@ class CreateLostPropertyHome extends StatelessWidget {
               child: Center(
                 // Botón para agregar imagen
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.add_a_photo,
-                    color: Color(0XBBBB87400),
+                    color: Color(0xbbbb87400),
                   ),
                   onPressed: () {
                     // Implement your image picker logic here
@@ -61,7 +63,7 @@ class CreateLostPropertyHome extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Espacio para texto "Qué encontraste"
             const TextField(
               decoration: InputDecoration(
@@ -74,9 +76,9 @@ class CreateLostPropertyHome extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Espacio para texto "Donde lo encontraste"
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: "Donde lo encontraste",
                 labelStyle: TextStyle(
@@ -87,9 +89,9 @@ class CreateLostPropertyHome extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Espacio para texto "Cuando lo encontraste"
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: "Cuando lo encontraste",
                 labelStyle: TextStyle(
@@ -100,9 +102,9 @@ class CreateLostPropertyHome extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Espacio para texto "Descripción"
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: "Descripción",
                 labelStyle: TextStyle(
@@ -113,15 +115,15 @@ class CreateLostPropertyHome extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Botón para publicar
             ElevatedButton(
               onPressed: () {
                 // Implement your publish logic here
               },
               style: ElevatedButton.styleFrom(
-                  primary: Colors.black, minimumSize: Size(50, 50)),
-              child: Text("Publicar",
+                  backgroundColor: Colors.black, minimumSize: const Size(50, 50)),
+              child: const Text("Publicar",
                   style: TextStyle(
                       color: Color(0xFFF6A700),
                       fontFamily: 'Urbanist',

@@ -36,7 +36,7 @@ class AllEvents extends StatelessWidget {
                     _launchgmail();
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.black, minimumSize: Size(40, 40)),
+                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                   child: const Text(
                     "Crear Nuevo Evento",
                     style: TextStyle(
@@ -62,26 +62,26 @@ class AllEvents extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
-                                      color: Color(0xBBBB87400),
+                                      color: const Color(0xbbbb87400),
                                       borderRadius: BorderRadius.circular(10.0),
                                       border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
                                   ),
 
                                 ),
                                 Text(snapshot.data![index].nombre,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xFFF6A700),
                                         fontFamily: 'Urbanist',
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20)),
                                 Text(snapshot.data![index].lugar,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xFFF6A700),
                                         fontFamily: 'Urbanist',
                                         fontWeight: FontWeight.bold,
                                         fontSize: 10)),
                                 Text(snapshot.data![index].fecha,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xFFF6A700),
                                         fontFamily: 'Urbanist',
                                         fontWeight: FontWeight.bold,
@@ -123,9 +123,9 @@ class AllEvents extends StatelessWidget {
 }
 
 _launchgmail() async {
-  final Uri _url = Uri.parse(
+  final Uri url = Uri.parse(
       'mailto:diegogonvar@outlook.es?subject=New Event&body=Event Characteristics ');
-  if (!await launchUrl(_url)) {
-    throw 'Could not launch $_url';
+  if (!await launchUrl(url)) {
+    throw 'Could not launch $url';
   }
 }

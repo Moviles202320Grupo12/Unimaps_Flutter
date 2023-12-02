@@ -10,13 +10,13 @@ class FeedScreen extends StatelessWidget {
 
   final FeedController controller;
 
-  FeedScreen({required this.controller});
+  const FeedScreen({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ejemplo de botones'),
+        title: const Text('Ejemplo de botones'),
       ),
       body: Center(
         child: Column(
@@ -48,7 +48,7 @@ class FeedScreen extends StatelessWidget {
               onPressed: () {
                 _mostrarDialogo(context);
               },
-              child: Text("ESTA MIERDA NO FUNCIONA"),
+              child: const Text("ESTA MIERDA NO FUNCIONA"),
             ),
           ],
         ),
@@ -61,22 +61,22 @@ class FeedScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('¿Que quieres hacer?'),
-          content: Text('Estas a punto de adentrarte en un mundo de cosas perdidas'),
+          title: const Text('¿Que quieres hacer?'),
+          content: const Text('Estas a punto de adentrarte en un mundo de cosas perdidas'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Get.to(() => LostProperty());
+                Get.to(() => const LostProperty());
               },
-              child: Text('Ver cosas encontradas'),
+              child: const Text('Ver cosas encontradas'),
             ),
             TextButton(
               onPressed: () {
                 // Acción al presionar el segundo botón del diálogo
                 print('Segundo botón presionado');
-                Get.to(() => FoundProperty());
+                Get.to(() => const FoundProperty());
               },
-              child: Text('Ver cosas Buscadas'),
+              child: const Text('Ver cosas Buscadas'),
             ),
           ],
         );

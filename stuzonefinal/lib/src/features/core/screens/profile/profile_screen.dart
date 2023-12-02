@@ -134,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () {
                             AuthenticationRepository.instance.logout();
-                            Get.to(() => LoginPage());
+                            Get.to(() => const LoginPage());
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.redAccent,

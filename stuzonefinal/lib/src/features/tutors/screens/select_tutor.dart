@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 
 class SelectTutorPage extends StatelessWidget {
+  const SelectTutorPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFCFAF8),
+      backgroundColor: const Color(0xFFFCFAF8),
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 15.0),
+          const SizedBox(height: 15.0),
           Container(
-              padding: EdgeInsets.only(right: 15.0),
+              padding: const EdgeInsets.only(right: 15.0),
               width: MediaQuery.of(context).size.width - 30.0,
               height: MediaQuery.of(context).size.height - 50.0,
               child: GridView.count(
@@ -30,7 +32,7 @@ class SelectTutorPage extends StatelessWidget {
                       context)
                 ],
               )),
-          SizedBox(height: 15.0)
+          const SizedBox(height: 15.0)
         ],
       ),
     );
@@ -38,7 +40,7 @@ class SelectTutorPage extends StatelessWidget {
 
   Widget _buildCard(String subject, String name, String imgPath, context) {
     return Padding(
-        padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
+        padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
         child: InkWell(
 
             child: Container(
@@ -63,29 +65,29 @@ class SelectTutorPage extends StatelessWidget {
                               image: DecorationImage(
                                   image: AssetImage(imgPath),
                                   fit: BoxFit.contain)))),
-                  SizedBox(height: 7.0),
+                  const SizedBox(height: 7.0),
                   Text(name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Color(0xFFCC8053),
                           fontFamily: 'Varela',
                           fontSize: 14.0)),
                   Text(subject,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Color(0xFF575E67),
                           fontFamily: 'Varela',
                           fontSize: 11.0)),
                   Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Container(color: Color(0xFFEBEBEB), height: 1.0)),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(color: const Color(0xFFEBEBEB), height: 1.0)),
                   Padding(
-                      padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                       child: Row(
 
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
 
-                            Container(height: 20,child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
-                              primary: Color.fromRGBO(254, 211, 83, 0.7),
+                            SizedBox(height: 20,child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromRGBO(254, 211, 83, 0.7),
                               //side: const BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid)
                             ),child: const Text('Book a session', style: TextStyle(color: Colors.black, fontSize: 11),)),)
                           ]))

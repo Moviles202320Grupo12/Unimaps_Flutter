@@ -13,7 +13,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 40),
-            CircleAvatar(
+            const CircleAvatar(
               radius: 70,
               backgroundColor: Color.fromRGBO(254, 211, 83, 0.7),
               backgroundImage: AssetImage('lib/imgs/tutors.png'),
@@ -33,8 +33,7 @@ class ProfileScreen extends StatelessWidget {
               child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(15),
-                    primary: Colors.black,
+                    padding: const EdgeInsets.all(15), backgroundColor: Colors.black,
                     //side: const BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid)
                   ),
                   child: const Text('Edit Profile')
@@ -50,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(color: Color.fromRGBO(254, 211, 83, 0.7),width: 2),
+          border: Border.all(color: const Color.fromRGBO(254, 211, 83, 0.7),width: 2),
           borderRadius: BorderRadius.circular(10),
           
       ),

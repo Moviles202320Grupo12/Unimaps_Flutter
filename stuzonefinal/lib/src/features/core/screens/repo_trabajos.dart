@@ -18,6 +18,8 @@ class FileData {
 }
 
 class RepoTrabajos extends StatefulWidget {
+  const RepoTrabajos({super.key});
+
   @override
   _RepoTrabajos createState() => _RepoTrabajos();
 }
@@ -90,11 +92,11 @@ class _RepoTrabajos extends State<RepoTrabajos> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Upload Complete"),
-              content: Text("Archivo subido correctamente"),
+              title: const Text("Upload Complete"),
+              content: const Text("Archivo subido correctamente"),
               actions: <Widget>[
                 TextButton(
-                  child: Text("OK"),
+                  child: const Text("OK"),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -132,7 +134,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
         );
     if (result != null) {
       File file = File(result.files.single.path!);
-      String fileName = '${randomName}.pdf';
+      String fileName = '$randomName.pdf';
       savePdf(await file.readAsBytes(), fileName);
     }
   }
@@ -151,7 +153,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
         child: const Icon(Icons.add, color: Colors.amber),
       ),
       body: files.isEmpty
-          ? Center(child: Text("No files uploadessd"))
+          ? const Center(child: Text("No files uploadessd"))
           : ListView.builder(
               itemCount: files.length,
               itemBuilder: (context, index) {
@@ -176,13 +178,13 @@ class _RepoTrabajos extends State<RepoTrabajos> {
 class PDFViewPage extends StatelessWidget {
   final String url;
 
-  PDFViewPage({required this.url});
+  const PDFViewPage({super.key, required this.url});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ver PDF'),
+        title: const Text('Ver PDF'),
       ),
       body: PDFView(
         filePath: url,

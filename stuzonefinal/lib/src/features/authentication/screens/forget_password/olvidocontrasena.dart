@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/inicio_crear_sesion.dart';
 
 class OlvidoContrasena extends StatelessWidget {
+  const OlvidoContrasena({super.key});
+
   @override
   Widget build(BuildContext context) {
     final texto = Container(
@@ -25,7 +27,7 @@ class OlvidoContrasena extends StatelessWidget {
               child: Text(
                 'No te preocupes. Por favor ingresa tu correo electronico para recuperar tu cuenta',
                 style: TextStyle(
-                    color: Color(0xbbbbbbF6A700),
+                    color: Color(0xbbbbbbf6a700),
                     fontSize: 16,
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.left,
@@ -48,7 +50,7 @@ class OlvidoContrasena extends StatelessWidget {
       ),
     );
 
-    final send_code = Container(
+    final sendCode = Container(
         margin: const EdgeInsets.only(top: 30),
         height: 45.0, // Altura del botón
         width: 200.0,
@@ -64,13 +66,13 @@ class OlvidoContrasena extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => VerificacionCorreo()),
+              MaterialPageRoute(builder: (context) => const VerificacionCorreo()),
             );
           },
           child: const Text('Ingresar'),
         ));
 
-    final contrasena_conocida = Container(
+    final contrasenaConocida = Container(
       margin: EdgeInsets.symmetric(
         vertical: MediaQuery.of(context).size.width * 0.1,
         horizontal: MediaQuery.of(context).size.width *
@@ -93,7 +95,7 @@ class OlvidoContrasena extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VerificacionCorreo()),
+                  MaterialPageRoute(builder: (context) => const VerificacionCorreo()),
                 );
               },
               child: const Text(
@@ -117,7 +119,7 @@ class OlvidoContrasena extends StatelessWidget {
         body: Column(children: [
           texto,
           ingresarCorreo,
-          send_code,
+          sendCode,
         ]));
   }
 }

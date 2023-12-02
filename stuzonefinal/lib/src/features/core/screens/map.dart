@@ -45,7 +45,7 @@ class _Map extends State<Map> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    final mapa_google = GoogleMap(
+    final mapaGoogle = GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: const CameraPosition(
         target: LatLng(4.637531247024522, -74.08290974945845),
@@ -58,7 +58,7 @@ class _Map extends State<Map> {
       compassEnabled: true,
     );
 
-    final caja_menu = Container(
+    final cajaMenu = Container(
       margin: EdgeInsets.only(top: height - 120),
       decoration: const ShapeDecoration(
         color: Colors.white70,
@@ -83,11 +83,11 @@ class _Map extends State<Map> {
       top: height - 120, // Device height minus 200
       left: 1,
       right: 1,
-      child: Opacity(
+      child: const Opacity(
         opacity: 0.8, // Adjust the opacity as needed
-        child: Container(
+        child: SizedBox(
           height: 80.0, // Set the height
-          child: const TextField(
+          child: TextField(
             obscureText: false,
             decoration: InputDecoration(
               prefixIcon: Icon(
@@ -109,7 +109,7 @@ class _Map extends State<Map> {
     final pasos = Positioned(
       top: height - 55,
       //bottom: ,
-      child: Container(
+      child: SizedBox(
         height: 55, // Set the height
         width: MediaQuery.of(context).size.width / 4, // Set the width
         child: ElevatedButton(
@@ -120,9 +120,9 @@ class _Map extends State<Map> {
             ),
           ),
           onPressed: () {
-            Get.to(() => LoginPage());
+            Get.to(() => const LoginPage());
           },
-          child: Icon(
+          child: const Icon(
             Icons.directions_walk,
             color: Colors.amber,
           ),
@@ -132,7 +132,7 @@ class _Map extends State<Map> {
     final configuracion = Positioned(
       top: height - 55,
       left: (MediaQuery.of(context).size.width / 4),
-      child: Container(
+      child: SizedBox(
         height: 55, // Set the height
         width: (MediaQuery.of(context).size.width / 4), // Set the width
         child: ElevatedButton(
@@ -143,9 +143,9 @@ class _Map extends State<Map> {
             ),
           ),
           onPressed: () {
-            Get.to(() => LoginPage());
+            Get.to(() => const LoginPage());
           },
-          child: Icon(
+          child: const Icon(
             Icons.settings,
             color: Colors.amber,
           ),
@@ -156,7 +156,7 @@ class _Map extends State<Map> {
     final eventos = Positioned(
       top: height - 55,
       left: (MediaQuery.of(context).size.width / 4) * 2,
-      child: Container(
+      child: SizedBox(
         height: 55, // Set the height
         width: (MediaQuery.of(context).size.width / 4), // Set the width
         child: ElevatedButton(
@@ -167,9 +167,9 @@ class _Map extends State<Map> {
             ),
           ),
           onPressed: () {
-            Get.to(() => LoginPage());
+            Get.to(() => const LoginPage());
           },
-          child: Icon(
+          child: const Icon(
             Icons.event,
             color: Colors.amber,
           ),
@@ -177,10 +177,10 @@ class _Map extends State<Map> {
       ),
     );
 
-    final lost_property = Positioned(
+    final lostProperty = Positioned(
       top: height - 55,
       left: (MediaQuery.of(context).size.width / 4) * 3,
-      child: Container(
+      child: SizedBox(
         height: 55, // Set the height
         width: (MediaQuery.of(context).size.width / 4), // Set the width
         child: ElevatedButton(
@@ -191,9 +191,9 @@ class _Map extends State<Map> {
             ),
           ),
           onPressed: () {
-            Get.to(() => LoginPage());
+            Get.to(() => const LoginPage());
           },
-          child: Icon(
+          child: const Icon(
             Icons.backpack,
             color: Colors.amber,
           ), // Icon for lost items
@@ -214,20 +214,20 @@ class _Map extends State<Map> {
           children: [
           Visibility(
           visible: _isConnected == false,
-          child: Text(
+          child: const Text(
             'Estas SIN INTERNET, no puedo mostrarte el mapa :(',
             style: TextStyle(
                 color: Colors.black, fontSize: 35, fontWeight: FontWeight.bold),
           ),),
             Visibility(
               visible: _isConnected == true,
-              child: mapa_google),
-            caja_menu,
+              child: mapaGoogle),
+            cajaMenu,
             busqueda,
             configuracion,
             pasos,
             eventos,
-            lost_property
+            lostProperty
           ],
         ),
       )),

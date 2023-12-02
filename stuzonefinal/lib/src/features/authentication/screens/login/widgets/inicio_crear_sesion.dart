@@ -10,6 +10,8 @@ class InicioCrearSesion extends StatelessWidget {
   String path_image = tLogoStuZone;
   String timerimg = timer;
 
+  InicioCrearSesion({super.key});
+
   @override
   Widget build(BuildContext context) {
     final ingresar = Center(
@@ -26,7 +28,7 @@ class InicioCrearSesion extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
+              MaterialPageRoute(builder: (context) => const LoginPage()),
             );
           },
           child: const Text(
@@ -58,12 +60,12 @@ class InicioCrearSesion extends StatelessWidget {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
                 padding: const EdgeInsets.all(10)),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AppLifecycleReactorState ()),
+                MaterialPageRoute(builder: (context) => const AppLifecycleReactorState ()),
               );
             },
             child: Image.asset(
@@ -77,7 +79,7 @@ class InicioCrearSesion extends StatelessWidget {
       ),
     );
 
-    final crear_cuenta = Center(
+    final crearCuenta = Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 10.0,
@@ -116,7 +118,7 @@ class InicioCrearSesion extends StatelessWidget {
         child: InkWell(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Map()));
+                context, MaterialPageRoute(builder: (context) => const Map()));
           },
           child: const Text(
             'Continuar como Invitado',
@@ -132,6 +134,6 @@ class InicioCrearSesion extends StatelessWidget {
     return Material(
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [timer, photoImage, ingresar, crear_cuenta, invitado ]));
+            children: [timer, photoImage, ingresar, crearCuenta, invitado ]));
   }
 }

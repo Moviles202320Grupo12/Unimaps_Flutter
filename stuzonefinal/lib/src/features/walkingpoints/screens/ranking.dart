@@ -6,10 +6,9 @@ import 'package:stuzonefinal/src/features/walkingpoints/controllers/walking_cont
 
 import 'package:connectivity/connectivity.dart';
 import '../../../constants/colors.dart';
-import '../../../constants/sizes.dart';
 import '../../../utils/database_helper.dart';
 class Ranking extends StatefulWidget {
-  Ranking({Key? key}) : super(key: key);
+  const Ranking({Key? key}) : super(key: key);
 
   @override
   State<Ranking> createState() => _Ranking();
@@ -110,7 +109,7 @@ class _Ranking extends State<Ranking>{
               )),
       Visibility(
         visible: _isConnected == false,
-        child: Text(
+        child: const Text(
           'Estas sin internet, los ultimos datos guardados son los siguientes',
           style: TextStyle(fontSize: 24),
         ),),
@@ -157,10 +156,10 @@ class _Ranking extends State<Ranking>{
                                 });
                           }
                         } else if (!snapshot.hasData) {
-                             return Center(
+                             return const Center(
                               child: Text('No data available'),
                               );}
-                        return Center(
+                        return const Center(
                           child: Text('Something went wrong'),
                         );
 
