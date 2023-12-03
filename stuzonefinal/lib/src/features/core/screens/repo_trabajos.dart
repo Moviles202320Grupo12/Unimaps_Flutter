@@ -6,10 +6,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:stuzonefinal/src/features/core/screens/pdfviewerpage.dart';
 
-// Simple model class to represent file data
+
 class FileData {
   final String url;
   final String name;
@@ -25,8 +27,6 @@ class RepoTrabajos extends StatefulWidget {
 }
 
 class _RepoTrabajos extends State<RepoTrabajos> {
-  final DatabaseReference mainReference =
-      FirebaseDatabase.instance.reference().child('Database');
   List<FileData> files = [];
 
   @override
@@ -35,20 +35,20 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     loadFiles();
   }
 
-  // Function to load files from Firebase
-  void loadFiles() {
-    mainReference.onValue.listen((event) {
-      var filesData = <FileData>[];
-      event.snapshot.children.forEach((child) {
-        filesData.add(FileData(
-          url: child.child('PDF').value as String,
-          name: child.child('FileName').value as String,
-        ));
-      });
-      setState(() {
-        files = filesData;
-      });
+  void loadFiles() async {
+    final ListResult result =
+    await FirebaseStorage.instance.ref('trabajos/').listAll();
+    List<FileData> filesData = [];
+    for (var item in result.items) {
+      final String url = await item.getDownloadURL();
+      filesData.add(FileData(url: url, name: item.name));
+    }
+    setState(() {
+      files = filesData;
     });
+
+    print("--->");
+    print(files);
   }
 
   Future<void> requestStoragePermission() async {
@@ -63,13 +63,16 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     return status.isGranted;
   }
 
+  final DatabaseReference mainReference =
+  FirebaseDatabase.instance.reference().child('Database');
+
   String createCryptoRandomString([int length = 32]) {
     final Random random = Random.secure();
     var values = List<int>.generate(length, (i) => random.nextInt(256));
     return base64Url.encode(values);
   }
 
-  void documentFileUpload(String url, Function onUploadComplete) {
+  void documentFileUpload(String url) {
     var data = {
       "PDF": url,
       "FileName": "My new Book",
@@ -77,38 +80,16 @@ class _RepoTrabajos extends State<RepoTrabajos> {
 
     mainReference.child(createCryptoRandomString()).set(data).then((v) {
       print("Saved Successfully");
-      onUploadComplete();
     });
   }
 
   Future savePdf(List<int> asset, String name) async {
-    try {
-      final reference = FirebaseStorage.instance.ref().child('trabajos/$name');
-      UploadTask uploadTask = reference.putData(Uint8List.fromList(asset));
-      String url = await (await uploadTask).ref.getDownloadURL();
-      documentFileUpload(url, () {
-        print("Callback Triggered"); // Debug print
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Upload Complete"),
-              content: const Text("Archivo subido correctamente"),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text("OK"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      });
-    } catch (e) {
-      print("An error occurred: $e"); // Print any errors
-    }
+
+    final reference = FirebaseStorage.instance.ref().child(name);
+    UploadTask uploadTask = reference
+        .putData(Uint8List.fromList(asset)); // Convert to Uint8List here
+    String url = await (await uploadTask).ref.getDownloadURL();
+    documentFileUpload(url);
   }
 
   Future getPdfAndUpload() async {
@@ -125,13 +106,13 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     }
     var rng = Random();
     String randomName =
-        List.generate(20, (_) => rng.nextInt(100).toString()).join();
+    List.generate(20, (_) => rng.nextInt(100).toString()).join();
 
     // Updated FilePicker call
     FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['pdf'] // Specify 'pdf' here without the dot
-        );
+    );
     if (result != null) {
       File file = File(result.files.single.path!);
       String fileName = '$randomName.pdf';
@@ -139,7 +120,6 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     }
   }
 
-  // Build function for the UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,45 +130,30 @@ class _RepoTrabajos extends State<RepoTrabajos> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: getPdfAndUpload,
-        child: const Icon(Icons.add, color: Colors.amber),
+        child: const Icon(
+          Icons.add,
+          color: Colors.amber,
+        ),
       ),
       body: files.isEmpty
-          ? const Center(child: Text("No files uploadessd"))
+          ? Center(child: Text("Cargando archivos ..."))
           : ListView.builder(
-              itemCount: files.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(files[index].name),
-                  subtitle: Text(files[index].url),
-                  onTap: () => _openPdf(context, files[index].url),
-                );
-              },
-            ),
-    );
-  }
-
-  void _openPdf(BuildContext context, String url) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => PDFViewPage(url: url),
-    ));
-  }
-}
-
-// Una nueva pantalla para mostrar el PDF
-class PDFViewPage extends StatelessWidget {
-  final String url;
-
-  const PDFViewPage({super.key, required this.url});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Ver PDF'),
-      ),
-      body: PDFView(
-        filePath: url,
-        // Aquí puedes agregar más opciones de visualización si lo necesitas
+        itemCount: files.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.picture_as_pdf,
+                color: Colors.red), // Icono de PDF
+            title: Text(files[index].name),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) =>
+                      PdfViewerPage(url: files[index].url),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

@@ -8,26 +8,28 @@ import 'package:get/get.dart';
 
 import 'package:stuzonefinal/src/features/feed/controllers/feedcontroller.dart';
 
+
 import '../../../lostproperty/screens/found_property.dart';
 import '../../../lostproperty/screens/lost_property.dart';
-
+import '../../../maps/intentoDos/pages/maps_v1_page.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
     //Variables
     final txtTheme = Theme.of(context).textTheme;
-    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark; //Dark mode
+    final isDark = MediaQuery.of(context).platformBrightness ==
+        Brightness.dark; //Dark mode
 
     final FeedController controller = FeedController();
 
     return SafeArea(
       child: Scaffold(
-        appBar: DashboardAppBar(isDark: isDark,),
+        appBar: DashboardAppBar(
+          isDark: isDark,
+        ),
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(tDashboardPadding),
@@ -39,58 +41,51 @@ class Dashboard extends StatelessWidget {
                 Text(tDashboardHeading, style: txtTheme.displayMedium),
                 const SizedBox(height: tDashboardPadding),
 
-                //Search Box
-                DashboardSearchBox(txtTheme: txtTheme),
-                const SizedBox(height: tDashboardPadding),
+                Align(
+                    alignment: Alignment.center,
 
-                Align(
-                    alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
-                      onPressed: () => controller.buttonPressed(0),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(200, 10),
-                      ),
-                      //onPressed: () {
-                      //  Navigator.push(
-                      //    context,
-                      //    MaterialPageRoute(builder: (context) => const HomePage()), // Navega a HomeMap
-                      //  );
-                      //},
+                    child: ElevatedButton(
+                      //onPressed: () => controller.buttonPressed(0),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MapsV1Page()), // Navega a HomeMap
+                        );
+                      },
                       child: Text(controller.buttons[0].name),
-                    )
-                ),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(200, 10),
+                      ),
+                    )),
                 const SizedBox(height: 5),
                 Align(
                     alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
-                        onPressed: () {
-                          _mostrarDialogo(context);
-                        },
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _mostrarDialogo(context);
+                      },
+                      child: Text(controller.buttons[1].name),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(200, 10),
                       ),
-                      child: Text(controller.buttons[1].name),
-                    )
-                ),
+                    )),
+
                 const SizedBox(height: 5),
                 Align(
                     alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
+                    child: ElevatedButton(
                       onPressed: () => controller.buttonPressed(2),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(200, 10),
                       ),
+
                       child: Text(controller.buttons[2].name),
                     )
                 ),
                 const SizedBox(height: 5),
                 Align(
                     alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
+                    child: ElevatedButton(
                       onPressed: () => controller.buttonPressed(3),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(200, 10),
@@ -101,18 +96,24 @@ class Dashboard extends StatelessWidget {
                 const SizedBox(height: 5),
                 Align(
                     alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
+                    child: ElevatedButton(
                       onPressed: () => controller.buttonPressed(4),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(200, 10),
                       ),
                       child: Text(controller.buttons[4].name),
-                    )
-                )
 
-
-
+                    )),
+                const SizedBox(height: 5),
+                Align(
+                    alignment: Alignment.center,
+                    child: ElevatedButton(
+                      onPressed: () => controller.buttonPressed(5),
+                      child: Text(controller.buttons[5].name),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(200, 10),
+                      ),
+                    ))
               ],
             ),
           ),
@@ -141,7 +142,6 @@ class Dashboard extends StatelessWidget {
                 print('Segundo botón presionado');
                 Get.to(() => const FoundProperty());
                 //Get.to(() => PruebaDeMierda());
-
               },
               child: const Text('Ver cosas Buscadas'),
             ),
@@ -151,6 +151,3 @@ class Dashboard extends StatelessWidget {
     );
   }
 }
-
-
-
