@@ -3,10 +3,12 @@ import 'package:pinput/pinput.dart';
 //import 'package:app_final/pages/contrasena_creada.dart';
 
 class VerificacionCorreo extends StatelessWidget {
+  const VerificacionCorreo({super.key});
+
   @override
   Widget build(BuildContext context) {
     final texto = Container(
-      margin: EdgeInsets.only(top: 100, left: 20, right: 20),
+      margin: const EdgeInsets.only(top: 100, left: 20, right: 20),
       alignment: Alignment.topLeft,
       child: const Text(
         'OTP Verificacion',
@@ -21,7 +23,7 @@ class VerificacionCorreo extends StatelessWidget {
     );
 
     final subtexto = Container(
-      margin: EdgeInsets.only(top: 50, left: 20, right: 20),
+      margin: const EdgeInsets.only(top: 50, left: 20, right: 20),
       child: const Text(
         'Envia el código de seguridad que recibiste a tu correo',
         style: TextStyle(
@@ -34,14 +36,14 @@ class VerificacionCorreo extends StatelessWidget {
     final defaultPinTheme = PinTheme(
         width: 100,
         height: 100,
-        textStyle: TextStyle(color: Colors.black, fontSize: 26),
+        textStyle: const TextStyle(color: Colors.black, fontSize: 26),
         decoration: BoxDecoration(
             color: Colors.amber.shade400,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: Colors.transparent)));
 
-    final codigo_verificacion = Container(
-        margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+    final codigoVerificacion = Container(
+        margin: const EdgeInsets.only(top: 40, left: 20, right: 20),
         width: double.infinity,
         child: Pinput(
           length: 4,
@@ -51,7 +53,7 @@ class VerificacionCorreo extends StatelessWidget {
             border: Border.all(color: Colors.black),
           )),
         ));
-    final boton_verificar = Container(
+    final botonVerificar = Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 60, // Margen simétrico para centrar el botón
@@ -81,7 +83,7 @@ class VerificacionCorreo extends StatelessWidget {
           ),
         ));
 
-    final enviar_code = Container(
+    final enviarCode = Container(
       margin: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width *
             0.1, // Dynamic margin based on screen width
@@ -124,9 +126,9 @@ class VerificacionCorreo extends StatelessWidget {
         body: Column(children: [
           texto,
           subtexto,
-          codigo_verificacion,
-          boton_verificar,
-          enviar_code
+          codigoVerificacion,
+          botonVerificar,
+          enviarCode
         ]));
   }
 }

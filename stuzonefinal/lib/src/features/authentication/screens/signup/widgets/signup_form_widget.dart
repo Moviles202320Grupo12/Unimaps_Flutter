@@ -71,9 +71,9 @@ class SignUpFormWidget extends StatelessWidget {
                     }
                   },
                   child: controller.isLoading.value
-                      ? Row(
+                      ? const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 20,
                               height: 20,

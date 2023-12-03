@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SpecificEvent extends StatelessWidget {
+  const SpecificEvent({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: SpecificEventHome());
+    return const MaterialApp(home: SpecificEventHome());
   }
 }
 
@@ -15,7 +17,7 @@ class SpecificEventHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -43,7 +45,7 @@ class SpecificEventHome extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.bottomRight,
                 children: [
-                  Container(
+                  SizedBox(
                       width: 380, // Ancho de la imagen
                       height: 200, // Altura de la imagen
                       child: Image.asset(
@@ -55,7 +57,7 @@ class SpecificEventHome extends StatelessWidget {
                     child: FloatingActionButton(
                       onPressed: () {
                       },
-                      child: Icon(Icons.share),
+                      child: const Icon(Icons.share),
                     ),
                   ),
                 ],
@@ -74,18 +76,18 @@ class SpecificEventHome extends StatelessWidget {
           const Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: EdgeInsets.all(5.0),
               child: Text(
                 "FOPRE CAFÉ 2023                 Comida - Juegos - Música y mucha diversión",
                 style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xBBBB87400),
+                    color: Color(0xbbbb87400),
                     fontWeight: FontWeight.bold),
               ),
             ),
           ),
           const Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(15.0),
             child: Text(
               "Del 4 al 8 de septiembre de 2023 compra tu comida en el Fopre Café, participa en juegos, conciertos y eventos para que más estudiantes puedan recibir el apoyo FOPRE. No te lo ",
               style: TextStyle(fontSize: 16),

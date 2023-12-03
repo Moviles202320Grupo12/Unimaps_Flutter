@@ -1,9 +1,7 @@
 // step_counter_app.dart
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -12,13 +10,14 @@ import 'package:stuzonefinal/src/features/walkingpoints/screens/cupones.dart';
 import 'package:stuzonefinal/src/features/walkingpoints/screens/ranking.dart';
 import '../../../constants/colors.dart';
 import 'package:get/get.dart';
-import 'package:decimal/decimal.dart';
 
 import '../../core/controllers/profile_controller.dart';
 
 import 'package:connectivity/connectivity.dart';
 
 class ScreenWalk extends StatefulWidget {
+  const ScreenWalk({super.key});
+
   @override
   _MyAppState createState() => _MyAppState();
 
@@ -188,7 +187,7 @@ class _MyAppState extends State<ScreenWalk> {
                   }
                 },
               ),
-              Divider(
+              const Divider(
                 height: 100,
                 thickness: 0,
                 color: Colors.white,
@@ -211,12 +210,12 @@ class _MyAppState extends State<ScreenWalk> {
                   _status,
                   style: _status == 'walking' || _status == 'stopped'
                       ? TextStyle(color: isDarkMode ? tPrimaryColor : tSecondaryColor,fontSize: 30)
-                      : TextStyle(fontSize: 20, color: Colors.red),
+                      : const TextStyle(fontSize: 20, color: Colors.red),
                 ),
               ),
               Center(
                 child: _isConnected
-                    ? Text(' ')
+                    ? const Text(' ')
                     : Text('No hay conexión a Internet', style: TextStyle(color: isDarkMode ? tPrimaryColor : tSecondaryColor,fontSize: 30)),
               ),
               Row(
@@ -228,7 +227,7 @@ class _MyAppState extends State<ScreenWalk> {
                       Get.to(() => CuponesView(initialValue: inicia,));
                     },
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.black, minimumSize: Size(40, 40)),
+                        backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                     child: const Text("Cupones",
                         style: TextStyle(
                             color: Color(0xFFF6A700),
@@ -238,10 +237,10 @@ class _MyAppState extends State<ScreenWalk> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Get.to(() => Ranking());
+                      Get.to(() => const Ranking());
                     },
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.black, minimumSize: Size(40, 40)),
+                        backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                     child: const Text("Ranking",
                         style: TextStyle(
                             color: Color(0xFFF6A700),
@@ -272,20 +271,20 @@ class _MyAppState extends State<ScreenWalk> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('¿Desea salir?'),
-          content: Text('¿Está seguro de que desea salir de esta vista?'),
+          title: const Text('¿Desea salir?'),
+          content: const Text('¿Está seguro de que desea salir de esta vista?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(false); // No cierra la vista.
               },
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(true); // Cierra la vista.
               },
-              child: Text('Aceptar'),
+              child: const Text('Aceptar'),
             ),
           ],
         );

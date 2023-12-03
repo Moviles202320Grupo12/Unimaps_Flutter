@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,9 +19,9 @@ class AddItemFound extends StatefulWidget {
 }
 
 class _AddItemFoundState extends State<AddItemFound> {
-  TextEditingController _controllerName = TextEditingController();
-  TextEditingController _controllerDescription = TextEditingController();
-  TextEditingController _controllerLocation = TextEditingController();
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerDescription = TextEditingController();
+  final TextEditingController _controllerLocation = TextEditingController();
 
   File? _imageFile;
 
@@ -31,7 +30,7 @@ class _AddItemFoundState extends State<AddItemFound> {
   GlobalKey<FormState> key = GlobalKey();
   bool _isConnected = true;
 
-  CollectionReference _reference =
+  final CollectionReference _reference =
   FirebaseFirestore.instance.collection('foundproperty');
 
   String imageUrl = '';
@@ -60,7 +59,7 @@ class _AddItemFoundState extends State<AddItemFound> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add an item'),
+        title: const Text('Add an item'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -70,11 +69,11 @@ class _AddItemFoundState extends State<AddItemFound> {
             children: [
               Text(
                 'Fecha y Hora Actual: $now',
-                style: TextStyle(fontSize: 24),),
+                style: const TextStyle(fontSize: 24),),
               TextFormField(
                 controller: _controllerName,
                 decoration:
-                InputDecoration(hintText: 'Enter the name of the item'),
+                const InputDecoration(hintText: 'Enter the name of the item'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the item name';
@@ -86,7 +85,7 @@ class _AddItemFoundState extends State<AddItemFound> {
               TextFormField(
                 controller: _controllerDescription,
                 decoration:
-                InputDecoration(hintText: 'Enter the description of the item'),
+                const InputDecoration(hintText: 'Enter the description of the item'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the item description';
@@ -98,7 +97,7 @@ class _AddItemFoundState extends State<AddItemFound> {
               TextFormField(
                 controller: _controllerLocation,
                 decoration:
-                InputDecoration(hintText: 'Enter the location of the item'),
+                const InputDecoration(hintText: 'Enter the location of the item'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the item location';
@@ -168,7 +167,7 @@ class _AddItemFoundState extends State<AddItemFound> {
                       //Handle errors/success
                       try {
                         //Store the file
-                        await referenceImageToUpload.putFile(File(file!.path));
+                        await referenceImageToUpload.putFile(File(file.path));
                         //Success: get the download URL
                         imageUrl = await referenceImageToUpload.getDownloadURL();
                       } catch (error) {
@@ -178,14 +177,14 @@ class _AddItemFoundState extends State<AddItemFound> {
                     }
 
                   },
-                  icon: Icon(Icons.camera_alt)),
+                  icon: const Icon(Icons.camera_alt)),
               Visibility(
                   visible: _isConnected == true,
                   child: ElevatedButton(
                       onPressed: () async {
                         if (imageUrl.isEmpty) {
                           ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text('Please upload an image')));
+                              .showSnackBar(const SnackBar(content: Text('Please upload an image')));
 
                           return;
                         }
@@ -213,7 +212,7 @@ class _AddItemFoundState extends State<AddItemFound> {
                           LostTimerRepository.instance.createLostTimer(timerr);
                         }
                       },
-                      child: Text('Submit'))),
+                      child: const Text('Submit'))),
 
               Visibility(
                   visible: _isConnected == false,
@@ -221,7 +220,7 @@ class _AddItemFoundState extends State<AddItemFound> {
                       onPressed: () async {
                         if (newImagePath.isEmpty) {
                           ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text('Please upload an image')));
+                              .showSnackBar(const SnackBar(content: Text('Please upload an image')));
                           print("PANICOOOOOOO");
                           print(DataLocalFound.getAllFounds());
 
@@ -252,7 +251,7 @@ class _AddItemFoundState extends State<AddItemFound> {
                           //Add a new item
                         }
                       },
-                      child: Text('Submit'))),
+                      child: const Text('Submit'))),
             ],
           ),
         ),
@@ -275,11 +274,11 @@ class _AddItemFoundState extends State<AddItemFound> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Sin conexión'),
-            content: Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
+            title: const Text('Sin conexión'),
+            content: const Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
             actions: <Widget>[
               ElevatedButton(
-                child: Text('Cerrar'),
+                child: const Text('Cerrar'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

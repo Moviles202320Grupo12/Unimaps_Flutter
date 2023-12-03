@@ -20,6 +20,8 @@ class FileData {
 }
 
 class RepoTrabajos extends StatefulWidget {
+  const RepoTrabajos({super.key});
+
   @override
   _RepoTrabajos createState() => _RepoTrabajos();
 }
@@ -82,6 +84,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
   }
 
   Future savePdf(List<int> asset, String name) async {
+
     final reference = FirebaseStorage.instance.ref().child(name);
     UploadTask uploadTask = reference
         .putData(Uint8List.fromList(asset)); // Convert to Uint8List here
@@ -112,7 +115,7 @@ class _RepoTrabajos extends State<RepoTrabajos> {
     );
     if (result != null) {
       File file = File(result.files.single.path!);
-      String fileName = '${randomName}.pdf';
+      String fileName = '$randomName.pdf';
       savePdf(await file.readAsBytes(), fileName);
     }
   }

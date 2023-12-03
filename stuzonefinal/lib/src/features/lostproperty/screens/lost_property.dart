@@ -55,7 +55,7 @@ class LostPropertyHome extends State<LostProperty> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -86,12 +86,12 @@ class LostPropertyHome extends State<LostProperty> {
                 },
                 decoration: InputDecoration(
                   labelText: '',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
+                  const EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
                 ),
               ),
             ),
@@ -107,14 +107,14 @@ class LostPropertyHome extends State<LostProperty> {
                     fontSize: 20),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.black, minimumSize: Size(40, 40)),
+                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                   child: const Text("Celulares",
                       style: TextStyle(
                           color: Color(0xFFF6A700),
@@ -127,7 +127,7 @@ class LostPropertyHome extends State<LostProperty> {
                     // Acción del botón 2
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.black, minimumSize: Size(40, 40)),
+                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                   child: const Text("Libros",
                       style: TextStyle(
                           color: Color(0xFFF6A700),
@@ -140,7 +140,7 @@ class LostPropertyHome extends State<LostProperty> {
                     // Acción del botón 3
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.black, minimumSize: Size(40, 40)),
+                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                   child: const Text("PCs",
                       style: TextStyle(
                           color: Color(0xFFF6A700),
@@ -153,7 +153,7 @@ class LostPropertyHome extends State<LostProperty> {
                     // Acción del botón 3
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.black, minimumSize: Size(40, 40)),
+                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                   child: const Text("Otros",
                       style: TextStyle(
                           color: Color(0xFFF6A700),
@@ -167,10 +167,10 @@ class LostPropertyHome extends State<LostProperty> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => AddItem());
+                  Get.to(() => const AddItem());
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: Colors.black, minimumSize: Size(40, 40)),
+                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                 child: const Text(
                   "Reportar Objeto Encontrado",
                   style: TextStyle(
@@ -182,7 +182,7 @@ class LostPropertyHome extends State<LostProperty> {
               ),
             ),Visibility(
                 visible: _isConnected == false,
-                child: Text(
+                child: const Text(
                   'NO TIENES CONEXION A INTERNET',
                   style: TextStyle(fontSize: 24),
             )),
@@ -201,26 +201,26 @@ class LostPropertyHome extends State<LostProperty> {
                               Container(
                                 padding: const EdgeInsets.all(10.0),
                                 decoration: BoxDecoration(
-                                    color: Color(0xBBBB87400),
+                                    color: const Color(0xbbbb87400),
                                     borderRadius: BorderRadius.circular(10.0),
                                     border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
                                 ),
 
                               ),
                               Text(snapshot.data![index].name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color(0xFFF6A700),
                                       fontFamily: 'Urbanist',
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20)),
                               Text(snapshot.data![index].description,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color(0xFFF6A700),
                                       fontFamily: 'Urbanist',
                                       fontWeight: FontWeight.bold,
                                       fontSize: 10)),
                               Text(snapshot.data![index].location,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Color(0xFFF6A700),
                                       fontFamily: 'Urbanist',
                                       fontWeight: FontWeight.bold,
@@ -274,11 +274,11 @@ class LostPropertyHome extends State<LostProperty> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Sin conexión'),
-            content: Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
+            title: const Text('Sin conexión'),
+            content: const Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
             actions: <Widget>[
               ElevatedButton(
-                child: Text('Cerrar'),
+                child: const Text('Cerrar'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

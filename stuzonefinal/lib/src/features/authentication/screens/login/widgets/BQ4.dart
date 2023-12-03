@@ -4,6 +4,8 @@ import 'dart:async';
 
  int count = 0;
 class AppLifecycleReactorState extends StatefulWidget{
+  const AppLifecycleReactorState({super.key});
+
   @override
   _AppLifecycleReactorState createState()=>_AppLifecycleReactorState();
 
@@ -17,7 +19,7 @@ class _AppLifecycleReactorState extends State<AppLifecycleReactorState> with Wid
   void initState(){
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    timer=Timer.periodic(Duration(seconds: 1), (tm) { 
+    timer=Timer.periodic(const Duration(seconds: 1), (tm) { 
      if(active){
        setState(() {
         count+=1;
@@ -47,7 +49,7 @@ class _AppLifecycleReactorState extends State<AppLifecycleReactorState> with Wid
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Center(child: Text("El tiempo transcurrido en Stuzone es de $count segundos", style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),),
+      body: Center(child: Text("El tiempo transcurrido en Stuzone es de $count segundos", style: const TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),),
       
     );
   }

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
-import 'package:stuzonefinal/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:stuzonefinal/src/repository/lost_repository/lost_repository.dart';
 
 class LostController extends GetxController {

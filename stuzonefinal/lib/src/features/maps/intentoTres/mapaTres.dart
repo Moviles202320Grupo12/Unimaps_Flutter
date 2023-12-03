@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -96,7 +95,7 @@ class TrackingPageState extends State<TrackingPage> {
         title: const Text("Tracking"),
       ),
       body: currentLocation == null
-        ? Center(child: CircularProgressIndicator())
+        ? const Center(child: CircularProgressIndicator())
           : GoogleMap(
         initialCameraPosition: CameraPosition(
           target: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
@@ -104,7 +103,7 @@ class TrackingPageState extends State<TrackingPage> {
         ),
         polylines: {
           Polyline(
-            polylineId: PolylineId("route"),
+            polylineId: const PolylineId("route"),
             points: polylineCoordinates,
             color: Colors.deepOrange,
             width: 6
@@ -112,7 +111,7 @@ class TrackingPageState extends State<TrackingPage> {
         },
         markers: {
           Marker(
-            markerId: MarkerId("currentLocation"),
+            markerId: const MarkerId("currentLocation"),
             position: LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
           ),
           const Marker(

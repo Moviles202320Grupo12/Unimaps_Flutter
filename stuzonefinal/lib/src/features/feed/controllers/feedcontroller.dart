@@ -2,12 +2,9 @@ import 'package:stuzonefinal/src/features/core/screens/repo_trabajos.dart';
 import 'package:stuzonefinal/src/features/events/screens/todos_los_eventos.dart';
 import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
 import 'package:get/get.dart';
-import 'package:stuzonefinal/src/features/feed/models/feedmodel.dart';
-import 'package:stuzonefinal/src/features/authentication/screens/signup/signup_screen.dart';
 import 'package:stuzonefinal/src/features/tutors/screens/todos_los_tutores.dart';
 import 'package:stuzonefinal/src/features/walkingpoints/screens/screenwalk.dart';
 import 'package:stuzonefinal/src/features/core/screens/map.dart';
-import 'package:stuzonefinal/src/features/events/screens/events.dart';
 
 import 'package:stuzonefinal/src/features/lostproperty/screens/lost_property.dart';
 
@@ -30,7 +27,7 @@ class FeedController {
       Get.to(() => LostProperty());
     } else if (index == 2) {
       print('B');
-      Get.to(() => ScreenWalk());
+      Get.to(() => const ScreenWalk());
     } else if (index == 3) {
       print('C');
 

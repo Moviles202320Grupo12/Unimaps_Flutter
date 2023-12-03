@@ -30,10 +30,10 @@ class DashboardBanners extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
+                const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Flexible(child: Image(image: AssetImage(tBookmarkIcon))),
                     Flexible(child: Image(image: AssetImage(tBannerImage1))),
                   ],
@@ -60,10 +60,10 @@ class DashboardBanners extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Flexible(child: Image(image: AssetImage(tBookmarkIcon))),
                         Flexible(child: Image(image: AssetImage(tBannerImage2))),
                       ],

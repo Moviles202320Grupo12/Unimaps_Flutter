@@ -5,16 +5,14 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:stuzonefinal/src/features/events/models/event_model.dart';
 import 'package:stuzonefinal/src/features/events/controllers/event_controller.dart';
 import 'package:stuzonefinal/src/features/tutors/screens/crear_tutor.dart';
-import 'package:stuzonefinal/src/features/events/screens/eventos_populares.dart';
-
 import 'package:url_launcher/url_launcher.dart';
 import 'package:stuzonefinal/src/constants/image_strings.dart';
 
 import '../../../constants/colors.dart';
 import '../../../constants/sizes.dart';
 
-class AllEvents extends StatelessWidget {
-  AllEvents({Key? key}) : super(key: key);
+class EventosPops extends StatelessWidget {
+  EventosPops({Key? key}) : super(key: key);
 
   final controller = Get.put(EventController());
 
@@ -52,7 +50,7 @@ class AllEvents extends StatelessWidget {
                Center(
                 child: ElevatedButton(
                   onPressed: () {
-                  Get.to(() => EventosPops());
+                  
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black, minimumSize: const Size(40, 40)),

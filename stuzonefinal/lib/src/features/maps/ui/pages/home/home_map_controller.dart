@@ -3,13 +3,11 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stuzonefinal/src/features/maps/ui/pages/home/utils/image_to_bytes.dart';
-import 'package:stuzonefinal/src/features/maps/ui/pages/home/utils/map_style.dart';
-import 'package:stuzonefinal/src/constants/image_strings.dart';
 
 
 class HomeMapController extends ChangeNotifier {
 
-  Map<MarkerId, Marker> _markers = {};
+  final Map<MarkerId, Marker> _markers = {};
 
 
   Set<Marker> get markers => _markers.values.toSet();
@@ -18,7 +16,7 @@ class HomeMapController extends ChangeNotifier {
 
   Stream<String> get onMarkerTap => _markersController.stream;
 
-  final initialCameraPosition = CameraPosition(
+  final initialCameraPosition = const CameraPosition(
       target: LatLng(4.601224016343051, -74.06627833843231),
       zoom: 20
   );

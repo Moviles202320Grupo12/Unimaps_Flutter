@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:flutter/material.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
 
 import '../features/lostproperty/controllers/found_controller.dart';
@@ -75,7 +73,7 @@ class DataLocalFound {
       final List<Map<String, dynamic>> maps = await db.query("Found");
       List<LostModel> lalista = List.generate(maps.length, (index) => LostModel.fromJson(maps[index]));
       final controller = Get.put(FoundController());
-      CollectionReference _reference =
+      CollectionReference reference =
       FirebaseFirestore.instance.collection('foundproperty');
       for (var perdida in lalista){
 
@@ -102,7 +100,7 @@ class DataLocalFound {
         //Handle errors/success
         try {
           //Store the file
-          await referenceImageToUpload.putFile(File(imageFile!.path));
+          await referenceImageToUpload.putFile(File(imageFile.path));
           //Success: get the download URL
           imageUrl = await referenceImageToUpload.getDownloadURL();
         } catch (error) {
@@ -115,7 +113,7 @@ class DataLocalFound {
           'image': imageUrl,
         };
 
-        _reference.add(dataToSend);
+        reference.add(dataToSend);
       }
 
 
@@ -124,7 +122,7 @@ class DataLocalFound {
 
     } catch (e) {
       print("Error al actualizar usuarios en la base de datos local: $e");
-      throw e;
+      rethrow;
     }
 
 

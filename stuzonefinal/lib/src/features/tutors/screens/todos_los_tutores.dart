@@ -5,6 +5,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:stuzonefinal/src/features/tutors/models/tutor_model.dart';
 import 'package:stuzonefinal/src/features/tutors/controllers/tutor_controller.dart';
 import 'package:stuzonefinal/src/features/tutors/screens/crear_tutor.dart';
+import 'package:stuzonefinal/src/features/tutors/screens/ranking_tutores.dart';
 import 'package:stuzonefinal/src/constants/image_strings.dart';
 
 import '../../../constants/colors.dart';
@@ -31,12 +32,29 @@ class AllTutors extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.to(() => AddTutor());
+                    Get.to(() => const AddTutor());
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.black, minimumSize: Size(40, 40)),
+                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                   child: const Text(
                     "Crear Nuevo tutor",
+                    style: TextStyle(
+                        color: Color(0xFFF6A700),
+                        fontFamily: 'Urbanist',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => const RankingTutor());
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
+                  child: const Text(
+                    "Ranking",
                     style: TextStyle(
                         color: Color(0xFFF6A700),
                         fontFamily: 'Urbanist',
@@ -60,26 +78,26 @@ class AllTutors extends StatelessWidget {
                                 Container(
                                   padding: const EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
-                                      color: Color(0xBBBB87400),
+                                      color: const Color(0xbbbb87400),
                                       borderRadius: BorderRadius.circular(10.0),
                                       border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
                                   ),
 
                                 ),
                                 Text(snapshot.data![index].name,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xFFF6A700),
                                         fontFamily: 'Urbanist',
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20)),
                                 Text(snapshot.data![index].email,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xFFF6A700),
                                         fontFamily: 'Urbanist',
                                         fontWeight: FontWeight.bold,
                                         fontSize: 10)),
                                 Text(snapshot.data![index].phoneNo,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xFFF6A700),
                                         fontFamily: 'Urbanist',
                                         fontWeight: FontWeight.bold,

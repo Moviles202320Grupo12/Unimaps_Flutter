@@ -15,13 +15,13 @@ class AddTutor extends StatefulWidget {
 }
 
 class _AddTutorState extends State<AddTutor> {
-  TextEditingController _controllerName = TextEditingController();
-  TextEditingController _controllerEmail = TextEditingController();
-  TextEditingController _controllerPhoneNoo = TextEditingController();
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPhoneNoo = TextEditingController();
 
   GlobalKey<FormState> key = GlobalKey();
 
-  CollectionReference _reference =
+  final CollectionReference _reference =
   FirebaseFirestore.instance.collection('tutors');
 
   String imageUrl = '';
@@ -48,7 +48,7 @@ class _AddTutorState extends State<AddTutor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add an item'),
+        title: const Text('Add an item'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -59,7 +59,7 @@ class _AddTutorState extends State<AddTutor> {
               TextFormField(
                 controller: _controllerName,
                 decoration:
-                InputDecoration(hintText: 'Enter the name of the tutor'),
+                const InputDecoration(hintText: 'Enter the name of the tutor'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the tutor name';
@@ -71,7 +71,7 @@ class _AddTutorState extends State<AddTutor> {
               TextFormField(
                 controller: _controllerEmail,
                 decoration:
-                InputDecoration(hintText: 'Enter the email of the item'),
+                const InputDecoration(hintText: 'Enter the email of the item'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the email description';
@@ -83,7 +83,7 @@ class _AddTutorState extends State<AddTutor> {
               TextFormField(
                 controller: _controllerPhoneNoo,
                 decoration:
-                InputDecoration(hintText: 'Enter the phone number of the tutor'),
+                const InputDecoration(hintText: 'Enter the phone number of the tutor'),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the phone number of the tutor';
@@ -134,32 +134,32 @@ class _AddTutorState extends State<AddTutor> {
                     //Handle errors/success
                     try {
                       //Store the file
-                      await referenceImageToUpload.putFile(File(file!.path));
+                      await referenceImageToUpload.putFile(File(file.path));
                       //Success: get the download URL
                       imageUrl = await referenceImageToUpload.getDownloadURL();
                     } catch (error) {
                       //Some error occurred
                     }
                   },
-                  icon: Icon(Icons.camera_alt)),
+                  icon: const Icon(Icons.camera_alt)),
 
               for (var controller in materiasControllers)
                 TextFormField(
                   controller: controller,
-                  decoration: InputDecoration(labelText: 'Ingrese la materia'),
+                  decoration: const InputDecoration(labelText: 'Ingrese la materia'),
                 ),
               ElevatedButton(
                 onPressed: _addMateriaField,
-                child: Text('Agregar Otra Materia'),
+                child: const Text('Agregar Otra Materia'),
               ),
               for (var controller in temasControllers)
                 TextFormField(
                   controller: controller,
-                  decoration: InputDecoration(labelText: 'Ingrese el tema'),
+                  decoration: const InputDecoration(labelText: 'Ingrese el tema'),
                 ),
               ElevatedButton(
                 onPressed: _addTemaField,
-                child: Text('Agregar Otro Tema'),
+                child: const Text('Agregar Otro Tema'),
               ),
 
               ElevatedButton(
@@ -167,7 +167,7 @@ class _AddTutorState extends State<AddTutor> {
 
                     if (imageUrl.isEmpty) {
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Please upload an image')));
+                          .showSnackBar(const SnackBar(content: Text('Please upload an image')));
 
                       return;
                     }
@@ -192,7 +192,7 @@ class _AddTutorState extends State<AddTutor> {
                       TutorRepository.instance.createTutor(tutor);
                     }
                   },
-                  child: Text('Submit'))
+                  child: const Text('Submit'))
             ],
           ),
         ),

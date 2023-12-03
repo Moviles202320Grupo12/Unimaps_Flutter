@@ -17,7 +17,7 @@ class OTPScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               tOtpTitle,
               ),
             Text(tOtpSubTitle.toUpperCase(), style: Theme.of(context).textTheme.titleLarge),

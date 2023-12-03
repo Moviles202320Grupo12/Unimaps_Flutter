@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
 import '../../features/walkingpoints/models/coupon_model.dart';
 import '../authentication_repository/exceptions/t_exceptions.dart';
 

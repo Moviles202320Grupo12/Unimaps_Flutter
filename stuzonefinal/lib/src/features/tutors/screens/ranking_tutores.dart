@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 
-class SelectTutorPage extends StatelessWidget {
-  const SelectTutorPage({super.key});
+
+class RankingTutor extends StatelessWidget {
+  const RankingTutor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +23,14 @@ class SelectTutorPage extends StatelessWidget {
                 mainAxisSpacing: 15.0,
                 childAspectRatio: 0.8,
                 children: <Widget>[
-                  _buildCard('Mobile Development', 'Juana Cabrera', 'lib/imgs/tutors.png',
+                  _buildCard('Mobile Development', 'Juana Cabrera', 'assets/images/tutors/tutor (1).jpg', "5",
+                     context),
+                  _buildCard('PMC', 'Pedro Perez', 'assets/images/tutors/tutor2 (1).png', "3.5",
                       context),
-                  _buildCard('PMC', 'Juan Carlos Garcia', 'lib/imgs/tutor2.png',
-                      context),
-                  _buildCard('Calculus', 'Santiago Restrepo',
-                      'lib/imgs/tutor3.png', context),
-                  _buildCard('Biology', 'Jorge Ardila', 'lib/imgs/tutor4.png',
-                      context)
+                  _buildCard('Calculus', 'Julian Gomez',
+                      'assets/images/tutors/tutor3 (1).png', "2", context),
+                  _buildCard('Biology', 'Lucas Rios', 'assets/images/tutors/tutor4 (1).png', "4",
+                     context)
                 ],
               )),
           const SizedBox(height: 15.0)
@@ -38,7 +39,7 @@ class SelectTutorPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCard(String subject, String name, String imgPath, context) {
+  Widget _buildCard(String subject, String name, String imgPath, String ranking, context) {
     return Padding(
         padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
         child: InkWell(
@@ -79,7 +80,22 @@ class SelectTutorPage extends StatelessWidget {
                   Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(color: const Color(0xFFEBEBEB), height: 1.0)),
-                  Padding(
+                      
+Center(
+                child: TextButton(
+  onPressed: () {},
+  
+  style: TextButton.styleFrom(
+    
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+  ),
+  child: Text(ranking),
+),
+              ),
+
+                            Padding(
                       padding: const EdgeInsets.only(left: 5.0, right: 5.0),
                       child: Row(
 
@@ -87,9 +103,10 @@ class SelectTutorPage extends StatelessWidget {
                           children: [
 
                             SizedBox(height: 20,child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color.fromRGBO(254, 211, 83, 0.7),
-                              //side: const BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid)
-                            ),child: const Text('Book a session', style: TextStyle(color: Colors.black, fontSize: 11),)),)
+                    backgroundColor: const Color.fromRGBO(254, 211, 83, 0.7),minimumSize: Size.zero, // Set this
+    padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+                    //side: const BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid)
+                  ),child: const Text('Rate', style: TextStyle(color: Colors.black, fontSize: 11),)),) 
                           ]))
                 ]))));
   }

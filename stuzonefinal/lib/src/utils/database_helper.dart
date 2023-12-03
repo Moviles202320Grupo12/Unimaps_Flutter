@@ -1,6 +1,5 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:flutter/material.dart';
 import 'package:stuzonefinal/src/features/authentication/models/user_model.dart';
 
 class DatabaseHelper {
@@ -70,7 +69,7 @@ class DatabaseHelper {
       }
     } catch (e) {
       print("Error al actualizar usuarios en la base de datos local: $e");
-      throw e;
+      rethrow;
     }
 
 

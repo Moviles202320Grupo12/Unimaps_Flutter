@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
 import 'package:stuzonefinal/src/features/walkingpoints/models/coupon_model.dart';
 
 import '../../../repository/coupon_repository/coupon_repository.dart';

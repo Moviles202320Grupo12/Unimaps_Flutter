@@ -6,9 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/login/widgets/inicio_crear_sesion.dart';
 import 'package:stuzonefinal/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:stuzonefinal/src/features/core/screens/dashboard/dashboard.dart';
-import 'package:stuzonefinal/src/features/lostproperty/screens/find_lost_property.dart';
-import 'package:stuzonefinal/src/features/feed/screens/feedscreen.dart';
-import 'package:stuzonefinal/src/features/core/screens/map.dart';
 
 import 'package:stuzonefinal/src/features/feed/controllers/feedcontroller.dart';
 
@@ -176,7 +173,7 @@ class AuthenticationRepository extends GetxController {
           email: email, password: password);
       firebaseUser != null
           ? Get.offAll(() => const Dashboard())
-          : Get.to(() => LoginPage());
+          : Get.to(() => const LoginPage());
     } on FirebaseAuthException catch (e) {
       final ex = TExceptions.fromCode(e.code);
       throw ex.message;

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class FindLostProperty extends StatelessWidget {
+  const FindLostProperty({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: FindLostPropertyHome());
+    return const MaterialApp(home: FindLostPropertyHome());
   }
 }
 
@@ -15,7 +17,7 @@ class FindLostPropertyHome extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -43,7 +45,7 @@ class FindLostPropertyHome extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.bottomRight,
                 children: [
-                  Container(
+                  SizedBox(
                       width: 380, // Ancho de la imagen
                       height: 200, // Altura de la imagen
                       child: Image.asset(
@@ -56,7 +58,7 @@ class FindLostPropertyHome extends StatelessWidget {
                       onPressed: () {
                         // Add your share logic here
                       },
-                      child: Icon(Icons.share),
+                      child: const Icon(Icons.share),
                     ),
                   ),
                 ],
@@ -75,18 +77,18 @@ class FindLostPropertyHome extends StatelessWidget {
           const Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: EdgeInsets.all(5.0),
               child: Text(
                 "Descripcion",
                 style: TextStyle(
                     fontSize: 18,
-                    color: Color(0xBBBB87400),
+                    color: Color(0xbbbb87400),
                     fontWeight: FontWeight.bold),
               ),
             ),
           ),
           const Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(15.0),
             child: Text(
               "Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.Un parrafo con una descripcion.",
               style: TextStyle(fontSize: 16),
@@ -100,7 +102,7 @@ class FindLostPropertyHome extends StatelessWidget {
                       // Add your logic here
                     },
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.black, minimumSize: Size(40, 40)),
+                        backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
                     child: const Text(
                       "Es mio",
                       style: TextStyle(
