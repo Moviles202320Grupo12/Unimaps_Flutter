@@ -75,6 +75,9 @@ class SignUpFormWidget extends StatelessWidget {
                           SignUpController.instance.createUser(user);
                         }
                       },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(200, 10),
+                      ),
                       child: controller.isLoading.value
                           ? const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -99,10 +102,9 @@ class SignUpFormWidget extends StatelessWidget {
                           // SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
 
                           /// For Phone Authentication
-                          SignUpController.instance.phoneAuthentication(controller.phoneNo.text.trim());
-                          OTPController.instance.updateData(controller.phoneNo.text.trim());
 
-                          Get.to(()=> OTPScreen());
+                          Get.to(()=> RegistroConCelular());
+
 
                           /*
                        =========
@@ -112,6 +114,9 @@ class SignUpFormWidget extends StatelessWidget {
 
                         }
                       },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(200, 10),
+                      ),
                       child: controller.isLoading.value
                           ? const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -127,7 +132,8 @@ class SignUpFormWidget extends StatelessWidget {
                           Text("Loading...")
                         ],
                       )
-                          : Text("Con celular"),
+                          : Text("¡NEW! Con celular"),
+
                     ),
                   ],
                 )
@@ -139,4 +145,93 @@ class SignUpFormWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+
+class RegistroConCelular extends StatefulWidget {
+  const RegistroConCelular({Key? key}) : super(key: key);
+
+  @override
+  State<RegistroConCelular> createState() => _RegistroConCelular();
+}
+
+
+class _RegistroConCelular  extends State<RegistroConCelular> {
+
+
+  final phoneController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final ingresarPhone = Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      child: TextField(
+        controller: phoneController,
+        obscureText: false,
+        decoration: const InputDecoration(
+            filled: true,
+            fillColor: Color(0xbbbbbf7f8f9),
+            border: OutlineInputBorder(),
+            labelText: 'Ingresa tu celular',
+            labelStyle: TextStyle(color: Colors.black45),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1.5, color: Colors.black))),
+      ),
+    );
+
+    const cajita = SizedBox(
+      height: 200,
+    );
+
+    final ingresar = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: SizedBox(
+        width: double.infinity, // Expand the button
+        height: 65.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(70),
+            ),
+          ),
+          onPressed: () {
+            String celular = phoneController.text.trim();
+
+            if (celular.isEmpty) {
+              Get.snackbar(
+                "Ops ! ",
+                "Por favor ingrese un celular valido",
+                snackPosition: SnackPosition.BOTTOM,
+                duration: const Duration(seconds: 3),
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+              );
+            } else {
+              // enviar al back las credenciales
+              SignUpController.instance.phoneAuthentication(celular);
+              OTPController.instance.updateData(celular);
+
+              Get.to(()=> OTPScreen());
+            }
+          },
+          child: const Text(
+            'Ingresar',
+            style: TextStyle(color: Colors.amber, fontSize: 18),
+          ),
+        ),
+      ),
+    );
+
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(children: [
+          cajita,
+          ingresarPhone,
+          ingresar,
+        ]));
+
+
+  }
+
 }

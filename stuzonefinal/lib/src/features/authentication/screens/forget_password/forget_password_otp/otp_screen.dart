@@ -20,9 +20,9 @@ class OTPScreen extends StatelessWidget {
             const Text(
               tOtpTitle,
               ),
-            Text(tOtpSubTitle.toUpperCase(), style: Theme.of(context).textTheme.titleLarge),
+            Text("VERIFICA TU CELULAR", style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 40.0),
-            const Text("$tOtpMessage support@codingwitht.com", textAlign: TextAlign.center),
+            const Text("COLOCA EL CODIGO AQUI: ", textAlign: TextAlign.center),
             const SizedBox(height: 20.0),
             OtpTextField(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -64,9 +64,9 @@ class OTPScreenClone extends StatelessWidget {
             const Text(
               tOtpTitle,
             ),
-            Text(tOtpSubTitle.toUpperCase(), style: Theme.of(context).textTheme.titleLarge),
+            Text("VERIFICA TU CELULAR", style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 40.0),
-            const Text("$tOtpMessage support@codingwitht.com", textAlign: TextAlign.center),
+            const Text("COLOCA EL CODIGO AQUI: ", textAlign: TextAlign.center),
             const SizedBox(height: 20.0),
             OtpTextField(
                 mainAxisAlignment: MainAxisAlignment.center,

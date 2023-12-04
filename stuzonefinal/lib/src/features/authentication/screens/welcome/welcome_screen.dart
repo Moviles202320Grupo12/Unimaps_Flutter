@@ -454,7 +454,7 @@ String generateBioSessionId() {
             Get.to(() => LoginConCelular());
           },
           child: const Text(
-            'Ingresar',
+            'Ingresa Con tu Celular',
             style: TextStyle(color: Colors.amber, fontSize: 18),
           ),
         ),
@@ -472,9 +472,6 @@ String generateBioSessionId() {
           olvideContrasena,
           ingresar,
           ingresarPhone,
-          otroIngreso,
-          metodosIngreso,
-          crearCuenta
         ]));
   }
 }
@@ -503,11 +500,15 @@ class _LoginConCelular  extends State<LoginConCelular> {
             filled: true,
             fillColor: Color(0xbbbbbf7f8f9),
             border: OutlineInputBorder(),
-            labelText: 'Ingresa tu correo uniandes',
+            labelText: 'Ingresa tu celular',
             labelStyle: TextStyle(color: Colors.black45),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 1.5, color: Colors.black))),
       ),
+    );
+
+    const cajita = SizedBox(
+      height: 200,
     );
 
     final ingresar = Padding(
@@ -553,6 +554,7 @@ class _LoginConCelular  extends State<LoginConCelular> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
+          cajita,
 
           ingresarPhone,
           ingresar,

@@ -17,16 +17,19 @@ class SignUpScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(tDefaultSize),
-            child: const Column(
+            child: Column(
               children: [
-                FormHeaderWidget(
-                  image: tLogoStuZone,
-                  title: tSignUpTitle,
-                  subTitle: tSignUpSubTitle,
-                  imageHeight: 0.1,
+                Container(
+                  width: 340,
+                  height: 340,
+                  margin: const EdgeInsets.only(top: 80, bottom: 10, left: 20),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(image: AssetImage(tLogoStuZone)),
+                    borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
+                  ),
                 ),
+
                 SignUpFormWidget(),
-                SignUpFooterWidget(),
               ],
             ),
           ),
