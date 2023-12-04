@@ -22,48 +22,13 @@ class EventosPops extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: tPrimaryColor,
         leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left,)),
-        title: Text("Events", style: Theme.of(context).textTheme.headlineMedium),
+        title: Text("TOP EVENTS", style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("All Events", style: Theme.of(context).textTheme.headlineMedium),
-              const SizedBox(height: 20.0),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    //TENGO QUE CAMBIAR ESTA MIERDA
-                    _launchgmail();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                  child: const Text(
-                    "Crear Nuevo Evento",
-                    style: TextStyle(
-                        color: Color(0xFFF6A700),
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                ),
-              ),
-               Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                  
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                  child: const Text(
-                    "Evento más popular",
-                    style: TextStyle(
-                        color: Color(0xFFF6A700),
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                ),
-              ),
+              const SizedBox(height: 50.0),
+
               Expanded(child:
               FutureBuilder<List<EventModel>>(
                 future: controller.getAllEventsSorted(),
@@ -74,51 +39,88 @@ class EventosPops extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (c, index) {
+                            final eventoo = snapshot.data![index];
                             return Column(
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xbbbb87400),
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      border: const Border(bottom: BorderSide(), top: BorderSide(), left: BorderSide(), right: BorderSide(), )
+                                SizedBox(
+                                  height: 130,
+
+                                  child: Row(
+                                    children: [
+                                      CachedNetworkImage(
+                                        height: 100,
+                                        width: 150,
+                                        fit: BoxFit.cover,
+                                        imageUrl: snapshot.data![index].image,
+                                        placeholder: (context, url) {
+                                          // Si no hay conexión o la imagen no se puede cargar, muestra la imagen predeterminada desde el almacenamiento local
+                                          return Image.asset(defaultLostProperty);
+                                        },
+                                        errorWidget: (context, url, error) {
+                                          // Si ocurre un error al cargar la imagen, muestra la imagen predeterminada desde el almacenamiento local
+                                          return Image.asset(defaultLostProperty);
+                                        },
+                                      ),
+                                      Container(
+                                          width: 40,
+                                          height: 40,
+                                          margin: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            color: Colors.black87,
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          child: Center(child: Text((index+1).toString(),
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w900,
+
+                                            ),
+                                          ),
+                                          ),
+
+
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                          Text(
+                                            eventoo.nombre,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black
+                                            ),
+                                          ),
+                                          Text(
+                                            "Consultas: ${eventoo.consultas.toString()}",
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              eventoo.categoria,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+
+                                    ],
                                   ),
-
-                                ),
-                                Text(snapshot.data![index].nombre,
-                                    style: const TextStyle(
-                                        color: Color(0xFFF6A700),
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20)),
-                                Text(snapshot.data![index].lugar,
-                                    style: const TextStyle(
-                                        color: Color(0xFFF6A700),
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10)),
-                                Text(snapshot.data![index].fecha,
-                                    style: const TextStyle(
-                                        color: Color(0xFFF6A700),
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15)),
-                                CachedNetworkImage(
-                                  imageUrl: snapshot.data![index].image,
-                                  placeholder: (context, url) {
-                                    // Si no hay conexión o la imagen no se puede cargar, muestra la imagen predeterminada desde el almacenamiento local
-                                    return Image.asset(defaultLostProperty);
-                                  },
-                                  errorWidget: (context, url, error) {
-                                    // Si ocurre un error al cargar la imagen, muestra la imagen predeterminada desde el almacenamiento local
-                                    return Image.asset(defaultLostProperty);
-                                  },
-                                ),
-
-                                const SizedBox(
-                                  height: 10,
                                 )
-                              ],
+                                ],
                             );
                           });
                     } else if (snapshot.hasError) {
