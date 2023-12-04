@@ -8,10 +8,11 @@ class EventModel {
   final String categoria;
   final String activo;
   final String image;
+  final int consultas;
 
   /// Constructor
   const EventModel(
-      {this.id, required this.nombre, required this.lugar, required this.fecha, required this.categoria, required this.activo, required this.image});
+      {this.id, required this.nombre, required this.lugar, required this.fecha, required this.categoria, required this.activo, required this.image, required this.consultas});
 
   /// convert model to Json structure so that you can it to store data in Firesbase
   toJson() {
@@ -22,12 +23,14 @@ class EventModel {
       "categoria": categoria,
       "activo": activo,
       "image" : image,
+      "consultas": consultas
     };
   }
 
   /// Map Json oriented document snapshot from Firebase to LostModel
   factory EventModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data()!;
+    print(data);
     return EventModel(
       id: document.id,
       nombre: data["nombre"],
@@ -35,7 +38,8 @@ class EventModel {
       fecha: data["fecha"],
       categoria: data["categoria"],
       activo: data["activo"],
-      image: data["image"]
+      image: data["image"],
+      consultas: data["consultas"] as int
     );
   }
 }

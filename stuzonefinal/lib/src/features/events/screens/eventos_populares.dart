@@ -66,7 +66,7 @@ class EventosPops extends StatelessWidget {
               ),
               Expanded(child:
               FutureBuilder<List<EventModel>>(
-                future: controller.getAllEvents(),
+                future: controller.getAllEventsSorted(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {

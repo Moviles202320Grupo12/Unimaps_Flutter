@@ -48,8 +48,26 @@ class EventRepository extends GetxController {
       throw result.message;
     } on FirebaseException catch (e) {
       throw e.message.toString();
-    } catch (_) {
-      throw 'Something went wrong. Please Try Again';
+    } catch (e) {
+      print (e);
+      throw 'Something went wrong. Please Try AgainAAAAAAAAAAAAAA';
+    }
+  }
+
+  Future<List<EventModel>> allEventsSorted() async {
+    try {
+      final snapshot = await _db.collection("events").get();
+      final events = snapshot.docs.map((e) => EventModel.fromSnapshot(e)).toList();
+      events.sort((a, b) => b.consultas.compareTo(a.consultas));
+      return events;
+    } on FirebaseAuthException catch (e) {
+      final result = TExceptions.fromCode(e.code);
+      throw result.message;
+    } on FirebaseException catch (e) {
+      throw e.message.toString();
+    } catch (e) {
+      print (e);
+      throw 'Something went wrong. Please Try AgainAAAAAAAAAAAAAA';
     }
   }
 

@@ -270,10 +270,10 @@ class _MapsV1PageState extends State<MapsV1Page> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Mientras se espera la resolución del futuro
-          return CircularProgressIndicator(); // o cualquier otro indicador de carga
+          return const CircularProgressIndicator(); // o cualquier otro indicador de carga
         } else if (snapshot.hasError) {
           // Si ocurre un error al resolver el futuro
-          return Text('Error al cargar el widget');
+          return const Text('Error al cargar el widget');
         } else {
           // Cuando el futuro se resuelve exitosamente
           return snapshot.data ?? Container(); // El widget resuelto del futuro
@@ -458,7 +458,7 @@ class _MapsV1PageState extends State<MapsV1Page> {
                         ),
                         Text(
                           desc1,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
                           ),
@@ -467,7 +467,7 @@ class _MapsV1PageState extends State<MapsV1Page> {
                         Expanded(
                           child: Text(
                             desc2,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -495,7 +495,7 @@ class _MapsV1PageState extends State<MapsV1Page> {
                       color: Colors.deepOrange,
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_forward,
                       color: Colors.white,
                       size: 30,

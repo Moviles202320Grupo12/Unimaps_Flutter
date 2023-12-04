@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stuzonefinal/src/constants/sizes.dart';
-import 'package:stuzonefinal/src/constants/text_strings.dart';
 import 'package:stuzonefinal/src/features/core/screens/dashboard/widgets/appbar.dart';
-import 'package:stuzonefinal/src/features/core/screens/dashboard/widgets/search.dart';
 
 import 'package:get/get.dart';
 
@@ -36,11 +34,6 @@ class Dashboard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //Heading
-                Text(tDashboardTitle, style: txtTheme.bodyMedium),
-                Text(tDashboardHeading, style: txtTheme.displayMedium),
-                const SizedBox(height: tDashboardPadding),
-
                 Align(
                     alignment: Alignment.center,
 
@@ -52,10 +45,10 @@ class Dashboard extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => MapsV1Page()), // Navega a HomeMap
                         );
                       },
-                      child: Text(controller.buttons[0].name),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(200, 10),
                       ),
+                      child: Text(controller.buttons[0].name),
                     )),
                 const SizedBox(height: 5),
                 Align(
@@ -109,10 +102,11 @@ class Dashboard extends StatelessWidget {
                     alignment: Alignment.center,
                     child: ElevatedButton(
                       onPressed: () => controller.buttonPressed(5),
-                      child: Text(controller.buttons[5].name),
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(200, 10),
                       ),
+
+                      child: Text(controller.buttons[5].name),
                     ))
               ],
             ),
@@ -127,14 +121,14 @@ class Dashboard extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Diálogo con dos botones'),
-          content: const Text('Este es un diálogo con dos botones.'),
+          title: const Text('Lost Property'),
+          content: const Text('Welcome to the wonderful world of lost things. What do you want to do today?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Get.to(() => const LostProperty());
               },
-              child: const Text('Ver cosas encontradas'),
+              child: const Text('See Found Things'),
             ),
             TextButton(
               onPressed: () {
@@ -143,7 +137,7 @@ class Dashboard extends StatelessWidget {
                 Get.to(() => const FoundProperty());
                 //Get.to(() => PruebaDeMierda());
               },
-              child: const Text('Ver cosas Buscadas'),
+              child: const Text('See Lost Things'),
             ),
           ],
         );

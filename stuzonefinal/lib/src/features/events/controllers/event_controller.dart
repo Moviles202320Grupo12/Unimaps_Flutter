@@ -20,6 +20,8 @@ class EventController extends GetxController {
 
   /// Fetch List of user records.
   Future<List<EventModel>> getAllEvents() async => await _eventsRepo.allEvents();
+  Future<List<EventModel>> getAllEventsSorted() async => await _eventsRepo.allEventsSorted();
+
 
   /// Update User Data
   updateRecord(EventModel eventitem) async {

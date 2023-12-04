@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:stuzonefinal/src/utils/local_db_lost.dart';
-import 'find_lost_property.dart';
+
 import 'package:stuzonefinal/src/features/lostproperty/screens/crear_con_back.dart';
 import 'package:stuzonefinal/src/features/lostproperty/models/lostmodel.dart';
 import 'package:stuzonefinal/src/features/lostproperty/controllers/lost_controller.dart';
