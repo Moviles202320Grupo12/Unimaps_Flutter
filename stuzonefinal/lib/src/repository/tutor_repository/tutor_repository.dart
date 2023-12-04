@@ -53,6 +53,22 @@ class TutorRepository extends GetxController {
     }
   }
 
+  Future<List<TutorModel>> allTutorSorted() async {
+    try {
+      final snapshot = await _db.collection("tutors").get();
+      final tutors = snapshot.docs.map((e) => TutorModel.fromSnapshot(e)).toList();
+      tutors.sort((a, b) => b.llamadas.compareTo(a.llamadas));
+      return tutors;
+    } on FirebaseAuthException catch (e) {
+      final result = TExceptions.fromCode(e.code);
+      throw result.message;
+    } on FirebaseException catch (e) {
+      throw e.message.toString();
+    } catch (_) {
+      throw 'Something went wrong. Please Try Again';
+    }
+  }
+
   /// Update User details
   Future<void> updateTutorRecord(TutorModel item) async {
     try {

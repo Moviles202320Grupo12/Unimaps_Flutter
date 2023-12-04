@@ -6,12 +6,13 @@ class TutorModel {
   final String email;
   final String phoneNo;
   final String image;
+  final int llamadas;
   final List<String> subjects;
   final List<String> topics;
 
   /// Constructor
   const TutorModel(
-      {this.id, required this.name, required this.email, required this.phoneNo,  required this.image, required this.subjects, required this.topics});
+      {this.id, required this.name, required this.email, required this.phoneNo,  required this.image, required this.llamadas, required this.subjects, required this.topics});
 
   /// convert model to Json structure so that you can it to store data in Firesbase
   toJson() {
@@ -20,6 +21,7 @@ class TutorModel {
       "email": email,
       "phoneNo": phoneNo,
       "image": image,
+      "llamadas": llamadas,
       "subjects": subjects,
       "topics": topics
     };
@@ -34,6 +36,7 @@ class TutorModel {
       email: data["email"],
       phoneNo: data["phoneNo"],
       image: data["image"],
+      llamadas: data["llamadas"],
       subjects: List<String>.from(document['subjects']),
       topics: List<String>.from(document['topics']),
     );

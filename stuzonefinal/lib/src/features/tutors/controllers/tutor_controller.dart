@@ -21,6 +21,8 @@ class TutorController extends GetxController {
   /// Fetch List of user records.
   Future<List<TutorModel>> getAllTutors() async => await _tutorsRepo.allTutors();
 
+  Future<List<TutorModel>> getAllTutorSorted() async => await _tutorsRepo.allTutorSorted();
+
   /// Update User Data
   updateRecord(TutorModel tutoritem) async {
     await _tutorsRepo.updateTutorRecord(tutoritem);

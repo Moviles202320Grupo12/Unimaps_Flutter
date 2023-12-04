@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/src/features/tutors/models/tutor_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/tutor_controller.dart';
 
@@ -8,22 +9,7 @@ import '../controllers/tutor_controller.dart';
 class RankingTutor extends StatelessWidget {
   const RankingTutor({super.key});
 
-  Future<List<Widget>> getData() async {
-    // Aquí puedes realizar la lógica para obtener los datos
-    // Por ejemplo, obtener los datos de una base de datos o una API
 
-    final controller = Get.put(TutorController());
-    Future<List<TutorModel>> popo = controller.getAllTutors();
-    // Simulando una operación asíncrona
-
-    // Retornar una lista de widgets basada en los datos
-    return [
-      _buildCard('Mobile Development', 'Juana Cabrera', 'assets/images/tutors/tutor (1).jpg', "5"),
-      _buildCard('PMC', 'Pedro Perez', 'assets/images/tutors/tutor2 (1).png', "3.5"),
-      _buildCard('Calculus', 'Julian Gomez', 'assets/images/tutors/tutor3 (1).png', "2"),
-      _buildCard('Biology', 'Lucas Rios', 'assets/images/tutors/tutor4 (1).png', "4"),
-    ];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +18,11 @@ class RankingTutor extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Tu Aplicación'),
+          title: Text('RANKING TUTORS'),
+          backgroundColor: Colors.black87,
         ),
         body: FutureBuilder<List<TutorModel>>(
-          future: controller.getAllTutors(),
+          future: controller.getAllTutorSorted(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -52,10 +39,7 @@ class RankingTutor extends StatelessWidget {
                 childAspectRatio: 0.8,
                 children: snapshot.data!.map((tutor) {
                   return _buildCard(
-                    tutor.subjects[0],
-                    tutor.name,
-                    tutor.image,
-                    tutor.phoneNo,
+                    tutor, controller
                   );
                 }).toList(),
               );
@@ -67,7 +51,7 @@ class RankingTutor extends StatelessWidget {
 
   }
 
-  Widget _buildCard(String subject, String name, String imgPath, String ranking) {
+  Widget _buildCard(TutorModel tutor, TutorController controller) {
     return Padding(
         padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
         child: InkWell(
@@ -86,21 +70,21 @@ class RankingTutor extends StatelessWidget {
                 child: Column(children: [
 
                   Hero(
-                      tag: imgPath,
+                      tag: tutor.image,
                       child: Container(
                           height: 75.0,
                           width: 75.0,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: NetworkImage(imgPath),
+                                  image: NetworkImage(tutor.image),
                                   fit: BoxFit.contain)))),
                   const SizedBox(height: 7.0),
-                  Text(name,
+                  Text(tutor.name,
                       style: const TextStyle(
                           color: Color(0xFFCC8053),
                           fontFamily: 'Varela',
                           fontSize: 14.0)),
-                  Text(subject,
+                  Text(tutor.subjects[0],
                       style: const TextStyle(
                           color: Color(0xFF575E67),
                           fontFamily: 'Varela',
@@ -119,7 +103,7 @@ Center(
       borderRadius: BorderRadius.circular(20),
     ),
   ),
-  child: Text(ranking),
+  child: Text("llamadas: ${tutor.llamadas}"),
 ),
               ),
 
@@ -130,12 +114,40 @@ Center(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
 
-                            SizedBox(height: 20,child: ElevatedButton(onPressed: () {},style: ElevatedButton.styleFrom(
+                            SizedBox(height: 20,child: ElevatedButton(onPressed: () {
+
+                              final newtutorData = TutorModel(
+                                  id: tutor.id,
+                                  name: tutor.name,
+                                  email: tutor.email,
+                                  phoneNo: tutor.phoneNo,
+                                  image: tutor.image,
+                                  llamadas: tutor.llamadas+1,
+                                  subjects: tutor.subjects,
+                                  topics: tutor.topics
+                              );
+
+                              controller.updateRecord(newtutorData);
+                              _makePhoneCall(tutor.phoneNo);
+
+                            },style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(254, 211, 83, 0.7),minimumSize: Size.zero, // Set this
     padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                     //side: const BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid)
-                  ),child: const Text('Rate', style: TextStyle(color: Colors.black, fontSize: 11),)),) 
+                  ),child: const Text('Llamar', style: TextStyle(color: Colors.black, fontSize: 11),)),)
                           ]))
                 ]))));
+  }
+}
+
+void _makePhoneCall(String numero) async {
+  // Reemplaza con el número que deseas marcar
+
+  final url = 'tel:$numero';
+
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'No se pudo abrir la app de teléfono';
   }
 }

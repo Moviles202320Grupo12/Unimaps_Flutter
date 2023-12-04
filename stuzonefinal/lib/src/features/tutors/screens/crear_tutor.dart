@@ -186,7 +186,7 @@ class _AddTutorState extends State<AddTutor> {
                       }
 
                       //Create a Map of data
-                      final tutor = TutorModel(name: tutorName, email: tutorEmail, phoneNo: tutorPhoneNoo, image: imageUrl, subjects: materias, topics: topics);
+                      final tutor = TutorModel(name: tutorName, email: tutorEmail, phoneNo: tutorPhoneNoo, image: imageUrl,llamadas: 0, subjects: materias, topics: topics);
 
                       //Add a new item
                       TutorRepository.instance.createTutor(tutor);
