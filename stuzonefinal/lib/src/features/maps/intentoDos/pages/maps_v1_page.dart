@@ -222,7 +222,10 @@
 
 import 'dart:async';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:stuzonefinal/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../ui/pages/home/utils/image_to_bytes.dart';
 import '../data_dummy.dart';
@@ -243,6 +246,59 @@ class _MapsV1PageState extends State<MapsV1Page> {
   double latitude = 4.601182;
   double longitude = -74.065069;
 
+  StreamSubscription<bool>? _networkConnectionStream;
+  bool _isConnected = true;
+
+  late ConnectivityResult _connectionStatus;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkConnectivity();
+    // Suscripción a los cambios de conectividad
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isConnected = (result != ConnectivityResult.none);
+      });
+    });
+  }
+
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _connectionStatus = connectivityResult;
+    });
+
+    if (_connectionStatus == ConnectivityResult.none) {
+      // Realizar un comportamiento específico cuando no hay conexión
+      // Por ejemplo, mostrar un diálogo o un mensaje
+      // Puedes usar showDialog() para mostrar un diálogo informativo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Sin conexión'),
+            content: const Text('OJO!! NO HAY CONEXION, EL MAPA NO LO PUEDES USAR :C.'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text('Cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Get.to(()=> Dashboard());
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Realizar un comportamiento específico cuando hay conexión
+      // Por ejemplo, cargar datos desde una API o realizar alguna acción
+      // Puedes colocar aquí el código para realizar esa acción
+
+
+    }
+  }
   var mapType = MapType.normal;
 
   @override

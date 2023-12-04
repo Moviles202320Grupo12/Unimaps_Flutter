@@ -37,6 +37,10 @@ class LoginPage extends StatefulWidget {
 
 
 class _LoginPage  extends State<LoginPage> {
+
+
+
+  late ConnectivityResult _connectionStatus;
   // Variables
 
   // Biometric auth
@@ -63,6 +67,7 @@ class _LoginPage  extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _checkConnectivity();
     // Suscripción a los cambios de conectividad
     Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
@@ -70,6 +75,44 @@ class _LoginPage  extends State<LoginPage> {
       });
     });
   }
+
+
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _connectionStatus = connectivityResult;
+    });
+
+    if (_connectionStatus == ConnectivityResult.none) {
+      // Realizar un comportamiento específico cuando no hay conexión
+      // Por ejemplo, mostrar un diálogo o un mensaje
+      // Puedes usar showDialog() para mostrar un diálogo informativo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Sin conexión'),
+            content: const Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text('Cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Realizar un comportamiento específico cuando hay conexión
+      // Por ejemplo, cargar datos desde una API o realizar alguna acción
+      // Puedes colocar aquí el código para realizar esa acción
+
+
+    }
+  }
+
 
   @override
   void dispose() async {
@@ -486,6 +529,20 @@ class LoginConCelular extends StatefulWidget {
 
 class _LoginConCelular  extends State<LoginConCelular> {
 
+  StreamSubscription<bool>? _networkConnectionStream;
+  bool _isConnected = true;
+  late ConnectivityResult _connectionStatus;
+  @override
+  void initState() {
+    super.initState();
+    _checkConnectivity();
+    // Suscripción a los cambios de conectividad
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isConnected = (result != ConnectivityResult.none);
+      });
+    });
+  }
 
   final phoneController = TextEditingController();
   @override
@@ -561,6 +618,42 @@ class _LoginConCelular  extends State<LoginConCelular> {
         ]));
 
 
+  }
+
+  Future<void> _checkConnectivity() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    setState(() {
+      _connectionStatus = connectivityResult;
+    });
+
+    if (_connectionStatus == ConnectivityResult.none) {
+      // Realizar un comportamiento específico cuando no hay conexión
+      // Por ejemplo, mostrar un diálogo o un mensaje
+      // Puedes usar showDialog() para mostrar un diálogo informativo
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Sin conexión'),
+            content: const Text('No tienes conexión a internet, la informacion mostrada puede estar desactualizada.'),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text('Cerrar'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Realizar un comportamiento específico cuando hay conexión
+      // Por ejemplo, cargar datos desde una API o realizar alguna acción
+      // Puedes colocar aquí el código para realizar esa acción
+
+
+    }
   }
 
 }

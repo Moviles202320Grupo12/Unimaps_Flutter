@@ -1,45 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:stuzonefinal/src/features/tutors/models/tutor_model.dart';
 
+import '../controllers/tutor_controller.dart';
 
 
 class RankingTutor extends StatelessWidget {
   const RankingTutor({super.key});
 
+  Future<List<Widget>> getData() async {
+    // Aquí puedes realizar la lógica para obtener los datos
+    // Por ejemplo, obtener los datos de una base de datos o una API
+
+    final controller = Get.put(TutorController());
+    Future<List<TutorModel>> popo = controller.getAllTutors();
+    // Simulando una operación asíncrona
+
+    // Retornar una lista de widgets basada en los datos
+    return [
+      _buildCard('Mobile Development', 'Juana Cabrera', 'assets/images/tutors/tutor (1).jpg', "5"),
+      _buildCard('PMC', 'Pedro Perez', 'assets/images/tutors/tutor2 (1).png', "3.5"),
+      _buildCard('Calculus', 'Julian Gomez', 'assets/images/tutors/tutor3 (1).png', "2"),
+      _buildCard('Biology', 'Lucas Rios', 'assets/images/tutors/tutor4 (1).png', "4"),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFFCFAF8),
-      body: ListView(
-        children: <Widget>[
-          const SizedBox(height: 15.0),
-          Container(
-              padding: const EdgeInsets.only(right: 15.0),
-              width: MediaQuery.of(context).size.width - 30.0,
-              height: MediaQuery.of(context).size.height - 50.0,
-              child: GridView.count(
+    final controller = Get.put(TutorController());
+
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Tu Aplicación'),
+        ),
+        body: FutureBuilder<List<TutorModel>>(
+          future: controller.getAllTutors(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error al cargar los datos'));
+            } else if (!snapshot.hasData || snapshot.data==null) {
+              return Center(child: Text('No se encontraron datos'));
+            } else {
+              return GridView.count(
                 crossAxisCount: 2,
                 primary: false,
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 15.0,
                 childAspectRatio: 0.8,
-                children: <Widget>[
-                  _buildCard('Mobile Development', 'Juana Cabrera', 'assets/images/tutors/tutor (1).jpg', "5",
-                     context),
-                  _buildCard('PMC', 'Pedro Perez', 'assets/images/tutors/tutor2 (1).png', "3.5",
-                      context),
-                  _buildCard('Calculus', 'Julian Gomez',
-                      'assets/images/tutors/tutor3 (1).png', "2", context),
-                  _buildCard('Biology', 'Lucas Rios', 'assets/images/tutors/tutor4 (1).png', "4",
-                     context)
-                ],
-              )),
-          const SizedBox(height: 15.0)
-        ],
+                children: snapshot.data!.map((tutor) {
+                  return _buildCard(
+                    tutor.subjects[0],
+                    tutor.name,
+                    tutor.image,
+                    tutor.phoneNo,
+                  );
+                }).toList(),
+              );
+            }
+          },
+        ) // Aquí reemplaza con tu widget que contiene el GridView
       ),
     );
+
   }
 
-  Widget _buildCard(String subject, String name, String imgPath, String ranking, context) {
+  Widget _buildCard(String subject, String name, String imgPath, String ranking) {
     return Padding(
         padding: const EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
         child: InkWell(
@@ -64,7 +92,7 @@ class RankingTutor extends StatelessWidget {
                           width: 75.0,
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage(imgPath),
+                                  image: NetworkImage(imgPath),
                                   fit: BoxFit.contain)))),
                   const SizedBox(height: 7.0),
                   Text(name,

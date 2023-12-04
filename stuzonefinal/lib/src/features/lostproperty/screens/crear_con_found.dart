@@ -226,7 +226,6 @@ class _AddItemFoundState extends State<AddItemFound> {
 
                           return;
                         }
-                        print("NECESITO QUE ESTA MIERDA SUCEDA");
                         print(DataLocalFound.getAllFounds());
 
                         if (key.currentState!.validate()) {
