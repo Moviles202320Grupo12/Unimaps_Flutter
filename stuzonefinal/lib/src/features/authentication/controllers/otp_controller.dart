@@ -4,10 +4,12 @@ import 'package:stuzonefinal/src/features/authentication/controllers/signup_cont
 import '../../../constants/sizes.dart';
 import '../../../constants/text_strings.dart';
 import '../../../repository/authentication_repository/authentication_repository.dart';
+import '../../core/controllers/profile_controller.dart';
 import '../../core/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
 import '../models/user_model.dart';
+import 'login_controller.dart';
 String elnumero= '';
 class OTPController extends GetxController {
   static OTPController get instance => Get.find();
@@ -26,9 +28,24 @@ class OTPController extends GetxController {
   }
 
   void verifyOTPClone(String otp) async {
-    //elnumero = otp;
+    final controller = Get.put(ProfileController());//elnumero = otp;
     var isVerified = await AuthenticationRepository.instance.verifyOTP(otp);
-    isVerified ? Get.offAll(Dashboard()) : Get.back();
+    if (isVerified) {
+      UserModel usuario = await controller.getUserByPhone(elnumero);
+      // ^ Aquí se espera a que el Future<UserModel> se complete para obtener el UserModel
+      if (usuario != null) {
+        LoginController.instance.loginUser(usuario.email, usuario.password);
+      } else {
+        // Manejo si no se encuentra el usuario
+      }
+      print(usuario.email);
+      print(usuario.password);
+
+      LoginController.instance.loginUser(usuario.email, usuario.password);
+
+    } else {
+      Get.back();
+    }
   }
 
 }

@@ -16,6 +16,7 @@ import '../../../../constants/text_strings.dart';
 import '../../../../utils/animations/fade_in_animation/animation_design.dart';
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_controller.dart';
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_model.dart';
+import '../../controllers/otp_controller.dart';
 import '../../controllers/signup_controller.dart';
 import '../forget_password/forget_password_otp/otp_screen.dart';
 import '../login/login_screen.dart';
@@ -536,6 +537,7 @@ class _LoginConCelular  extends State<LoginConCelular> {
             } else {
               // enviar al back las credenciales
               SignUpController.instance.phoneAuthentication(celular);
+              OTPController.instance.updateData(celular);
 
               Get.to(()=> OTPScreenClone());
             }

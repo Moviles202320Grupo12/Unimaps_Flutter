@@ -27,6 +27,24 @@ class ProfileController extends GetxController {
     }
   }
 
+
+
+  getUserByPhone(String phone) {
+    try {
+      final currentUser = _userRepo.getUserByPhone(phone);
+      if (currentUser==null) {
+        Get.snackbar("Error", "No user found!",
+            snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
+        return;
+      } else {
+        return currentUser;
+      }
+    } catch (e) {
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
+    }
+  }
+
   getUserSteps() {
     try {
       final currentUserEmail = _authRepo.getUserEmail;
