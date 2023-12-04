@@ -16,6 +16,8 @@ import '../../../../constants/text_strings.dart';
 import '../../../../utils/animations/fade_in_animation/animation_design.dart';
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_controller.dart';
 import '../../../../utils/animations/fade_in_animation/fade_in_animation_model.dart';
+import '../../controllers/signup_controller.dart';
+import '../forget_password/forget_password_otp/otp_screen.dart';
 import '../login/login_screen.dart';
 import 'package:flutter_network_connectivity/flutter_network_connectivity.dart';
 import 'package:flutter/services.dart';
@@ -435,6 +437,29 @@ String generateBioSessionId() {
       ),
     );
 
+    final ingresarPhone = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: SizedBox(
+        width: double.infinity, // Expand the button
+        height: 65.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(70),
+            ),
+          ),
+          onPressed: () {
+            Get.to(() => LoginConCelular());
+          },
+          child: const Text(
+            'Ingresar',
+            style: TextStyle(color: Colors.amber, fontSize: 18),
+          ),
+        ),
+      ),
+    );
+
 
 
     return Scaffold(
@@ -445,9 +470,94 @@ String generateBioSessionId() {
           ingresarContrasena,
           olvideContrasena,
           ingresar,
+          ingresarPhone,
           otroIngreso,
           metodosIngreso,
           crearCuenta
         ]));
   }
 }
+
+class LoginConCelular extends StatefulWidget {
+  const LoginConCelular({Key? key}) : super(key: key);
+
+  @override
+  State<LoginConCelular> createState() => _LoginConCelular();
+}
+
+
+class _LoginConCelular  extends State<LoginConCelular> {
+
+
+  final phoneController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    final ingresarPhone = Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.only(left: 20, right: 20),
+      child: TextField(
+        controller: phoneController,
+        obscureText: false,
+        decoration: const InputDecoration(
+            filled: true,
+            fillColor: Color(0xbbbbbf7f8f9),
+            border: OutlineInputBorder(),
+            labelText: 'Ingresa tu correo uniandes',
+            labelStyle: TextStyle(color: Colors.black45),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 1.5, color: Colors.black))),
+      ),
+    );
+
+    final ingresar = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      child: SizedBox(
+        width: double.infinity, // Expand the button
+        height: 65.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(70),
+            ),
+          ),
+          onPressed: () {
+            String celular = phoneController.text.trim();
+
+            if (celular.isEmpty) {
+              Get.snackbar(
+                "Ops ! ",
+                "Por favor ingrese un celular valido",
+                snackPosition: SnackPosition.BOTTOM,
+                duration: const Duration(seconds: 3),
+                backgroundColor: Colors.red,
+                colorText: Colors.white,
+              );
+            } else {
+              // enviar al back las credenciales
+              SignUpController.instance.phoneAuthentication(celular);
+
+              Get.to(()=> OTPScreenClone());
+            }
+          },
+          child: const Text(
+            'Ingresar',
+            style: TextStyle(color: Colors.amber, fontSize: 18),
+          ),
+        ),
+      ),
+    );
+
+    return Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(children: [
+
+          ingresarPhone,
+          ingresar,
+        ]));
+
+
+  }
+
+}
+

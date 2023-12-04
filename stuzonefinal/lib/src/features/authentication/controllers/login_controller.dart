@@ -46,4 +46,14 @@ class LoginController extends GetxController {
       Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
+
+  Future<void> loginPhone(String phone) async {
+    try {
+      isLoading.value = true;
+      await AuthenticationRepository.instance.loginWithPhoneNo(phone);
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+    }
+  }
 }

@@ -48,3 +48,47 @@ class OTPScreen extends StatelessWidget {
     );
   }
 }
+
+class OTPScreenClone extends StatelessWidget {
+  const OTPScreenClone({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    String otp = '';
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(tDefaultSize),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              tOtpTitle,
+            ),
+            Text(tOtpSubTitle.toUpperCase(), style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 40.0),
+            const Text("$tOtpMessage support@codingwitht.com", textAlign: TextAlign.center),
+            const SizedBox(height: 20.0),
+            OtpTextField(
+                mainAxisAlignment: MainAxisAlignment.center,
+                numberOfFields: 6,
+                fillColor: Colors.black.withOpacity(0.1),
+                filled: true,
+                onSubmit: (code) {
+                  otp = code;
+                  OTPController.instance.verifyOTPClone(otp);
+                }),
+            const SizedBox(height: 20.0),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: () {
+                    OTPController.instance.verifyOTPClone(otp);
+                  },
+                  child: const Text(tNext)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

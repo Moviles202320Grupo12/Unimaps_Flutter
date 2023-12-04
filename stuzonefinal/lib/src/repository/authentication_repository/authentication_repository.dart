@@ -101,15 +101,16 @@ class AuthenticationRepository extends GetxController {
 
   /// [PhoneAuthentication] - LOGIN
   loginWithPhoneNo(String phoneNumber) async {
-    try {
-      await _auth.signInWithPhoneNumber(phoneNumber);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-phone-number') {
-        Get.snackbar("Error", "Invalid Phone No");
-      }
-    } catch (_) {
-      Get.snackbar("Error", "Something went wrong.");
-    }
+    //try {
+    //  await _auth.signInWithPhoneNumber(phoneNumber);
+    //} on FirebaseAuthException catch (e) {
+    //  if (e.code == 'invalid-phone-number') {
+    //    Get.snackbar("Error", "Invalid Phone No");
+    //  }
+    //} catch (_) {
+    //  Get.snackbar("Error", "Something went wrong.");
+    //}
+
   }
 
   /// [PhoneAuthentication] - REGISTER
