@@ -401,85 +401,8 @@ class _LoginPage  extends State<LoginPage> {
       ),
     );
 
-    final outlookButton = InkWell(
-      onTap: () {
-        // Acción al tocar el texto
-      },
-      child: Container(
-        alignment: Alignment.center,
-        height: 30,
-        width: 30,
-        margin: const EdgeInsets.only(top: 10, bottom: 10, left: 30, right: 30),
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(path_outlook)),
-          borderRadius: const BorderRadius.all(Radius.elliptical(60, 60)),
-          shape: BoxShape.rectangle,
-        ),
-      ),
-    );
 
-    
-// Generar un identificador de sesión único
-String generateBioSessionId() {
-  return DateTime.now().millisecondsSinceEpoch.toString();
-}    
 
-    final metodosIngreso = Container(
-      margin: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.width * 0.05,
-        horizontal: MediaQuery.of(context).size.width *
-            0.1, // Dynamic margin based on screen width
-      ),
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.center, // Center the children horizontally
-        children: [googleButton]//, outlookButton, huella],
-      ),
-    );
-
-    final crearCuenta = Container(
-      margin: EdgeInsets.symmetric(
-        vertical: MediaQuery.of(context).size.width * 0.1,
-        horizontal: MediaQuery.of(context).size.width *
-            0.1, // Dynamic margin based on screen width
-      ),
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment:
-            MainAxisAlignment.center, // Center the children horizontally
-        crossAxisAlignment:
-            CrossAxisAlignment.center, // Center the children vertically
-        children: [
-          const Text(
-            'No tienes una cuenta?  ',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 25),
-            child: InkWell(
-              onTap: () {
-                /*
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterPage()),
-                );*/
-              },
-              child: const Text(
-                'Crear cuenta',
-                style: TextStyle(
-                  color: Colors.amber, // Color del texto
-                  decoration: TextDecoration.underline,
-                  fontSize: 15,
-                  // Subrayado
-                ),
-                textAlign: TextAlign.right,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
 
     final ingresarPhone = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),

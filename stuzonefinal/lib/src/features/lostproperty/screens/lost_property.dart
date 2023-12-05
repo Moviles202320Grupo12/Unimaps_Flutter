@@ -49,6 +49,8 @@ class LostPropertyHome extends State<LostProperty> {
   }
   static const black_titles = Color(0x00090909);
 
+  String popo = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +84,7 @@ class LostPropertyHome extends State<LostProperty> {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: TextField(
                 onChanged: (value) {
-                  // Handle search logic here
+                  popo = value;
                 },
                 decoration: InputDecoration(
                   labelText: '',
@@ -96,73 +98,9 @@ class LostPropertyHome extends State<LostProperty> {
               ),
             ),
             const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Text(
-                "Categorias",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Urbanist',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              ),
-            ),
+
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                  child: const Text("Celulares",
-                      style: TextStyle(
-                          color: Color(0xFFF6A700),
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20)),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Acción del botón 2
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                  child: const Text("Libros",
-                      style: TextStyle(
-                          color: Color(0xFFF6A700),
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20)),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Acción del botón 3
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                  child: const Text("PCs",
-                      style: TextStyle(
-                          color: Color(0xFFF6A700),
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20)),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Acción del botón 3
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                  child: const Text("Otros",
-                      style: TextStyle(
-                          color: Color(0xFFF6A700),
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20)),
-                )
-              ],
-            ),
+
 
             Center(
               child: ElevatedButton(
@@ -196,7 +134,9 @@ class LostPropertyHome extends State<LostProperty> {
                         shrinkWrap: true,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (c, index) {
-                          return Column(
+                          return Visibility(
+                              visible: snapshot.data![index].name.toLowerCase().contains(popo.toLowerCase()),
+                              child: Column(
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(10.0),
@@ -241,7 +181,7 @@ class LostPropertyHome extends State<LostProperty> {
                                 height: 10,
                               )
                             ],
-                          );
+                          ));
                         });
                   } else if (snapshot.hasError) {
                     return Center(child: Text(snapshot.error.toString()));

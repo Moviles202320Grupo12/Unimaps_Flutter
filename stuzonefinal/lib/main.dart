@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:stuzonefinal/firebase_options.dart';
@@ -36,7 +37,12 @@ void main() {
     Get.put(FoundRepository());
   });
 
-  runApp(const App());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // Solo permite orientación vertical hacia arriba
+    DeviceOrientation.portraitDown, // Solo permite orientación vertical hacia abajo
+  ]).then((_) {
+    runApp(const App());
+  });
 }
 
 class App extends StatelessWidget {

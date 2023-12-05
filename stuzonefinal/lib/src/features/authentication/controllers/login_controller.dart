@@ -20,7 +20,7 @@ class LoginController extends GetxController {
       await AuthenticationRepository.instance.loginWithEmailAndPassword(email, password);
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Error: ", "Email-Password invalidos", snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 

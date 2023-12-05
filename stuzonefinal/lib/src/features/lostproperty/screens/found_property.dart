@@ -47,6 +47,7 @@ class FoundPropertyHome extends State<FoundProperty> {
     });
   }
   static const black_titles = Color(0x00090909);
+  String popo = '';
 
 
   @override
@@ -77,91 +78,10 @@ class FoundPropertyHome extends State<FoundProperty> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: TextField(
-              onChanged: (value) {
-                // Handle search logic here
-              },
-              decoration: InputDecoration(
-                labelText: '',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                contentPadding:
-                const EdgeInsets.symmetric(vertical: 3.0, horizontal: 2.0),
-              ),
-            ),
-          ),
+
           const SizedBox(height: 10),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              "Categorias",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Urbanist',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
-            ),
-          ),
+
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                child: const Text("Celulares",
-                    style: TextStyle(
-                        color: Color(0xFFF6A700),
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20)),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Acción del botón 2
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                child: const Text("Libros",
-                    style: TextStyle(
-                        color: Color(0xFFF6A700),
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20)),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Acción del botón 3
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                child: const Text("PCs",
-                    style: TextStyle(
-                        color: Color(0xFFF6A700),
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20)),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  // Acción del botón 3
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black, minimumSize: const Size(40, 40)),
-                child: const Text("Otros",
-                    style: TextStyle(
-                        color: Color(0xFFF6A700),
-                        fontFamily: 'Urbanist',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20)),
-              )
-            ],
-          ),
 
           Center(
             child: ElevatedButton(
@@ -200,76 +120,78 @@ class FoundPropertyHome extends State<FoundProperty> {
                       ),
                       itemCount: foundItems.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              AspectRatio(
-                                aspectRatio: 16 / 9, // Proporción de aspecto deseada
-                                child: ClipRRect(
-                                  borderRadius: const BorderRadius.vertical(top: Radius.circular(10.0)),
-                                  child: CachedNetworkImage(
-                                    imageUrl: foundItems[index].image,
-                                    placeholder: (context, url) {
-                                      return Image.asset(defaultLostProperty);
-                                    },
-                                    errorWidget: (context, url, error) {
-                                      return Image.asset(defaultLostProperty);
-                                    },
-                                    fit: BoxFit.cover, // Ajustar la imagen al tamaño del contenedor
+                        return Visibility(
+                            visible: foundItems[index].name.toLowerCase().contains(popo.toLowerCase()),
+                            child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  AspectRatio(
+                                    aspectRatio: 16 / 9, // Proporción de aspecto deseada
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(top: Radius.circular(10.0)),
+                                      child: CachedNetworkImage(
+                                        imageUrl: foundItems[index].image,
+                                        placeholder: (context, url) {
+                                          return Image.asset(defaultLostProperty);
+                                        },
+                                        errorWidget: (context, url, error) {
+                                          return Image.asset(defaultLostProperty);
+                                        },
+                                        fit: BoxFit.cover, // Ajustar la imagen al tamaño del contenedor
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          foundItems[index].name,
+                                          style: const TextStyle(
+                                            color: Color(0xFFF6A700),
+                                            fontFamily: 'Urbanist',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          foundItems[index].description,
+                                          style: const TextStyle(
+                                            color: Color(0xFFF6A700),
+                                            fontFamily: 'Urbanist',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 10,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          foundItems[index].location,
+                                          style: const TextStyle(
+                                            color: Color(0xFFF6A700),
+                                            fontFamily: 'Urbanist',
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 12,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      foundItems[index].name,
-                                      style: const TextStyle(
-                                        color: Color(0xFFF6A700),
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      foundItems[index].description,
-                                      style: const TextStyle(
-                                        color: Color(0xFFF6A700),
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 10,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      foundItems[index].location,
-                                      style: const TextStyle(
-                                        color: Color(0xFFF6A700),
-                                        fontFamily: 'Urbanist',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
+                            ));
                       },
                     );
                   } else if (snapshot.hasError) {

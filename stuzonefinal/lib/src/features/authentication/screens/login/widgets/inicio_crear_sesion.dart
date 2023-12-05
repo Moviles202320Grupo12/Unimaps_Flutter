@@ -49,35 +49,6 @@ class InicioCrearSesion extends StatelessWidget {
       ),
     );
 
-    final timer = Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10.0,
-        ),
-        child: Container(
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                shape: const CircleBorder(),
-                padding: const EdgeInsets.all(10)),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AppLifecycleReactorState ()),
-              );
-            },
-            child: Image.asset(
-              timerimg, 
-             width: 40, // Establece el ancho de la imagen
-          height: 40, // Establece la altura de la imagen
-          fit: BoxFit.contain,
-            ),
-          ),
-        ),
-      ),
-    );
 
     final crearCuenta = Center(
       child: Padding(
@@ -109,31 +80,10 @@ class InicioCrearSesion extends StatelessWidget {
       ),
     );
 
-    final invitado = Container(
-        margin: const EdgeInsets.symmetric(
-            horizontal: 110, // Margen horizontal
-            vertical: 50),
-        height: 50.0, // Altura del texto interactivo
-        width: 400.0, // Ancho del texto interactivo
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const Map()));
-          },
-          child: const Text(
-            'Continuar como Invitado',
-            style: TextStyle(
-              color: Colors.black, // Color del texto
-              decoration: TextDecoration.underline,
-              // Subrayado
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ));
 
     return Material(
-        child: Column(
+        child: Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [timer, photoImage, ingresar, crearCuenta, invitado ]));
+            children: [ photoImage, ingresar, crearCuenta])));
   }
 }
