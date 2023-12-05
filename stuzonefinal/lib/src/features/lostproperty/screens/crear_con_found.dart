@@ -184,7 +184,7 @@ class _AddItemFoundState extends State<AddItemFound> {
                       onPressed: () async {
                         if (imageUrl.isEmpty) {
                           ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(content: Text('Please upload an image')));
+                              .showSnackBar(const SnackBar(content: Text('Please wait 5 secs and try again')));
 
                           return;
                         }

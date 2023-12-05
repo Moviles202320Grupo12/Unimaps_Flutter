@@ -270,31 +270,7 @@ class _LoginPage  extends State<LoginPage> {
           },
         ));
 
-    final olvideContrasena = Align(
-      alignment: Alignment.centerRight,
-      child: Container(
-        margin: const EdgeInsets.only(top: 10, right: 25, bottom: 25),
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      const OlvidoContrasena()), //builder: (context) => OlvidoContrasena()),
-            );
-          },
-          child: const Text(
-            'Olvide mi contraseña',
-            style: TextStyle(
-              color: Colors.black, // Color del texto
-              decoration: TextDecoration.underline,
-              // Subrayado
-            ),
-            textAlign: TextAlign.right,
-          ),
-        ),
-      ),
-    );
+
 
     final ingresar = Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -435,7 +411,6 @@ class _LoginPage  extends State<LoginPage> {
           putaFunciona,
           ingresarCorreo,
           ingresarContrasena,
-          olvideContrasena,
           ingresar,
           ingresarPhone,
         ]));

@@ -18,6 +18,8 @@ class SignUpFormWidget extends StatelessWidget {
     final controller = Get.put(SignUpController());
     final formKey = GlobalKey<FormState>();
 
+    final ValueNotifier<bool> passwordVisible = ValueNotifier<bool>(false);
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: tFormHeight - 10),
       child: Form(
@@ -40,10 +42,38 @@ class SignUpFormWidget extends StatelessWidget {
               decoration: const InputDecoration(label: Text(tPhoneNo), prefixIcon: Icon(LineAwesomeIcons.phone)),
             ),
             const SizedBox(height: tFormHeight - 20),
-            TextFormField(
+          Container(
+      margin: const EdgeInsets.only(right: 20, left: 20, top: 15),
+        child: ValueListenableBuilder<bool>(
+          valueListenable: passwordVisible,
+          builder: (context, bool isVisible, child) {
+            return TextField(
               controller: controller.password,
-              decoration: const InputDecoration(label: Text(tPassword), prefixIcon: Icon(Icons.fingerprint)),
-            ),
+              obscureText: !isVisible,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: const Color(0xbbbbbf7f8f9),
+                border: const OutlineInputBorder(),
+                labelText: 'Ingresa tu contraseña',
+                labelStyle: const TextStyle(color: Colors.black45),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(width: 1.5, color: Colors.black),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Cambiar el ícono según el estado de la visibilidad
+                    isVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.black45,
+                  ),
+                  onPressed: () {
+                    // Cambiar el estado de la visibilidad
+                    passwordVisible.value = !isVisible;
+                  },
+                ),
+              ),
+            );
+          },
+        )),
             const SizedBox(height: tFormHeight - 10),
             Obx(
               () => SizedBox(
@@ -52,7 +82,29 @@ class SignUpFormWidget extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()) {
+                        if (controller.fullName.text.length>12)
+                          {
+                            Get.snackbar(
+                              "OJO",
+                              "Ese nombre esta como larguito -_-",
+                              snackPosition: SnackPosition.BOTTOM,
+                              duration: const Duration(seconds: 3),
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        else if (controller.email.text.length>30)
+                        {
+                          Get.snackbar(
+                            "OJO",
+                            "Ese correo esta como larguito -_-",
+                            snackPosition: SnackPosition.BOTTOM,
+                            duration: const Duration(seconds: 3),
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white,
+                          );
+                        }
+                        else if (formKey.currentState!.validate()) {
                           /// Email & Password Authentication
                           // SignUpController.instance.registerUser(controller.email.text.trim(), controller.password.text.trim());
 
@@ -172,7 +224,7 @@ class _RegistroConCelular  extends State<RegistroConCelular> {
             filled: true,
             fillColor: Color(0xbbbbbf7f8f9),
             border: OutlineInputBorder(),
-            labelText: 'Ingresa tu celular',
+            labelText: 'Ingresa: +573125556677',
             labelStyle: TextStyle(color: Colors.black45),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(width: 1.5, color: Colors.black))),
